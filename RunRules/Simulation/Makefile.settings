@@ -1,0 +1,17 @@
+# --- User's custom definitions
+
+# ---
+
+MAXCOMPILER_QUOTE   := $(shell printf %q "$(MAXCOMPILERDIR)")
+
+RUNRULE_ARGS        := -sim
+RUNRULE_RUNENV      := MAXELEROSDIR="$(MAXCOMPILERDIR)/lib/maxeleros-sim" LD_LIBRARY_PATH="$(MAXCOMPILERDIR)/lib/maxeleros-sim/lib:$$LD_LIBRARY_PATH" SLIC_CONF="use_simulation=LatencyInterac;"  
+RUNRULE_MAXFILES    := LatencyInteractionExperiment.max  
+RUNRULE_MAXFILES_H  := LatencyInteractionExperiment.h 
+RUNRULE_CFLAGS      := 
+RUNRULE_LDFLAGS     := 
+
+TARGET_EXEC         := LatencyInteractionExperiment
+TARGET_LIBRARY      := 
+
+

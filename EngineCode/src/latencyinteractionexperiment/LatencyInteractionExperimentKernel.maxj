@@ -1,0 +1,31 @@
+package latencyinteractionexperiment;
+
+import maxvideo.MaxVideoKernel;
+import types.RGB24Type;
+
+import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEType;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.composite.DFEStruct;
+
+import displaystandards.DisplayStandard;
+
+class LatencyInteractionExperimentKernel extends MaxVideoKernel {
+
+	private static final DFEType type = dfeInt(32);
+
+	protected LatencyInteractionExperimentKernel(KernelParameters parameters) {
+		super(parameters, DisplayStandard.make_1280x1024x75());
+	}
+
+	@Override
+	public DFEStruct ComputePixelColour(FragmentInput input) {
+		// TODO Auto-generated method stub
+
+		DFEStruct colour = new RGB24Type().FromRGB(200, 100, 50, this);
+
+
+
+		return colour;
+	}
+
+}

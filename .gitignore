@@ -1,0 +1,11 @@
+*.o
+*.d
+*.max
+*.checksum
+*.maxchecksum
+*.class
+binaries/
+objects/
+*.log
+*.xml
+*.pxg

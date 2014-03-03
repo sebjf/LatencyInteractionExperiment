@@ -1,0 +1,34 @@
+package latencyinteractionexperiment;
+
+import maxvideo.MaxVideoManager;
+
+import com.maxeler.maxcompiler.v2.managers.custom.blocks.KernelBlock;
+import com.maxeler.maxcompiler.v2.managers.engine_interfaces.EngineInterface;
+
+public class LatencyInteractionExperimentManager extends MaxVideoManager {
+
+	private static final String s_kernelName = "LatencyInteractionExperimentKernel";
+
+	public LatencyInteractionExperimentManager(LatencyInteractionExperimentEngineParameters engineParameters) {
+		super(engineParameters);
+
+		KernelBlock framegenkernel =  addVideoKernel(new LatencyInteractionExperimentKernel(makeKernelParameters(s_kernelName)));
+
+		//framegenkernel.getInput("positions") <== addStreamFromCPU("positions");
+
+		createSLiCinterface(interfaceDefault());
+
+	}
+
+	public static void main(String[] args) {
+		LatencyInteractionExperimentEngineParameters params = new LatencyInteractionExperimentEngineParameters(args);
+		LatencyInteractionExperimentManager manager = new LatencyInteractionExperimentManager(params);
+		manager.build();
+	}
+
+	public static EngineInterface interfaceDefault() {
+		EngineInterface engine_interface = new EngineInterface();
+		return engine_interface;
+	}
+
+}
