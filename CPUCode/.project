@@ -8,6 +8,7 @@
 	<maxelerVersion></maxelerVersion>
 	<maxelerBuildSystemVersion>2</maxelerBuildSystemVersion>
 	<projects>
+		<project>MaxVideoCpuResources</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

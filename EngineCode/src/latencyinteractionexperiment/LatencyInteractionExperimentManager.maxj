@@ -3,6 +3,7 @@ package latencyinteractionexperiment;
 import maxvideo.MaxVideoManager;
 
 import com.maxeler.maxcompiler.v2.managers.custom.blocks.KernelBlock;
+import com.maxeler.maxcompiler.v2.managers.engine_interfaces.CPUTypes;
 import com.maxeler.maxcompiler.v2.managers.engine_interfaces.EngineInterface;
 
 public class LatencyInteractionExperimentManager extends MaxVideoManager {
@@ -14,7 +15,7 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 
 		KernelBlock framegenkernel =  addVideoKernel(new LatencyInteractionExperimentKernel(makeKernelParameters(s_kernelName)));
 
-		//framegenkernel.getInput("positions") <== addStreamFromCPU("positions");
+		framegenkernel.getInput("positions") <== addStreamFromCPU("positions");
 
 		createSLiCinterface(interfaceDefault());
 
@@ -28,6 +29,7 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 
 	public static EngineInterface interfaceDefault() {
 		EngineInterface engine_interface = new EngineInterface();
+		engine_interface.setStream("positions", CPUTypes.INT32, CPUTypes.INT32.sizeInBytes() * 1 * 4);
 		return engine_interface;
 	}
 

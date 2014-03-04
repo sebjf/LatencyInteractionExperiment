@@ -4,8 +4,16 @@ import maxvideo.MaxVideoKernel;
 import types.RGB24Type;
 
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.KernelMath;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.DelimiterMode;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingInput;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingMode;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEFix;
 import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEType;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
 import com.maxeler.maxcompiler.v2.kernelcompiler.types.composite.DFEStruct;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.composite.DFEStructType;
 
 import displaystandards.DisplayStandard;
 
@@ -17,15 +25,44 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 		super(parameters, DisplayStandard.make_1280x1024x75());
 	}
 
+	NonBlockingInput<DFEStruct> positions;
+	DFEStruct positionData;
+
+	public class positionStructType extends DFEStructType	{
+		public positionStructType()	{
+			super(sft("x",dfeUInt(32)),
+				  sft("y",dfeUInt(32)),
+				  sft("padding",dfeUInt(64)));
+		}
+	}
+
+	protected static final int radius = 50;
+
 	@Override
 	public DFEStruct ComputePixelColour(FragmentInput input) {
 		// TODO Auto-generated method stub
 
-		DFEStruct colour = new RGB24Type().FromRGB(200, 100, 50, this);
+		DFEStruct black = new RGB24Type().FromRGB(0, 0, 0, this);
+		DFEStruct colour = new RGB24Type().FromRGB(200, 0, 0, this);
+
+		positions =
+			io.nonBlockingInput("positions", new positionStructType(), constant.var(true),
+					1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
 
 
+		positionData =
+			Reductions.streamHold(positions.data, positions.valid);
 
-		return colour;
+		DFEVar xp = positionData["x"];
+		DFEVar yp = positionData["y"];
+
+		DFEFix TYPE = dfeInt(32);
+
+		DFEVar isInRadiusX = (KernelMath.abs(xp.cast(TYPE) - input.x.cast(TYPE)) < radius);
+		DFEVar isInRadiusY = (KernelMath.abs(yp.cast(TYPE) - input.y.cast(TYPE)) < radius);
+
+		return (isInRadiusX) ? colour : black;
+		//return colour;
 	}
 
 }

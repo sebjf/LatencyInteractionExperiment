@@ -18,11 +18,9 @@ extern "C" {
  * \brief Basic static function for the interface 'default'.
  * 
  * \param [in] instream_positions The stream should be of size 16 bytes.
- * \param [out] outstream_displayDataOut The stream should be of size 8 bytes.
  */
 void LatencyInteractionExperiment(
-	const int32_t *instream_positions,
-	uint64_t *outstream_displayDataOut);
+	const int32_t *instream_positions);
 
 /**
  * \brief Basic static non-blocking function for the interface 'default'.
@@ -33,12 +31,10 @@ void LatencyInteractionExperiment(
  * 
  * 
  * \param [in] instream_positions The stream should be of size 16 bytes.
- * \param [out] outstream_displayDataOut The stream should be of size 8 bytes.
  * \return A handle on the execution status, or NULL in case of error.
  */
 max_run_t *LatencyInteractionExperiment_nonblock(
-	const int32_t *instream_positions,
-	uint64_t *outstream_displayDataOut);
+	const int32_t *instream_positions);
 
 /**
  * \brief Advanced static interface, structure for the engine interface 'default'
@@ -46,7 +42,6 @@ max_run_t *LatencyInteractionExperiment_nonblock(
  */
 typedef struct { 
 	const int32_t *instream_positions; /**<  [in] The stream should be of size 16 bytes. */
-	uint64_t *outstream_displayDataOut; /**<  [out] The stream should be of size 8 bytes. */
 } LatencyInteractionExperiment_actions_t;
 
 /**
@@ -148,9 +143,8 @@ const char* LatencyInteractionExperiment_get_errors(void);
 void LatencyInteractionExperiment_clear_errors(void);
 /* Free statically allocated maxfile data */
 void LatencyInteractionExperiment_free(void);
-/* returns: -1 = error running command; 0 = no error reported */
+/* These are dummy functions for hardware builds. */
 int LatencyInteractionExperiment_simulator_start(void);
-/* returns: -1 = error running command; 0 = no error reported */
 int LatencyInteractionExperiment_simulator_stop(void);
 
 #ifdef __cplusplus

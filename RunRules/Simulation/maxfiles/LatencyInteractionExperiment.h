@@ -17,9 +17,11 @@ extern "C" {
 /**
  * \brief Basic static function for the interface 'default'.
  * 
+ * \param [in] instream_positions The stream should be of size 16 bytes.
  * \param [out] outstream_displayDataOut The stream should be of size 8 bytes.
  */
 void LatencyInteractionExperiment(
+	const int32_t *instream_positions,
 	uint64_t *outstream_displayDataOut);
 
 /**
@@ -30,10 +32,12 @@ void LatencyInteractionExperiment(
  * note that one of these *must* be called, so that associated memory can be released.
  * 
  * 
+ * \param [in] instream_positions The stream should be of size 16 bytes.
  * \param [out] outstream_displayDataOut The stream should be of size 8 bytes.
  * \return A handle on the execution status, or NULL in case of error.
  */
 max_run_t *LatencyInteractionExperiment_nonblock(
+	const int32_t *instream_positions,
 	uint64_t *outstream_displayDataOut);
 
 /**
@@ -41,6 +45,7 @@ max_run_t *LatencyInteractionExperiment_nonblock(
  * 
  */
 typedef struct { 
+	const int32_t *instream_positions; /**<  [in] The stream should be of size 16 bytes. */
 	uint64_t *outstream_displayDataOut; /**<  [out] The stream should be of size 8 bytes. */
 } LatencyInteractionExperiment_actions_t;
 
