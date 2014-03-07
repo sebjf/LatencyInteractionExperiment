@@ -38,6 +38,8 @@
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/tbb/include"/>
 									<listOptionValue builtIn="false" value="&quot;${MAXCOMPILERDIR}/include/slic&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_RunRules/Simulation/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode/Metrics}&quot;"/>
+									<listOptionValue builtIn="false" value="/usr/include/c++/4.1.2"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.811804367" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>

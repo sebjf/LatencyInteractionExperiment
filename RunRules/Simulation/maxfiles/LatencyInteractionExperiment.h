@@ -6,6 +6,8 @@
 extern "C" {
 #endif /* __cplusplus */
 
+#define LatencyInteractionExperiment_DisplayTotalWidth (1360)
+#define LatencyInteractionExperiment_DisplayTotalHeight (733)
 
 
 /*----------------------------------------------------------------------------*/
@@ -17,11 +19,13 @@ extern "C" {
 /**
  * \brief Basic static function for the interface 'default'.
  * 
- * \param [in] instream_positions The stream should be of size 16 bytes.
+ * \param [in] instream_positions Stream "positions".
+ * \param [in] instream_size_positions The size of the stream instream_positions in bytes.
  * \param [out] outstream_displayDataOut The stream should be of size 8 bytes.
  */
 void LatencyInteractionExperiment(
-	const int32_t *instream_positions,
+	const void *instream_positions,
+	size_t instream_size_positions,
 	uint64_t *outstream_displayDataOut);
 
 /**
@@ -32,12 +36,14 @@ void LatencyInteractionExperiment(
  * note that one of these *must* be called, so that associated memory can be released.
  * 
  * 
- * \param [in] instream_positions The stream should be of size 16 bytes.
+ * \param [in] instream_positions Stream "positions".
+ * \param [in] instream_size_positions The size of the stream instream_positions in bytes.
  * \param [out] outstream_displayDataOut The stream should be of size 8 bytes.
  * \return A handle on the execution status, or NULL in case of error.
  */
 max_run_t *LatencyInteractionExperiment_nonblock(
-	const int32_t *instream_positions,
+	const void *instream_positions,
+	size_t instream_size_positions,
 	uint64_t *outstream_displayDataOut);
 
 /**
@@ -45,7 +51,8 @@ max_run_t *LatencyInteractionExperiment_nonblock(
  * 
  */
 typedef struct { 
-	const int32_t *instream_positions; /**<  [in] The stream should be of size 16 bytes. */
+	const void *instream_positions; /**<  [in] Stream "positions". */
+	size_t instream_size_positions; /**<  [in] The size of the stream instream_positions in bytes. */
 	uint64_t *outstream_displayDataOut; /**<  [out] The stream should be of size 8 bytes. */
 } LatencyInteractionExperiment_actions_t;
 

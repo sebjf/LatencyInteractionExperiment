@@ -7,6 +7,18 @@
 
 #include <MaxVideoCpuResources.h>
 
+#include "Experiment/experiment.h"
+
+#include <stdio.h>
+#include <linux/input.h>
+#include <fcntl.h>
+
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <linux/input.h>
+#include <string.h>
 #include <stdio.h>
 
 struct InputUpdate
@@ -16,6 +28,54 @@ struct InputUpdate
 	uint padding;
 	uint padding2;
 };
+
+
+//http://stackoverflow.com/questions/20943322/accessing-keys-from-linux-input-device
+
+static const char *const evval[3] = {
+    "RELEASED",
+    "PRESSED ",
+    "REPEATED"
+};
+
+class KeyboardDevice
+{
+public:
+	KeyboardDevice(char* dev)
+	{
+		fd = open(dev, O_RDONLY | O_NONBLOCK);
+		if (fd == -1) {
+			fprintf(stderr, "Cannot open %s: %s. Did you run CHMOD on the device?\n", dev, strerror(errno));
+		}
+	}
+
+	bool isKeyDown(int keycode)
+	{
+		if(fd == -1){
+			return false;
+		}
+
+		struct input_event ev;
+		ssize_t n;
+
+		n = read(fd, &ev, sizeof ev);
+
+		if (n != sizeof ev) {
+			errno = EIO;
+			return false;
+		}
+
+		if (ev.type == EV_KEY && ev.value == 1){
+			return (ev.code == keycode);
+		}
+
+		return false;
+	}
+
+private:
+	int fd;
+};
+
 
 int main(int argc, char *argv[])
 {
@@ -27,13 +87,16 @@ int main(int argc, char *argv[])
 	makeRealtime();
 
 	Mouse* mouse = new Mouse();
+	KeyboardDevice* keyboard = new KeyboardDevice("/dev/input/event0");
+	ExperimentLog* log = new ExperimentLog("participant");
 
-	VirtualMonitor* monitor = new VirtualMonitor(1688,1066);
 
 	/* Configure the card and start the kernel running */
 	max_file_t* maxfile = LatencyInteractionExperiment_init();
 	max_engine_t* engine = max_load(maxfile, "local:*");
 	max_actions_t* actions = max_actions_init(maxfile, "default");
+
+	VirtualMonitor* monitor = new VirtualMonitor(maxfile);
 
 	if(isSim(argc,argv)){
 		monitor->Connect(engine);
@@ -47,21 +110,36 @@ int main(int argc, char *argv[])
 
 	max_run(engine, actions);
 
+	mouse->Scale = 0.4f;
+
+	float x = 0;
+	float y = 0 ;
+
 	while(1){
 		MouseDelta m = mouse->readMouse(false);
 
-		update.x += m.x;
-		update.y += m.y;
+		x += m.x;
+		y += m.y;
+
+		update.x = (int)x;
+		update.y = (int)y;
 
 		inputStream->Write(&update);
 
 		monitor->Refresh(1066);
 
-		if(keyboardInputAvailable()){
+		Coordinate c;
+		c.x = (int)x;
+		c.y = (int)y;
+		log->Add(c);
+
+		if(keyboard->isKeyDown(KEY_Q)){
 			break;
 		}
 	}
 
-	printf("Done.\n");
+	log->Write();
+
+	printf("\nDone.\n");
 	return 0;
 }

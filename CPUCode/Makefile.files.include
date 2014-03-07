@@ -1,5 +1,5 @@
 #
 # This file is managed by MaxIDE. Do NOT change.
 #
-HEADERS:= 
-SOURCES:= LatencyInteractionExperiment.cpp 
+HEADERS:= Experiment/experiment.h Metrics/metrics.h 
+SOURCES:= Experiment/experiment.cpp LatencyInteractionExperiment.cpp Metrics/metrics.cpp 
