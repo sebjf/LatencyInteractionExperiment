@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <string>
+#include <iterator>
 #include <fstream>
 #include <iostream>
 #include <time.h>
@@ -17,41 +18,29 @@
 
 using namespace std;
 
-ExperimentLog::ExperimentLog(char* participant)
+std::ostream& operator<<(std::ostream& os, const Datapoint& dt)
 {
-	expectedTimeInMinutes = 20;
-	expectedLoopRateInMS = 1;
+	os << dt.timestamp_ms;
+	os << dt.x;
+	os << dt.y;
+	return os;
+}
 
-	long datapoints = expectedTimeInMinutes * 60 * (1000 / expectedLoopRateInMS);
-
-	log.MaxDatapoints = datapoints;
-	log.DatapointCount = 0;
-	log.Datapoints = (Datapoint*)malloc(log.MaxDatapoints * sizeof(Datapoint));
+ExperimentLog::ExperimentLog(std::string name, std::string directory)
+{
+	log = new Log();
+	log->name = name;
+	log->directory = directory;
 
 	performanceCounter = new PerformanceCounter();
 }
 
-void ExperimentLog::Begin(Condition condition)
-{
-	log.Condition = condition;
-}
-
-void ExperimentLog::Add(Coordinate coordinate)
-{
-	Datapoint d;
-	d.Position = coordinate;
-	d.Timestamp_ms = performanceCounter->GetTimestamp_ms();
-	Add(d);
-}
-
 void ExperimentLog::Add(Datapoint datapoint)
 {
-	if(log.DatapointCount >= log.MaxDatapoints){
-		return;
+	if(datapoint.timestamp_ms == 0){
+		datapoint.timestamp_ms = performanceCounter->GetTimestamp_ms();
 	}
-	log.Datapoints[log.DatapointCount] = datapoint;
-	log.DatapointCount++;
-
+	log->datapoints.push_back(datapoint);
 }
 
 // Get current date/time, format is YYYY-MM-DD.HH:mm:ss
@@ -69,17 +58,20 @@ const std::string currentDateTime() {
 
 void ExperimentLog::Write(ostream& myfile)
 {
-	myfile.write((char*)&log.Condition, sizeof(Condition));
-	myfile.write((char*)&log.DatapointCount, sizeof(int));
-	myfile.write((char*)log.Datapoints, sizeof(Datapoint) * log.DatapointCount);
+	myfile.write(log->name.c_str(), strlen(log->name.c_str()));
+	myfile.write((char*)&(log->datapoints[0]), (log->datapoints.size() * sizeof(Datapoint)));
+
+	//std::ostream_iterator<Datapoint> output_iterator(myfile);
+	//std::copy(log->datapoints.begin(), log->datapoints.end(), output_iterator);
 }
 
 void ExperimentLog::Write()
 {
-	string filename = string("participant 1") + string("_") + currentDateTime();
+	std::string filename = log->name + string("_") + currentDateTime();
+
 	ofstream myfile;
 
-	myfile.open(filename.c_str(), ios::binary);
+	myfile.open((log->directory + filename).c_str(), ios::binary);
 
 	Write(myfile);
 

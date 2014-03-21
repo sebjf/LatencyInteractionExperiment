@@ -13,53 +13,52 @@
 #include <stdio.h>
 #include <ostream>
 #include <iostream>
-
-struct Coordinate
-{
-	int x;
-	int y;
-};
-
-struct Condition
-{
-	int Latency_ms;
-	int Width;
-	Coordinate Position;
-};
+#include <string>
+#include <vector>
 
 struct Datapoint
 {
-	double Timestamp_ms;
-	Coordinate Position;
+	double timestamp_ms;
+	int x;
+	int y;
+
+	Datapoint()
+	{
+		timestamp_ms = 0;
+		x = 0;
+		y = 0;
+	}
+
+	Datapoint(int x, int y)
+	{
+		this->x = x;
+		this->y = y;
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, const Datapoint& dt);
 };
 
-struct LogHeader
-{
-	struct Condition Condition;
-	int DatapointCount;
-	Datapoint* Datapoints;
 
-	//The following members will not be written to file
-	int MaxDatapoints;
+
+struct Log
+{
+	std::string name;
+	std::string directory;
+	std::vector<Datapoint> datapoints;
 };
 
 class ExperimentLog
 {
 public:
-	ExperimentLog(char* participant);
-	void Begin(Condition condition);
-	void Add(Coordinate coordinate);
+	ExperimentLog(std::string name, std::string directory);
+
 	void Add(Datapoint datapoint);
 
 	void Write();
 	void Write(std::ostream& stream);
 
 private:
-	int expectedTimeInMinutes;
-	int expectedLoopRateInMS;
-
-	LogHeader log;
-
+	Log* log;
 	PerformanceCounter* performanceCounter;
 };
 

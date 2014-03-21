@@ -35,7 +35,7 @@
 <maxDRAMSize enabled="false"/>
 <DRAMFile enabled="false"/>
 <socketName>LatencyInterac</socketName>
-<startStopScript enabled="false"/>
+<startStopScript enabled="true"/>
 <numberOfDevices>1</numberOfDevices>
 <ethernetOneEnabled enabled="false"/>
 <ipAddressOne/>

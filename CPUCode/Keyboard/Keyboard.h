@@ -8,6 +8,8 @@
 #ifndef KEYBOARD_H_
 #define KEYBOARD_H_
 
+//http://stackoverflow.com/questions/20943322/accessing-keys-from-linux-input-device
+
 class KeyboardDevice
 {
 public:
