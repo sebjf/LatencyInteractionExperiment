@@ -32,8 +32,6 @@ public:
 		if(res != 0){
 			std::cout << "Could not create thread: " << strerror(res) << "\n";
 		}
-
-		std::cout << "Started.\n";
 	}
 
 	void StopSimulation()
@@ -58,6 +56,8 @@ private:
 	static void* SimulationMainLoop(void* c)
 	{
 		makeRealtime();
+
+		std::cout << "Started.\n";
 
 		SimulatorWrapper* wrapper = (SimulatorWrapper*)c;
 		Simulator* simulator = wrapper->simulator;

@@ -4,6 +4,7 @@
 #include "Maxfiles.h"
 #include "MaxSLiCInterface.h"
 #include "../Experiment/experiment.h"
+#include <stdio.h>
 
 struct InputUpdate
 {
@@ -23,6 +24,22 @@ void SimulatorOne::MainLoop()
 	max_file_t* maxfile = LatencyInteractionExperiment_init();
 	max_engine_t* engine = max_load(maxfile, "local:*");
 	max_actions_t* actions = max_actions_init(maxfile, "default");
+
+
+	std::cout << "Setting Memory...\n";
+
+	int numMemElements = 256 * 256;
+	int memElementSize = 4;
+
+	int memSizeInBytes = numMemElements * memElementSize;
+	int memSizeInWords = memSizeInBytes / sizeof(uint64_t);
+
+	uint64_t* memData = (uint64_t*)malloc(numMemElements * memElementSize);
+	memset(memData, 0, memSizeInBytes);
+
+	max_set_mem_range_uint64t(actions, "LatencyInteractionExperimentKernel", "sprite_0", memSizeInWords, 0, memData);
+
+
 
 	VirtualMonitor* monitor = new VirtualMonitor(maxfile);
 

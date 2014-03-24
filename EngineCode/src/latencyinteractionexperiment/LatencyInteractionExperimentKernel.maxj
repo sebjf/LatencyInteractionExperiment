@@ -1,7 +1,10 @@
 package latencyinteractionexperiment;
 
+import java.util.ArrayList;
+
 import maxvideo.MaxVideoKernel;
 import types.RGB24Type;
+import types.RGBA32Type;
 
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.KernelMath;
@@ -9,6 +12,7 @@ import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.DelimiterMode;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingInput;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingMode;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.memory.Memory;
 import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEFix;
 import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
 import com.maxeler.maxcompiler.v2.kernelcompiler.types.composite.DFEStruct;
@@ -32,6 +36,7 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 
 	protected static final int radius = 50;
 
+
 	@Override
 	public DFEStruct ComputePixelColour(FragmentInput input) {
 		// TODO Auto-generated method stub
@@ -52,11 +57,73 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 
 		DFEFix TYPE = dfeInt(32);
 
+
+		ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
+
+		spriteList.add(new Sprite("0", 256, 256));
+
+
+		for(Sprite s : spriteList){
+			DFEStruct sc = s.getColour(input, this);
+			DFEVar a = sc["A"];
+			DFEVar af = a.cast(dfeFloat(8, 24));
+			DFEVar ap = af / 255.0f;
+
+			DFEVar r = colour["R"];
+			DFEVar g = colour["G"];
+			DFEVar b = colour["B"];
+
+			DFEVar rs = sc["R"];
+			DFEVar gs = sc["G"];
+			DFEVar bs = sc["B"];
+
+			colour = new RGB24Type().FromRGB(
+					r + (rs.cast(dfeFloat(8, 24)) * ap).cast(dfeUInt(8)),
+					g + (gs.cast(dfeFloat(8, 24)) * ap).cast(dfeUInt(8)),
+					b + (bs.cast(dfeFloat(8, 24)) * ap).cast(dfeUInt(8)), this);
+		}
+
+
 		DFEVar isInRadiusX = (KernelMath.abs(xp.cast(TYPE) - input.x.cast(TYPE)) < radius);
 		DFEVar isInRadiusY = (KernelMath.abs(yp.cast(TYPE) - input.y.cast(TYPE)) < radius);
 
-		return (isInRadiusX) ? colour : black;
-		//return colour;
+		//return (isInRadiusX) ? colour : black;
+		return colour;
 	}
+
+	public class Sprite
+	{
+		Sprite(String name, int width, int height)
+		{
+			this.width = width;
+			this.height = height;
+			spriteContent = mem.alloc(new RGBA32Type(), width * height );
+			spriteContent.mapToCPU("sprite_" + name);
+
+			x = constant.var(0);
+			y = constant.var(0);
+		}
+
+		public DFEVar x;
+		public DFEVar y;
+
+		private final int width;
+		private final int height;
+		private final Memory<DFEStruct> spriteContent;
+
+		DFEStruct getColour(FragmentInput input, LatencyInteractionExperimentKernel kernel)
+		{
+			DFEVar x_offset = input.x.cast(dfeUInt(32)) - x;
+			DFEVar y_offset = input.y.cast(dfeUInt(32)) - y;
+			DFEVar readAddress = ((y_offset * width) + x_offset).cast(dfeUInt(16));
+
+			DFEVar isValid = (x_offset >= 0) & (x_offset < width) & (y_offset >= 0) & (y_offset < height);
+			DFEStruct colour = isValid.cast(dfeBool()) ? spriteContent.read(readAddress) : (new RGBA32Type()).Transparent(kernel);
+
+			return colour;
+		}
+
+	}
+
 
 }

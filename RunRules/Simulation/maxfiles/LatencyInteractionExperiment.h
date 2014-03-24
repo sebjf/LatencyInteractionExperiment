@@ -22,11 +22,13 @@ extern "C" {
  * \param [in] instream_positions Stream "positions".
  * \param [in] instream_size_positions The size of the stream instream_positions in bytes.
  * \param [out] outstream_displayDataOut The stream should be of size 8 bytes.
+ * \param [in] inmem_LatencyInteractionExperimentKernel_sprite_0 Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_0, should be of size (65536 * sizeof(uint64_t)).
  */
 void LatencyInteractionExperiment(
 	const void *instream_positions,
 	size_t instream_size_positions,
-	uint64_t *outstream_displayDataOut);
+	uint64_t *outstream_displayDataOut,
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_0);
 
 /**
  * \brief Basic static non-blocking function for the interface 'default'.
@@ -39,12 +41,14 @@ void LatencyInteractionExperiment(
  * \param [in] instream_positions Stream "positions".
  * \param [in] instream_size_positions The size of the stream instream_positions in bytes.
  * \param [out] outstream_displayDataOut The stream should be of size 8 bytes.
+ * \param [in] inmem_LatencyInteractionExperimentKernel_sprite_0 Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_0, should be of size (65536 * sizeof(uint64_t)).
  * \return A handle on the execution status, or NULL in case of error.
  */
 max_run_t *LatencyInteractionExperiment_nonblock(
 	const void *instream_positions,
 	size_t instream_size_positions,
-	uint64_t *outstream_displayDataOut);
+	uint64_t *outstream_displayDataOut,
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_0);
 
 /**
  * \brief Advanced static interface, structure for the engine interface 'default'
@@ -54,6 +58,7 @@ typedef struct {
 	const void *instream_positions; /**<  [in] Stream "positions". */
 	size_t instream_size_positions; /**<  [in] The size of the stream instream_positions in bytes. */
 	uint64_t *outstream_displayDataOut; /**<  [out] The stream should be of size 8 bytes. */
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_0; /**<  [in] Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_0, should be of size (65536 * sizeof(uint64_t)). */
 } LatencyInteractionExperiment_actions_t;
 
 /**
