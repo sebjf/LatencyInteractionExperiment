@@ -14,7 +14,6 @@ class Simulator
 {
 public:
 	virtual void MainLoop() = 0;
-	volatile bool IsSimulation;
 	volatile bool DoSimulation;
 	ExperimentLog* log;
 };

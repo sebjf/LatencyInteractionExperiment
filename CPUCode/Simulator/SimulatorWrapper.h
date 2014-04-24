@@ -16,10 +16,8 @@
 class SimulatorWrapper
 {
 public:
-	SimulatorWrapper(bool isSim)
+	SimulatorWrapper()
 	{
-		/* Refers to whether this is running on hardware or cpu... */
-		isSimulation = isSim;
 	}
 
 	/* This one creates the thread the simulator will run in and returns immediately */
@@ -46,7 +44,7 @@ public:
 	}
 
 	pthread_t threadInfo;
-	bool isSimulation;
+
 
 private:
 	Simulator* simulator;
@@ -62,7 +60,6 @@ private:
 		SimulatorWrapper* wrapper = (SimulatorWrapper*)c;
 		Simulator* simulator = wrapper->simulator;
 
-		simulator->IsSimulation = wrapper->isSimulation;
 		simulator->DoSimulation = true;
 		simulator->MainLoop();
 

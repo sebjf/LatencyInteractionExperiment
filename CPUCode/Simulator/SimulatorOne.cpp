@@ -14,10 +14,19 @@ struct InputUpdate
 	uint padding2;
 };
 
-
+struct memword
+{
+	char r;
+	char g;
+	char b;
+	char a;
+	uint32_t padding;
+};
 
 void SimulatorOne::MainLoop()
 {
+	std::cout << "Beginning main loop Simulator One\n";
+
 	Mouse* mouse = new Mouse();
 
 	/* Configure the card and start the kernel running */
@@ -25,21 +34,31 @@ void SimulatorOne::MainLoop()
 	max_engine_t* engine = max_load(maxfile, "local:*");
 	max_actions_t* actions = max_actions_init(maxfile, "default");
 
+	bool IsSimulation = max_get_constant_uint64t(maxfile,"IS_SIMULATION");
+
+	if(IsSimulation){
+		std::cout << "Running in simulation mode. " << max_get_constant_uint64t(maxfile,"IS_SIMULATION");
+	}
 
 	std::cout << "Setting Memory...\n";
 
 	int numMemElements = 256 * 256;
-	int memElementSize = 4;
 
-	int memSizeInBytes = numMemElements * memElementSize;
-	int memSizeInWords = memSizeInBytes / sizeof(uint64_t);
+	memword* memData = (new memword[numMemElements]);
 
-	uint64_t* memData = (uint64_t*)malloc(numMemElements * memElementSize);
-	memset(memData, 0, memSizeInBytes);
+	for(int i = 0; i < numMemElements; i++){
+		memData[i].r = 0;
+		memData[i].g = 255;
+		memData[i].b = 0;
+		memData[i].a = 127;
+	}
 
-	max_set_mem_range_uint64t(actions, "LatencyInteractionExperimentKernel", "sprite_0", memSizeInWords, 0, memData);
-
-
+	max_set_mem_range_uint64t(actions, "LatencyInteractionExperimentKernel", "sprite_0", 0, numMemElements, (uint64_t*)memData);
+/*
+	for(int i = 0; i < memSizeInWords; i++){
+		max_set_mem_uint64t(actions, "LatencyInteractionExperimentKernel", "sprite_0", i, memData[i]);
+	}
+*/
 
 	VirtualMonitor* monitor = new VirtualMonitor(maxfile);
 

@@ -29,14 +29,7 @@
 
 int main(int argc, char *argv[])
 {
-	bool isSimulation = isSim(argc,argv);
-
-	if(isSimulation){
-		std::cout << "Running in Simulation mode.";
-	}
-
-	SimulatorWrapper* simManager = new SimulatorWrapper(isSimulation);
-
+	SimulatorWrapper* simManager = new SimulatorWrapper();
 
 	std::cout <<
 	"Latency Interaction Experiment.\n"\
@@ -73,6 +66,10 @@ int main(int argc, char *argv[])
 		case 't':
 		case 'T':
 			std::cout << "Test\n";
+			break;
+
+		default:
+			std::cout << "Unknown command. Remember press E to exit.";
 			break;
 		}
 	};

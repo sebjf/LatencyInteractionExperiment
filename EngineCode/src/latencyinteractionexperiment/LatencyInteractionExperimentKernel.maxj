@@ -19,6 +19,7 @@ import com.maxeler.maxcompiler.v2.kernelcompiler.types.composite.DFEStruct;
 import com.maxeler.maxcompiler.v2.kernelcompiler.types.composite.DFEStructType;
 
 import displaystandards.DisplayStandard;
+import functions.ColourFunctions;
 
 class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 
@@ -65,24 +66,8 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 
 		for(Sprite s : spriteList){
 			DFEStruct sc = s.getColour(input, this);
-			DFEVar a = sc["A"];
-			DFEVar af = a.cast(dfeFloat(8, 24));
-			DFEVar ap = af / 255.0f;
-
-			DFEVar r = colour["R"];
-			DFEVar g = colour["G"];
-			DFEVar b = colour["B"];
-
-			DFEVar rs = sc["R"];
-			DFEVar gs = sc["G"];
-			DFEVar bs = sc["B"];
-
-			colour = new RGB24Type().FromRGB(
-					r + (rs.cast(dfeFloat(8, 24)) * ap).cast(dfeUInt(8)),
-					g + (gs.cast(dfeFloat(8, 24)) * ap).cast(dfeUInt(8)),
-					b + (bs.cast(dfeFloat(8, 24)) * ap).cast(dfeUInt(8)), this);
+			colour = ColourFunctions.Blend(sc,colour);
 		}
-
 
 		DFEVar isInRadiusX = (KernelMath.abs(xp.cast(TYPE) - input.x.cast(TYPE)) < radius);
 		DFEVar isInRadiusY = (KernelMath.abs(yp.cast(TYPE) - input.y.cast(TYPE)) < radius);
