@@ -23,9 +23,61 @@ struct memword
 	uint32_t padding;
 };
 
+struct mempixel
+{
+	uint32_t pixel;
+	uint32_t padding;
+};
+
+struct spriteproperties
+{
+	int x;
+	int y;
+	char r;
+	char g;
+	char b;
+	char a;
+};
+
+class Sprite
+{
+public:
+	Sprite(std::string name, max_engine* engine, int width, int height)
+	{
+		this->name = name;
+		surface = SDL_CreateRGBSurface(0, width, height, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+		properties_stream = new Stream(engine, (name + "_positions").c_str(), sizeof(spriteproperties));
+	}
+
+	SDL_Surface* surface;
+
+	void WriteToDFE(max_actions_t* actions)
+	{
+		int numMemElements = surface->w * surface->h;
+		memData = (new mempixel[numMemElements]);
+		for(int i = 0; i < numMemElements; i++){
+			memData[i].pixel = ((uint32_t*)surface->pixels)[i];
+		}
+		max_set_mem_range_uint64t(actions, "LatencyInteractionExperimentKernel", name.c_str(), 0, numMemElements, (uint64_t*)memData);
+	}
+
+	void UpdateLocation(int x, int y)
+	{
+		spriteproperties t;
+		t.x = x;
+		t.y = y;
+		properties_stream->Write(&t);
+	}
+
+private:
+	std::string name;
+	mempixel* memData;
+	Stream* properties_stream;
+};
+
 void SimulatorOne::MainLoop()
 {
-	std::cout << "Beginning main loop Simulator One\n";
+	std::cout << "Beginning main loop Simulator One" << std::endl;
 
 	Mouse* mouse = new Mouse();
 
@@ -37,28 +89,23 @@ void SimulatorOne::MainLoop()
 	bool IsSimulation = max_get_constant_uint64t(maxfile,"IS_SIMULATION");
 
 	if(IsSimulation){
-		std::cout << "Running in simulation mode. " << max_get_constant_uint64t(maxfile,"IS_SIMULATION");
+		std::cout << "Running in simulation mode. " << max_get_constant_uint64t(maxfile,"IS_SIMULATION") << std::endl;
 	}
 
-	std::cout << "Setting Memory...\n";
+	std::cout << "Setting Memory..." << std::endl;
 
-	int numMemElements = 256 * 256;
+	SDL_Surface* img = SDL_LoadBMP("test1.bmp");
+	//SDL_Surface* scaled = SDL_ScaleSurface(img)
 
-	memword* memData = (new memword[numMemElements]);
-
-	for(int i = 0; i < numMemElements; i++){
-		memData[i].r = 0;
-		memData[i].g = 255;
-		memData[i].b = 0;
-		memData[i].a = 127;
+	if(img == NULL){
+		std::cout << SDL_GetError() << std::endl;
+		return;
 	}
 
-	max_set_mem_range_uint64t(actions, "LatencyInteractionExperimentKernel", "sprite_0", 0, numMemElements, (uint64_t*)memData);
-/*
-	for(int i = 0; i < memSizeInWords; i++){
-		max_set_mem_uint64t(actions, "LatencyInteractionExperimentKernel", "sprite_0", i, memData[i]);
-	}
-*/
+	Sprite* sprite_0 = new Sprite("sprite_0",engine,256,256);
+
+	SDL_BlitSurface(img,NULL,sprite_0->surface,NULL);
+	sprite_0->WriteToDFE(actions);
 
 	VirtualMonitor* monitor = new VirtualMonitor(maxfile);
 
@@ -89,6 +136,8 @@ void SimulatorOne::MainLoop()
 		update.y = (int)y;
 
 		inputStream->Write(&update);
+
+		sprite_0->UpdateLocation(x,y);
 
 		monitor->Refresh(1066);
 	}

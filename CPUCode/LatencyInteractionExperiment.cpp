@@ -65,16 +65,16 @@ int main(int argc, char *argv[])
 
 		case 't':
 		case 'T':
-			std::cout << "Test\n";
+			std::cout << "Test" << std::endl;
 			break;
 
 		default:
-			std::cout << "Unknown command. Remember press E to exit.";
+			std::cout << "Unknown command. Remember press E to exit." << std::endl;
 			break;
 		}
 	};
 
-	std::cout << "Done.";
+	std::cout << "Done." << std::endl;
 
 	return 0;
 }

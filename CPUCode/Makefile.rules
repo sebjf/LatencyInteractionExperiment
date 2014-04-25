@@ -35,7 +35,8 @@ endif
 ifndef DEBUG
  O_FLAGS = -g -O0
 else
- O_FLAGS = -g -O3
+ #O_FLAGS = -g -O3
+ O_FLAGS = -g -O0
 endif
 
 CFLAGS    = -std=gnu99 $(O_FLAGS) -Wall -Wextra -I$(RUNRULE_DIR)/include $(shell slic-config --cflags) $(RUNRULE_CFLAGS)

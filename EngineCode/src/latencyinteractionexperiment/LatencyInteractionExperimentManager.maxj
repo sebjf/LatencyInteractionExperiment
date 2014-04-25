@@ -15,6 +15,7 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 		KernelBlock framegenkernel =  addVideoKernel(new LatencyInteractionExperimentKernel(makeKernelParameters(s_kernelName)));
 
 		framegenkernel.getInput("positions") <== addStreamFromCPU("positions");
+		framegenkernel.getInput("sprite_0_positions") <== addStreamFromCPU("sprite_0_positions");
 
 		createSLiCinterface(interfaceDefault());
 
