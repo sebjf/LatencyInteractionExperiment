@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	"	E: Exit.\n";
 
 	ExperimentLog* log = new ExperimentLog("Experiment 1", "/home/sfriston/");
-	Simulator* sim = new SimulatorOne();
+	Simulator* sim = new SimulatorFitts();
 	sim->log = log;
 
 	bool run = true;

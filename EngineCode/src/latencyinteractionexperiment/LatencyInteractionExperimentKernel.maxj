@@ -25,7 +25,7 @@ import functions.ColourFunctions;
 class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 
 	protected LatencyInteractionExperimentKernel(KernelParameters parameters) {
-		super(parameters, DisplayStandard.make_1280x720x150());
+		super(parameters, DisplayStandard.make_1280x1024x75());
 	}
 
 	public class positionStructType extends DFEStructType	{
@@ -62,6 +62,8 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 		ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
 
 		spriteList.add(new Sprite("sprite_0", 256, 256));
+		spriteList.add(new Sprite("sprite_1", 256, 256));
+		spriteList.add(new Sprite("sprite_2", 256, 256));
 
 
 		for(Sprite s : spriteList){
@@ -82,10 +84,10 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 			public spritePropertiesStructType()	{
 				super(sft("x",dfeUInt(32)),
 					  sft("y",dfeUInt(32)),
-					  sft("r",dfeUInt(8)),
-					  sft("g",dfeUInt(8)),
-					  sft("b",dfeUInt(8)),
-					  sft("a",dfeUInt(8)),
+					  sft("R",dfeUInt(8)),
+					  sft("G",dfeUInt(8)),
+					  sft("B",dfeUInt(8)),
+					  sft("A",dfeUInt(8)),
 					  sft("padding",dfeUInt(32)));
 			}
 		}
@@ -120,7 +122,7 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 			DFEVar isValid = (x_offset >= 0) & (x_offset < width) & (y_offset >= 0) & (y_offset < height);
 			DFEStruct colour = isValid.cast(dfeBool()) ?  spriteContent.read(readAddress) : (new RGBA32Type()).Transparent(kernel);
 
-			return new fRGBA(colour);
+			return ColourFunctions.Multiply(new fRGBA(colour), new fRGBA(properties));
 		}
 
 	}

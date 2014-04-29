@@ -6,6 +6,8 @@
 extern "C" {
 #endif /* __cplusplus */
 
+#define LatencyInteractionExperiment_DisplayTotalWidth (1688)
+#define LatencyInteractionExperiment_DisplayTotalHeight (1066)
 
 
 /*----------------------------------------------------------------------------*/
@@ -19,10 +21,28 @@ extern "C" {
  * 
  * \param [in] instream_positions Stream "positions".
  * \param [in] instream_size_positions The size of the stream instream_positions in bytes.
+ * \param [in] instream_sprite_0_positions Stream "sprite_0_positions".
+ * \param [in] instream_size_sprite_0_positions The size of the stream instream_sprite_0_positions in bytes.
+ * \param [in] instream_sprite_1_positions Stream "sprite_1_positions".
+ * \param [in] instream_size_sprite_1_positions The size of the stream instream_sprite_1_positions in bytes.
+ * \param [in] instream_sprite_2_positions Stream "sprite_2_positions".
+ * \param [in] instream_size_sprite_2_positions The size of the stream instream_sprite_2_positions in bytes.
+ * \param [in] inmem_LatencyInteractionExperimentKernel_sprite_0 Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_0, should be of size (65536 * sizeof(uint64_t)).
+ * \param [in] inmem_LatencyInteractionExperimentKernel_sprite_1 Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_1, should be of size (65536 * sizeof(uint64_t)).
+ * \param [in] inmem_LatencyInteractionExperimentKernel_sprite_2 Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_2, should be of size (65536 * sizeof(uint64_t)).
  */
 void LatencyInteractionExperiment(
 	const void *instream_positions,
-	size_t instream_size_positions);
+	size_t instream_size_positions,
+	const void *instream_sprite_0_positions,
+	size_t instream_size_sprite_0_positions,
+	const void *instream_sprite_1_positions,
+	size_t instream_size_sprite_1_positions,
+	const void *instream_sprite_2_positions,
+	size_t instream_size_sprite_2_positions,
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_0,
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_1,
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_2);
 
 /**
  * \brief Basic static non-blocking function for the interface 'default'.
@@ -34,11 +54,29 @@ void LatencyInteractionExperiment(
  * 
  * \param [in] instream_positions Stream "positions".
  * \param [in] instream_size_positions The size of the stream instream_positions in bytes.
+ * \param [in] instream_sprite_0_positions Stream "sprite_0_positions".
+ * \param [in] instream_size_sprite_0_positions The size of the stream instream_sprite_0_positions in bytes.
+ * \param [in] instream_sprite_1_positions Stream "sprite_1_positions".
+ * \param [in] instream_size_sprite_1_positions The size of the stream instream_sprite_1_positions in bytes.
+ * \param [in] instream_sprite_2_positions Stream "sprite_2_positions".
+ * \param [in] instream_size_sprite_2_positions The size of the stream instream_sprite_2_positions in bytes.
+ * \param [in] inmem_LatencyInteractionExperimentKernel_sprite_0 Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_0, should be of size (65536 * sizeof(uint64_t)).
+ * \param [in] inmem_LatencyInteractionExperimentKernel_sprite_1 Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_1, should be of size (65536 * sizeof(uint64_t)).
+ * \param [in] inmem_LatencyInteractionExperimentKernel_sprite_2 Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_2, should be of size (65536 * sizeof(uint64_t)).
  * \return A handle on the execution status, or NULL in case of error.
  */
 max_run_t *LatencyInteractionExperiment_nonblock(
 	const void *instream_positions,
-	size_t instream_size_positions);
+	size_t instream_size_positions,
+	const void *instream_sprite_0_positions,
+	size_t instream_size_sprite_0_positions,
+	const void *instream_sprite_1_positions,
+	size_t instream_size_sprite_1_positions,
+	const void *instream_sprite_2_positions,
+	size_t instream_size_sprite_2_positions,
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_0,
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_1,
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_2);
 
 /**
  * \brief Advanced static interface, structure for the engine interface 'default'
@@ -47,6 +85,15 @@ max_run_t *LatencyInteractionExperiment_nonblock(
 typedef struct { 
 	const void *instream_positions; /**<  [in] Stream "positions". */
 	size_t instream_size_positions; /**<  [in] The size of the stream instream_positions in bytes. */
+	const void *instream_sprite_0_positions; /**<  [in] Stream "sprite_0_positions". */
+	size_t instream_size_sprite_0_positions; /**<  [in] The size of the stream instream_sprite_0_positions in bytes. */
+	const void *instream_sprite_1_positions; /**<  [in] Stream "sprite_1_positions". */
+	size_t instream_size_sprite_1_positions; /**<  [in] The size of the stream instream_sprite_1_positions in bytes. */
+	const void *instream_sprite_2_positions; /**<  [in] Stream "sprite_2_positions". */
+	size_t instream_size_sprite_2_positions; /**<  [in] The size of the stream instream_sprite_2_positions in bytes. */
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_0; /**<  [in] Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_0, should be of size (65536 * sizeof(uint64_t)). */
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_1; /**<  [in] Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_1, should be of size (65536 * sizeof(uint64_t)). */
+	const uint64_t *inmem_LatencyInteractionExperimentKernel_sprite_2; /**<  [in] Mapped ROM inmem_LatencyInteractionExperimentKernel_sprite_2, should be of size (65536 * sizeof(uint64_t)). */
 } LatencyInteractionExperiment_actions_t;
 
 /**

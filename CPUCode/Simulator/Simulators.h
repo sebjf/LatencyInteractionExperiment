@@ -24,6 +24,14 @@ public:
 	virtual void MainLoop();
 };
 
+class SimulatorFitts : public Simulator
+{
+public:
+	virtual void MainLoop();
+};
+
+
+
 class SimulatorTwo : public Simulator
 {
 public:
