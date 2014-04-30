@@ -137,6 +137,16 @@ void FittsLawTestRunner::Complete()
 	target->UpdateSpriteProperties();
 }
 
+double FittsLawTestRunner::GetDelay()
+{
+	double d = 0;
+	if(condition != NULL)
+	{
+		d = condition->latency_in_ms;
+	}
+	return d;
+}
+
 void FittsLawTestRunner::LoadImages()
 {
 	/* these will load images eventually to create a more appealing interface for the user but for now we will test

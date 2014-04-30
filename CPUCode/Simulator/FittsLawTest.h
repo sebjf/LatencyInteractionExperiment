@@ -10,6 +10,7 @@
 
 #include "SDL/SDL.h"
 #include "Sprite.h"
+#include "FittsLawTestConditions.h"
 
 
 enum FittsStage {
@@ -20,42 +21,7 @@ enum FittsStage {
 	MoveToTargetStage,
 	CompleteStage };
 
-class Rectangle
-{
-public:
-	int center_x;
-	int center_y;
-	int width;
-	int height;
 
-	bool isCursorInRect(int x, int y)
-	{
-		return ((abs(center_x - x) <= width)
-				&&
-				(abs(center_y - y) <= height));
-	}
-};
-
-class FittsLawTestCondition
-{
-public:
-	Rectangle staging_area;
-	Rectangle target;
-	int latency_in_ms;
-
-	FittsLawTestCondition()
-	{
-		staging_area.center_x = 100;
-		staging_area.center_y = 100;
-		staging_area.width = 50;
-		staging_area.height = 50;
-		target.center_x = 500;
-		target.center_y = 100;
-		target.width = 25;
-		target.height = 25;
-		latency_in_ms = 0;
-	}
-};
 
 class FittsLawTestRunner
 {
@@ -74,6 +40,8 @@ public:
 
 	FittsStage stage;
 	FittsLawTestCondition* condition;
+
+	double GetDelay();
 
 private:
 

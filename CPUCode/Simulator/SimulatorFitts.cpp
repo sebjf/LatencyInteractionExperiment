@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "Sprite.h"
 #include "FittsLawTest.h"
+#include "Delay.h"
 
 struct InputUpdate
 {
@@ -60,9 +61,6 @@ void SimulatorFitts::MainLoop()
 
 	mouse->Scale = 0.4f;
 
-	float x = 0;
-	float y = 0;
-
 	Sprite* sprite_0 = new Sprite("sprite_0",engine,maxfile,256,256);
 	Sprite* sprite_1 = new Sprite("sprite_1",engine,maxfile,256,256);
 	Sprite* sprite_2 = new Sprite("sprite_2",engine,maxfile,256,256);
@@ -77,24 +75,45 @@ void SimulatorFitts::MainLoop()
 
 	max_run(engine, actions);
 
+	/* This object will control the logic of the Fitts Law Tests */
+
 	FittsLawTestRunner* runner = new FittsLawTestRunner(sprite_0, sprite_1);
+
+	/* This will control the cursor sprite */
 
 	Cursor* cursor = new Cursor(sprite_2);
 
+	/* This will control the input device, reading it and storing a history of its state so that delayed input
+	 * may be provided to the tests */
 
-	runner->Begin(new FittsLawTestCondition());
+	DelayedInputController* input_controller = new DelayedInputController(0.060f,500,mouse);
+
+	/* This object will load the conditions that drive the state of the tests */
+
+	FittsLawTestConditionLoader loader;
+	std::vector<FittsLawTestCondition*> conditions = loader.LoadCSV(std::string("fittsLawConditions.csv"));
+	std::vector<FittsLawTestCondition*>::iterator conditions_interator = conditions.begin();
 
 	while(DoSimulation){
-		MouseDelta m = mouse->readMouse(false);
 
-		x += m.x;
-		y += m.y;
+		input_controller->Update();
+		MouseState input = input_controller->GetState(runner->GetDelay());
 
-		cursor->Update((int)x, (int)y);
+		cursor->Update(input.x, input.y);
 
-		if(runner->Update((int)x,(int)y, m.lmb)){
-			std::cout << "Test Complete." << std::endl;
-			DoSimulation = false;
+		/* Update returns true when the test is complete, so load the next one until all are exhausted */
+
+		if(runner->Update(input.x,input.y, input.lmb)){
+
+			runner->Begin(*conditions_interator);
+			conditions_interator++;
+
+			if(conditions_interator == conditions.end()){
+				std::cout << "All Conditions Complete." << std::endl;
+				DoSimulation = false;
+
+				return;
+			}
 		}
 
 		monitor->Refresh(1066);
