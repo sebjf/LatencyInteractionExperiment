@@ -1,13 +1,15 @@
-
-#include "Simulators.h"
+#include <stdio.h>
 #include <MaxVideoCpuResources.h>
+#include <iostream>
+
 #include "Maxfiles.h"
 #include "MaxSLiCInterface.h"
-#include "../Experiment/experiment.h"
-#include <stdio.h>
+
+#include "Simulators.h"
 #include "Sprite.h"
 #include "FittsLawTest.h"
 #include "Delay.h"
+#include "Logging.h"
 
 struct InputUpdate
 {
@@ -19,24 +21,24 @@ struct InputUpdate
 
 class Cursor
 {
+private:
+	Sprite* const m_sprite;
+
 public:
 	Cursor(Sprite* sprite)
+		:m_sprite(sprite)
 	{
-		this->sprite = sprite;
 		SDL_Surface* target_texture = SDL_CreateRGBSurface(0,50,50, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
 		SDL_FillRect(target_texture, NULL, SDL_MapRGBA(target_texture->format, 255,255,255,255));
-		sprite->SetSpriteSurface(target_texture,5,5);
-		sprite->UpdateSpriteContent();
+		m_sprite->SetSpriteSurface(target_texture,5,5);
+		m_sprite->UpdateSpriteContent();
 	}
 
 	void Update(int x, int y)
 	{
-		sprite->SetSpriteCenterLocation(x,y);
-		sprite->UpdateSpriteProperties();
+		m_sprite->SetSpriteCenterLocation(x,y);
+		m_sprite->UpdateSpriteProperties();
 	}
-
-private:
-	Sprite* sprite;
 };
 
 void SimulatorFitts::MainLoop()
@@ -66,12 +68,7 @@ void SimulatorFitts::MainLoop()
 	Sprite* sprite_2 = new Sprite("sprite_2",engine,maxfile,256,256);
 
 
-	/* Update the sprite content immediately, even if the sprite is not to be used, or will be overridden
-	 * immediately, just so the memory is set so max_run() can start */
-
-	sprite_0->UpdateSpriteContent(actions);
-	sprite_1->UpdateSpriteContent(actions);
-	sprite_2->UpdateSpriteContent(actions);
+	max_disable_validation(actions); //we wont have set the sprite content yet.
 
 	max_run(engine, actions);
 
@@ -94,9 +91,12 @@ void SimulatorFitts::MainLoop()
 	std::vector<FittsLawTestCondition*> conditions = loader.LoadCSV(std::string("fittsLawConditions.csv"));
 	std::vector<FittsLawTestCondition*>::iterator conditions_interator = conditions.begin();
 
-	while(DoSimulation){
+	Logger* logger = new Logger("\\home\\sfriston\\Experiments\\","fitts_law_log_collection_");
+
+	while(do_simulation()){
 
 		input_controller->Update();
+		MouseState real = input_controller->GetCurrentState();
 		MouseState input = input_controller->GetState(runner->GetDelay());
 
 		cursor->Update(input.x, input.y);
@@ -110,11 +110,16 @@ void SimulatorFitts::MainLoop()
 
 			if(conditions_interator == conditions.end()){
 				std::cout << "All Conditions Complete." << std::endl;
-				DoSimulation = false;
+				do_simuation(false);
 
 				return;
 			}
+
+		//	logger->AddNewLog(*(new Log("unknown",0,runner->condition)));
 		}
+
+		Datapoint dp = Datapoint(real,input);
+		//logger->CurrentLog().Add(dp);
 
 		monitor->Refresh(1066);
 	}

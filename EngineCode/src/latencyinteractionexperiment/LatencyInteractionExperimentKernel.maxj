@@ -3,18 +3,17 @@ package latencyinteractionexperiment;
 import java.util.ArrayList;
 
 import maxvideo.MaxVideoKernel;
-import types.RGBA32Type;
 import types.fRGBA;
 import types.uRGB;
+import types.uRGBA;
 
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.KernelMath;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.DelimiterMode;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingInput;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingMode;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.memory.Memory;
-import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEFix;
 import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
 import com.maxeler.maxcompiler.v2.kernelcompiler.types.composite.DFEStruct;
 import com.maxeler.maxcompiler.v2.kernelcompiler.types.composite.DFEStructType;
@@ -28,36 +27,11 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 		super(parameters, DisplayStandard.make_1280x1024x75());
 	}
 
-	public class positionStructType extends DFEStructType	{
-		public positionStructType()	{
-			super(sft("x",dfeUInt(32)),
-				  sft("y",dfeUInt(32)),
-				  sft("padding",dfeUInt(64)));
-		}
-	}
-
-	protected static final int radius = 50;
-
-
 	@Override
 	public uRGB ComputePixelColour(FragmentInput input) {
 		// TODO Auto-generated method stub
 
 		uRGB colour = new uRGB(200, 0, 0, this);
-
-		NonBlockingInput<DFEStruct>  positions =
-			io.nonBlockingInput("positions", new positionStructType(), constant.var(true),
-					1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
-
-
-		DFEStruct positionData =
-			Reductions.streamHold(positions.data, positions.valid);
-
-		DFEVar xp = positionData["x"];
-		DFEVar yp = positionData["y"];
-
-		DFEFix TYPE = dfeInt(32);
-
 
 		ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
 
@@ -71,10 +45,6 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 			colour = new uRGB(ColourFunctions.Blend(sc, new fRGBA(colour)));
 		}
 
-		DFEVar isInRadiusX = (KernelMath.abs(xp.cast(TYPE) - input.x.cast(TYPE)) < radius);
-		DFEVar isInRadiusY = (KernelMath.abs(yp.cast(TYPE) - input.y.cast(TYPE)) < radius);
-
-		//return (isInRadiusX) ? colour : black;
 		return colour;
 	}
 
@@ -92,37 +62,47 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 			}
 		}
 
+		private final int m_width;
+		private final int m_height;
+		private final Memory<DFEStruct> m_spriteContent;
+		private final DFEStruct m_properties;
+
 		Sprite(String name, int width, int height)
 		{
-			this.width = width;
-			this.height = height;
-			spriteContent = mem.alloc(new RGBA32Type(), width * height );
-			spriteContent.mapToCPU(name);
+			this.m_width = width;
+			this.m_height = height;
+			m_spriteContent = mem.alloc(uRGBA.getDFEStructType(), width * height );
 
-			NonBlockingInput<DFEStruct>  positions =
+			NonBlockingInput<DFEStruct> positions =
 				io.nonBlockingInput(name + "_positions", new spritePropertiesStructType(), constant.var(true),
 						1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
-			properties = Reductions.streamHold(positions.data, positions.valid);
+			m_properties = Reductions.streamHold(positions.data, positions.valid);
+
+
+			NonBlockingInput<DFEStruct> content =
+				io.nonBlockingInput(name + "_content", uRGBA.getDFEStructType(), constant.var(true), 1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
+
+			CounterChain pc = control.count.makeCounterChain(content.valid);
+			DFEVar writeAddress = pc.addCounter(m_width * m_height, 1);
+
+			m_spriteContent.write(writeAddress, content.data, content.valid);
 
 		}
 
-		private final int width;
-		private final int height;
-		private final Memory<DFEStruct> spriteContent;
-		private final DFEStruct properties;
+
 
 		fRGBA getColour(FragmentInput input, LatencyInteractionExperimentKernel kernel)
 		{
-			DFEVar x = properties["x"];
-			DFEVar y = properties["y"];
-			DFEVar x_offset = input.x.cast(dfeUInt(32)) - x;
-			DFEVar y_offset = input.y.cast(dfeUInt(32)) + y;
-			DFEVar readAddress = ((y_offset * width) + x_offset).cast(dfeUInt(16));
+			DFEVar x = m_properties["x"];
+			DFEVar y = m_properties["y"];
+			DFEVar x_offset = input.m_x.cast(dfeUInt(32)) - x;
+			DFEVar y_offset = input.m_y.cast(dfeUInt(32)) + y;
+			DFEVar readAddress = ((y_offset * m_width) + x_offset).cast(dfeUInt(16));
 
-			DFEVar isValid = (x_offset >= 0) & (x_offset < width) & (y_offset >= 0) & (y_offset < height);
-			DFEStruct colour = isValid.cast(dfeBool()) ?  spriteContent.read(readAddress) : (new RGBA32Type()).Transparent(kernel);
+			DFEVar isValid = (x_offset >= 0) & (x_offset < m_width) & (y_offset >= 0) & (y_offset < m_height);
+			DFEStruct colour = isValid.cast(dfeBool()) ?  m_spriteContent.read(readAddress) : uRGBA.Transparent(kernel).getDFEStruct();
 
-			return ColourFunctions.Multiply(new fRGBA(colour), new fRGBA(properties));
+			return ColourFunctions.Multiply(new fRGBA(colour), new fRGBA(m_properties));
 		}
 
 	}

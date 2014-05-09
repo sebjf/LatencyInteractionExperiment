@@ -13,12 +13,6 @@
 #include "MaxVideoCpuResources.h"
 #include <string>
 
-/* FMem addresses are always 64bit wide when mapped to CPU */
-struct FMemWord
-{
-	uint32_t pixel;
-	uint32_t padding;
-};
 
 struct spriteproperties
 {
@@ -29,7 +23,6 @@ struct spriteproperties
 	char b;
 	char a;
 };
-
 
 class Sprite
 {
@@ -48,16 +41,25 @@ public:
 	void SetSpriteCenterLocation(int x, int y);
 
 	void UpdateSpriteContent();
-	void UpdateSpriteContent(max_actions_t* actions);
 
 	void UpdateSpriteProperties();
 
 private:
-	std::string name;
-	FMemWord* memData;
+	std::string m_name;
+
 	Stream* properties_stream;
+
 	max_engine_t* engine;
 	max_file_t* maxfile;
+
+	size_t SLOT_SIZE;
+	size_t NUM_SLOTS;
+	void* write_buffer;
+	max_llstream_t* write_llstream;
+
+	void CreateContentStream();
+	void UpdateSpriteContentStream();
+	void UpdateSpriteContentStream2();
 };
 
 #endif /* SPRITE_H_ */

@@ -10,12 +10,14 @@
 
 #include "MaxVideoCpuResources.h"
 #include <time.h>
+#include <msgpack.hpp>
 
 struct MouseState
 {
 	int x;
 	int y;
 	bool lmb;
+	float timestamp_ms;
 
 	MouseState()
 	{
@@ -23,6 +25,8 @@ struct MouseState
 		y = 0;
 		lmb = false;
 	}
+
+	MSGPACK_DEFINE(x,y,lmb,timestamp_ms);
 };
 
 class DelayedInputController
@@ -41,7 +45,6 @@ private:
 
 	int buffer_length;
 	int buffer_position;
-	double* 	timestamps;
 	MouseState*	values;
 
 	timespec starttime;

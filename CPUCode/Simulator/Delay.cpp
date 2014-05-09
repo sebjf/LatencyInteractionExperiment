@@ -16,7 +16,6 @@ DelayedInputController::DelayedInputController(float average_period_ms, float ma
 	buffer_length = (int)((max_delay_ms / average_period_ms) * 2.0f);
 	buffer_position = 0;
 
-	timestamps = new double[buffer_length]();
 	values = new MouseState[buffer_length]();
 
 
@@ -45,7 +44,7 @@ MouseState DelayedInputController::GetState(float delay_ms)
 	int search_position = buffer_position;
 	do
 	{
-		if(timestamps[search_position] <= target_time){
+		if(values[search_position].timestamp_ms <= target_time){
 			//timestamps increase from epoch, so we have found the first timestamp older than the target age
 			return values[search_position];
 		}
@@ -81,7 +80,6 @@ void DelayedInputController::Update()
 	acc_x += m.x;
 	acc_y += m.y;
 
-
 	buffer_position++;
 
 	if(buffer_position >= buffer_length)
@@ -92,6 +90,5 @@ void DelayedInputController::Update()
 	values[buffer_position].x = (int)acc_x;
 	values[buffer_position].y = (int)acc_y;
 	values[buffer_position].lmb = m.lmb;
-
-	timestamps[buffer_position] = getCurrentTimeInMs();
+	values[buffer_position].timestamp_ms = getCurrentTimeInMs();
 }

@@ -8,8 +8,11 @@
 #ifndef CONTEXT_H_
 #define CONTEXT_H_
 
+#include <string>
+
 struct Context
 {
+
 
 };
 

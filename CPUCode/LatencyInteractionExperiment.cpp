@@ -7,8 +7,6 @@
 
 #include <MaxVideoCpuResources.h>
 
-#include "Experiment/experiment.h"
-
 #include <stdio.h>
 #include <linux/input.h>
 #include <fcntl.h>
@@ -36,9 +34,7 @@ int main(int argc, char *argv[])
 	"	R: Run Simulation\n"\
 	"	E: Exit.\n";
 
-	ExperimentLog* log = new ExperimentLog("Experiment 1", "/home/sfriston/");
 	Simulator* sim = new SimulatorFitts();
-	sim->log = log;
 
 	bool run = true;
 	while(run){
@@ -54,7 +50,6 @@ int main(int argc, char *argv[])
 		case 'S':
 
 			simManager->StopSimulation();
-			log->Write();
 			break;
 
 		case 'e':

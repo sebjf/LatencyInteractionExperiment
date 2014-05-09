@@ -16,56 +16,19 @@
 class SimulatorWrapper
 {
 public:
-	SimulatorWrapper()
-	{
-	}
+	SimulatorWrapper() {}
 
 	/* This one creates the thread the simulator will run in and returns immediately */
-	void RunSimulation(Simulator* simulator)
-	{
-		std::cout << "Starting simulator...\n";
 
-		this->simulator = simulator;
-		int res = pthread_create(&threadInfo, NULL, &SimulatorWrapper::SimulationMainLoop, this);
-		if(res != 0){
-			std::cout << "Could not create thread: " << strerror(res) << "\n";
-		}
-	}
-
-	void StopSimulation()
-	{
-		std::cout << "Stopping simulator...";
-
-		void* returnStatus;
-		simulator->DoSimulation = false;
-		pthread_join(threadInfo, &returnStatus);
-
-		std::cout << "Shutdown Complete.\n";
-	}
-
-	pthread_t threadInfo;
-
+	void RunSimulation(Simulator* simulator);
+	void StopSimulation();
 
 private:
 	Simulator* simulator;
+	pthread_t threadInfo;
 
 	/* This will be called in a new thread */
-
-	static void* SimulationMainLoop(void* c)
-	{
-		makeRealtime();
-
-		std::cout << "Started.\n";
-
-		SimulatorWrapper* wrapper = (SimulatorWrapper*)c;
-		Simulator* simulator = wrapper->simulator;
-
-		simulator->DoSimulation = true;
-		simulator->MainLoop();
-
-		pthread_exit(NULL);
-		return NULL;
-	}
+	static void* SimulationMainLoop(void* c);
 };
 
 #endif /* SIMULATORWRAPPER_H_ */

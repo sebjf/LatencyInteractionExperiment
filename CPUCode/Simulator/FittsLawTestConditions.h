@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <msgpack.hpp>
 
 class Rectangle
 {
@@ -25,6 +26,8 @@ public:
 				&&
 				(abs(center_y - y) <= height));
 	}
+
+	MSGPACK_DEFINE(center_x, center_y, width, height);
 };
 
 class FittsLawTestCondition
@@ -59,6 +62,8 @@ public:
 		target.height = height;
 		latency_in_ms = 0;
 	}
+
+	MSGPACK_DEFINE(staging_area,target,latency_in_ms);
 };
 
 class FittsLawTestConditionLoader

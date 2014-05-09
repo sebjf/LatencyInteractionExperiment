@@ -8,40 +8,30 @@
 #ifndef SIMULATORS_H_
 #define SIMULATORS_H_
 
-#include "../Experiment/experiment.h"
-
 class Simulator
 {
-public:
-	virtual void MainLoop() = 0;
-	volatile bool DoSimulation;
-	ExperimentLog* log;
-};
+private:
+	bool m_do_simulation;
 
-class SimulatorOne : public Simulator
-{
 public:
-	virtual void MainLoop();
+	Simulator()
+		:m_do_simulation(false)
+	{}
+
+	virtual void MainLoop() = 0;
+
+	const bool& do_simulation() const { return m_do_simulation; }
+	void do_simuation(const bool& val) { m_do_simulation = val; }
+
+	//volatile bool DoSimulation;
+	virtual ~Simulator()
+	{}
 };
 
 class SimulatorFitts : public Simulator
 {
 public:
 	virtual void MainLoop();
-};
-
-
-
-class SimulatorTwo : public Simulator
-{
-public:
-	virtual void MainLoop()
-	{
-		while(DoSimulation)
-		{
-			log->Add(Datapoint(10,10));
-		}
-	}
 };
 
 #endif /* SIMULATORS_H_ */

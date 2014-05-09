@@ -7,6 +7,9 @@ endif
 RUNRULE_DIR = ../RunRules/$(RUNRULE)
 include $(RUNRULE_DIR)/Makefile.settings
 
+MAXCOMPILERDIR:=/network-raid/opt/maxcompiler-2013.3
+MAXELEROSDIR:=/network-raid/opt/maxeleros-2013.3/maxeleros
+
 all: build
 
 MAXFILES     = $(patsubst %.max,$(RUNRULE_DIR)/maxfiles/%.max, $(RUNRULE_MAXFILES))
