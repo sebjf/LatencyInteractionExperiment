@@ -53,7 +53,7 @@ struct Log
 	std::vector<Datapoint> datapoints;
 
 	Log();
-	Log(std::string name, int id, FittsLawTestCondition* condition);
+	Log(std::string name, int id, const FittsLawTestCondition& condition);
 
 	void Add(const Datapoint& dp)
 	{
@@ -66,29 +66,35 @@ struct Log
 class Logger
 {
 public:
-	Logger(std::string directory, std::string filenameformat);
+	Logger(std::string directory, std::string filenameformat, std::string extension);
 
-	void AddNewLog(Log log);
+	void AddNewLog(const Log& log);
 
 	//Writes the current collection of logs to a new file. each call to this will result in a new file. files contain multiple logs.
 	void Clear();
-	void Write();
-	void Read(char* data, int size);
-
-	void WriteToMatlab();
+	void Save();
+	void AppendAll();
+	void Append(std::string filename);
 
 	//Because msgpack does not work with pointers, the Logger object needs to control the logs objects itself because
 	//it is not clear when or where the references will change. To get the active log always use this method.
 	Log& CurrentLog();
 
+	void SaveFormatMatlab();
+
 private:
 	std::vector<Log> logs;
-	std::string logfiles_directory;
+	std::string directory;
+	std::string filename_format;
+	std::string filename_extension;
 
 	std::string getNextFilename();
-	std::string filename_format;
 
-	void Write(std::fstream& stream);
+	void Write(std::ostream& stream);
+
+	void Append(char* data, int size);
+
+	std::vector<std::string> findLogFilenames();
 
 };
 

@@ -11,22 +11,34 @@
 /* This one creates the thread the simulator will run in and returns immediately */
 void SimulatorWrapper::RunSimulation(Simulator* simulator)
 {
+	if(thread_running){
+		StopSimulation();
+	}
+
 	std::cout << "Starting simulator...\n";
 
 	this->simulator = simulator;
-	int res = pthread_create(&threadInfo, NULL, &SimulatorWrapper::SimulationMainLoop, this);
+	int res = pthread_create(&thread_info, NULL, &SimulatorWrapper::SimulationMainLoop, this);
 	if(res != 0){
 		std::cout << "Could not create thread: " << strerror(res) << "\n";
+		return;
 	}
+	thread_running = true;
 }
 
 void SimulatorWrapper::StopSimulation()
 {
+	if(!thread_running){
+		return;
+	}
+
 	std::cout << "Stopping simulator...";
 
 	void* returnStatus;
 	simulator->do_simuation(false);
-	pthread_join(threadInfo, &returnStatus);
+	pthread_join(thread_info, &returnStatus);
+
+	thread_running = false;
 
 	std::cout << "Shutdown Complete.\n";
 }

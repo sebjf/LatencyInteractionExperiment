@@ -32,9 +32,11 @@ int main(int argc, char *argv[])
 	std::cout <<
 	"Latency Interaction Experiment.\n"\
 	"	R: Run Simulation\n"\
-	"	E: Exit.\n";
+	"	E: Exit.\n"\
+	"	S: Stop Simulation";
 
-	Simulator* sim = new SimulatorFitts();
+	Logger logger("/home/sfriston/Experiments/","fitts_law_log_collection_",".fitts");
+	Simulator* sim = new SimulatorFitts(logger);
 
 	bool run = true;
 	while(run){
@@ -55,12 +57,33 @@ int main(int argc, char *argv[])
 		case 'e':
 		case 'E':
 
+			simManager->StopSimulation();
 			run = false;
 			break;
 
 		case 't':
 		case 'T':
 			std::cout << "Test" << std::endl;
+			break;
+
+		case 'w':	//force writing of current logs - note this is NOT threadsafe, do not call it while tests are in progress
+		case 'W':
+			logger.Save();
+			logger.Clear();
+			break;
+
+		case 'q':	//this will kill any stuck simulator threads by exiting the program.
+		case 'Q':
+			run = false;
+			break;
+
+		case 'c':	//convert the logs to matlab
+		case 'C':
+			logger.SaveFormatMatlab();
+			break;
+
+		case '\n':
+		case '\r':
 			break;
 
 		default:

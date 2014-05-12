@@ -16,7 +16,9 @@
 class SimulatorWrapper
 {
 public:
-	SimulatorWrapper() {}
+	SimulatorWrapper()
+	 :thread_running(false)
+	{}
 
 	/* This one creates the thread the simulator will run in and returns immediately */
 
@@ -25,7 +27,8 @@ public:
 
 private:
 	Simulator* simulator;
-	pthread_t threadInfo;
+	pthread_t thread_info;
+	bool thread_running;
 
 	/* This will be called in a new thread */
 	static void* SimulationMainLoop(void* c);

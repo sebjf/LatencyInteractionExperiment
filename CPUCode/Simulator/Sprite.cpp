@@ -26,22 +26,6 @@ Sprite::Sprite(std::string name, max_engine_t* engine, max_file_t* maxfile, int 
 	properties.g = 255;
 	properties.b = 255;
 	properties.a = 255;
-
-	//CreateContentStream();
-}
-
-void Sprite::CreateContentStream()
-{
-	SLOT_SIZE = 16; //32 bit rgba colour
-	NUM_SLOTS = std::min(512, surface->w * surface->h);
-
-	write_buffer = NULL;
-	if(posix_memalign(&write_buffer, 4096, SLOT_SIZE * NUM_SLOTS) == ENOMEM){
-		printf("Could not allocate memory.");
-	}
-	memset(write_buffer,0,SLOT_SIZE*NUM_SLOTS);
-	write_llstream = 0;
-	write_llstream = max_llstream_setup(engine, (m_name + "_content").c_str(), NUM_SLOTS, SLOT_SIZE, write_buffer);
 }
 
 void Sprite::SetSpriteSurface(SDL_Surface* source, int width, int height)
@@ -88,10 +72,10 @@ void Sprite::SetSpriteCenterLocation(int x, int y)
 
 void Sprite::UpdateSpriteContent()
 {
-	UpdateSpriteContentStream2();
+	UpdateSpriteContentStream();
 }
 
-void Sprite::UpdateSpriteContentStream2()
+void Sprite::UpdateSpriteContentStream()
 {
 	max_actions_t* mem_actions = max_actions_init(maxfile, NULL);
 	max_disable_reset(mem_actions);
@@ -106,32 +90,13 @@ void Sprite::UpdateSpriteContentStream2()
 	max_actions_free(mem_actions);
 }
 
-void Sprite::UpdateSpriteContentStream()
-{
-	int numMemElements = surface->w * surface->h;
-
-	void* write_ptr;
-
-	int offset = 0;
-	int slots = 0;
-
-	/* In simulation this can lock up, as the output stream stalls (because VirtualMonitor does not read it as it
-	 * runs in the same thread as this method), meaning the input streams are never 'read' and the acquired slots
-	 * always remain zero. */
-
-	do{
-		slots = max_llstream_write_acquire(write_llstream, NUM_SLOTS, &write_ptr);
-		if(slots > 0){
-			memcpy(write_ptr, &(((uint32_t*)surface->pixels)[offset]), SLOT_SIZE * slots); //this is wrong anyway, there are 4 bytes in a pixel not 16
-			max_llstream_write(write_llstream, slots);
-		}
-		offset+=slots;
-	}while(offset < numMemElements);
-
-}
-
 void Sprite::UpdateSpriteProperties()
 {
 	properties_stream->Write(&properties);
 }
 
+Sprite::~Sprite()
+{
+//	max_wait(max_run); //we cant unload the engine until all non-blocking operations have completed.
+	SDL_FreeSurface(surface);
+}

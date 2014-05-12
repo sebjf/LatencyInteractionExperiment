@@ -28,6 +28,7 @@ class Sprite
 {
 public:
 	Sprite(std::string name, max_engine_t* engine, max_file_t* maxfile, int width, int height);
+	~Sprite();
 
 	SDL_Surface* surface;
 	spriteproperties properties;
@@ -51,15 +52,10 @@ private:
 
 	max_engine_t* engine;
 	max_file_t* maxfile;
-
-	size_t SLOT_SIZE;
-	size_t NUM_SLOTS;
-	void* write_buffer;
-	max_llstream_t* write_llstream;
+	max_run_t* max_running;
 
 	void CreateContentStream();
 	void UpdateSpriteContentStream();
-	void UpdateSpriteContentStream2();
 };
 
 #endif /* SPRITE_H_ */

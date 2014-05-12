@@ -88,10 +88,8 @@ void SimulatorFitts::MainLoop()
 	/* This object will load the conditions that drive the state of the tests */
 
 	FittsLawTestConditionLoader loader;
-	std::vector<FittsLawTestCondition*> conditions = loader.LoadCSV(std::string("fittsLawConditions.csv"));
+	std::vector<FittsLawTestCondition*> conditions = loader.LoadCSV("/home/sfriston/Experiments/fittsLawConditions.csv");
 	std::vector<FittsLawTestCondition*>::iterator conditions_interator = conditions.begin();
-
-	Logger* logger = new Logger("\\home\\sfriston\\Experiments\\","fitts_law_log_collection_");
 
 	while(do_simulation()){
 
@@ -112,16 +110,49 @@ void SimulatorFitts::MainLoop()
 				std::cout << "All Conditions Complete." << std::endl;
 				do_simuation(false);
 
-				return;
+				break;
 			}
 
-		//	logger->AddNewLog(*(new Log("unknown",0,runner->condition)));
+			logger.AddNewLog(Log("unknown",0,*(runner->condition)));
 		}
 
-		Datapoint dp = Datapoint(real,input);
-		//logger->CurrentLog().Add(dp);
+		logger.CurrentLog().Add(Datapoint(real,input));
 
 		monitor->Refresh(1066);
 	}
 
+	logger.Save(); //saves to the default directory with an unused filename
+	logger.Clear();
+
+	max_actions_free(actions);
+
+	std::cout << "Freeing resources 1." << std::endl;
+
+	delete mouse;
+	delete monitor;
+
+	std::cout << "Freeing resources 2." << std::endl;
+
+	delete sprite_0;
+	delete sprite_1;
+	delete sprite_2;
+
+	std::cout << "Freeing resources 3." << std::endl;
+
+	delete runner;
+	delete cursor;
+	delete input_controller;
+
+	std::cout << "Resetting engine." << std::endl;
+
+	max_reset_engine(engine);
+
+	std::cout << "Unloading engine." << std::endl;
+
+//	max_unlock(engine);
+//	max_unload(engine);
+
+	LatencyInteractionExperiment_free();
+
+	std::cout << "Completed simulation." << std::endl;
 }

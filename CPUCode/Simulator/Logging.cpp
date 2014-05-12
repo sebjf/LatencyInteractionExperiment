@@ -12,6 +12,9 @@
 #include <time.h>
 #include <sstream>
 #include <sys/stat.h>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/convenience.hpp>
+#include <boost/algorithm/string_regex.hpp>
 
 #include "Logging.h"
 #include "Context.h"
@@ -34,29 +37,28 @@ Log::Log()
 	//this exists soley for msgpack
 }
 
-Log::Log(std::string name, int id, FittsLawTestCondition* condition)
+Log::Log(std::string name, int id, const FittsLawTestCondition& condition)
+:participant_name(name),
+ participant_id(id),
+ test_condition(condition)
 {
-	participant_name = name;
-	participant_id = id;
-	test_condition = *condition;
 	datetime_human_readable = currentDateTime();
 }
 
-Logger::Logger(std::string directory, std::string format)
-{
-	logfiles_directory = directory;
-	filename_format = format;
-}
+Logger::Logger(std::string directory, std::string format, std::string extension)
+ :directory(directory),
+  filename_format(format),
+  filename_extension(extension)
+{}
 
-void Logger::AddNewLog(Log log)
+void Logger::AddNewLog(const Log& log)
 {
 	logs.push_back(log);
 }
 
 Log& Logger::CurrentLog()
 {
-	std::vector<Log>::iterator i = logs.end();
-	return *i;
+	return logs[logs.size()-1];
 }
 
 void Logger::Clear()
@@ -64,44 +66,44 @@ void Logger::Clear()
 	logs.clear();
 }
 
-void Logger::Write()
+void Logger::Save()
 {
+	if(logs.size() <= 0){
+		return;
+	}
+
+	std::string filename = getNextFilename();
 	std::fstream myfile;
-	myfile.open(getNextFilename().c_str(), std::ios::binary);
-	Write(myfile);
-	myfile.close();
+	myfile.exceptions(std::ios::failbit);
+	try{
+		myfile.open(filename.c_str(), std::ios::binary | std::ios::out);
+		Write(myfile);
+		myfile.close();
+	}catch(const std::exception& ex){
+		std::cout << "Could not write to " << filename << ex.what() << std::endl;
+	}
 }
 
-void Logger::Write(std::fstream& myfile)
+void Logger::Write(std::ostream& myfile)
 {
 	msgpack::sbuffer sbuf;
 	msgpack::pack(sbuf, logs);
 	myfile.write(sbuf.data(),sbuf.size());
 }
 
-
-void Logger::Read(char* data, int size)
+void Logger::Append(char* data, int size)
 {
 	msgpack::unpacked msg;
 	msgpack::unpack(&msg, data, size);
 
 	msgpack::object obj = msg.get();
 
-	obj.convert(&logs);
+	std::vector<Log> new_logs;
+	obj.convert(&new_logs);
+
+	logs.insert(logs.end(), new_logs.begin(), new_logs.end());
 }
 
-void Logger::WriteToMatlab()
-{
-
-}
-
-//http://stackoverflow.com/questions/12774207/fastest-way-to-check-if-a-file-exist-using-standard-c-c11-c
-inline bool fileexists (const std::string& name) {
-  struct stat buffer;
-  return (stat (name.c_str(), &buffer) == 0); 
-}
-
-/* */
 std::string Logger::getNextFilename()
 {
 	int suffix = 0;
@@ -109,11 +111,75 @@ std::string Logger::getNextFilename()
 
 	do{
 		std::stringstream sstr;
-		sstr << logfiles_directory << filename_format << suffix << ".dat";
+		sstr << directory << filename_format << suffix << filename_extension;
 		suffix++;
 		full_path = sstr.str();
-	}while(fileexists(full_path));
+	}while(boost::filesystem::exists(full_path));
 
 	return full_path;
 }
 
+bool endsWidth (std::string const &fullString, std::string const &ending)
+{
+    if (fullString.length() >= ending.length()) {
+        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
+    }
+}
+
+//http://stackoverflow.com/questions/1257721/can-i-use-a-mask-to-iterate-files-in-a-directory-with-boost
+std::vector<std::string> Logger::findLogFilenames()
+{
+	std::string target_path = directory;
+	std::string my_filter = "*" + filename_extension;
+
+	std::vector< std::string > all_matching_files;
+
+	boost::filesystem::directory_iterator end_itr;
+	for( boost::filesystem::directory_iterator i( target_path ); i != end_itr; ++i )
+	{
+	    boost::smatch what;
+	    // Skip if no match
+	    //useless centos 5 has an ancient version of boost from 2006
+//	    if( !boost::regex_match( i->leaf(), what, my_filter ) ) continue;
+
+	    if(endsWidth( i->leaf(), filename_extension)){
+	    	// File matches, store it
+	    	all_matching_files.push_back( i->string() );
+	    }
+	}
+
+	return all_matching_files;
+}
+
+void Logger::Append(std::string filename)
+{
+	std::ifstream file(filename.c_str(), std::ios::binary | std::ios::in);
+	file.seekg(0, std::ios::end);
+	std::streamsize size = file.tellg();
+	file.seekg(0, std::ios::beg);
+
+	char* data = new char[size];
+	if (file.read(data, size))
+	{
+	    Append(data, size);
+	}
+	delete data;
+	file.close();
+}
+
+void Logger::AppendAll()
+{
+	std::vector<std::string> filenames = findLogFilenames();
+	for(int i = 0; i < filenames.size(); i++)
+	{
+		std::cout << filenames[i];
+		Append(filenames[i]);
+	}
+}
+
+void Logger::SaveFormatMatlab()
+{
+	AppendAll();
+}
