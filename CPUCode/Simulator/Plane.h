@@ -17,9 +17,10 @@
 class Plane
 {
 public:
-	Plane(std::string name, max_engine_t* engine, max_file_t* maxfile, max_actions_t* initial_actions);
+	Plane(std::string name, max_engine_t* engine, max_file_t* maxfile);
 	~Plane();
 
+	void SetPlaneContent(std::string image);
 	void UpdatePlaneContent();
 
 private:
@@ -31,7 +32,10 @@ private:
 
 	int m_width;
 	int m_height;
+	int m_offsetx;
+	int m_offsety;
 
+	int m_burst_size;
 };
 
 #endif /* PLANE_H_ */

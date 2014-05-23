@@ -3,6 +3,7 @@ package latencyinteractionexperiment;
 import maxvideo.MaxVideoManager;
 
 import com.maxeler.maxcompiler.v2.managers.custom.blocks.KernelBlock;
+import com.maxeler.maxcompiler.v2.managers.custom.stdlib.MemoryControlGroup.MemoryAccessPattern;
 import com.maxeler.maxcompiler.v2.managers.engine_interfaces.EngineInterface;
 
 public class LatencyInteractionExperimentManager extends MaxVideoManager {
@@ -21,6 +22,9 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 		framegenkernel.getInput("sprite_0_content") <== addStreamFromCPU("sprite_0_content");
 		framegenkernel.getInput("sprite_1_content") <== addStreamFromCPU("sprite_1_content");
 		framegenkernel.getInput("sprite_2_content") <== addStreamFromCPU("sprite_2_content");
+
+		framegenkernel.getInput("plane_0_content") <== addStreamFromOnCardMemory("plane_0_read", framegenkernel.getOutput("plane_0_commands"));
+		addStreamToOnCardMemory("plane_0_write", MemoryAccessPattern.LINEAR_1D) <== addStreamFromCPU("cpu_to_plane_0");
 
 		createSLiCinterface(interfaceDefault());
 

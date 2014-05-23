@@ -68,7 +68,7 @@ void SimulatorFitts::MainLoop()
 	Sprite sprite_1("sprite_1",engine,maxfile,256,256);
 	Sprite sprite_2("sprite_2",engine,maxfile,256,256);
 
-//	Plane plane_0("plane_0", engine, maxfile, actions);
+	Plane plane_0("plane_0", engine, maxfile);
 
 	max_disable_validation(actions); //we wont have set the sprite content yet.
 	max_run(engine, actions);
@@ -94,7 +94,8 @@ void SimulatorFitts::MainLoop()
 
 	MouseState last_input;
 
-//	plane_0.UpdatePlaneContent();
+	plane_0.SetPlaneContent("/home/sfriston/Experiments/Bezier_700.gif");
+	plane_0.UpdatePlaneContent(); //this will cause a reset
 
 	while(do_simulation()){
 
