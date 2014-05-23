@@ -87,6 +87,7 @@ void Sprite::UpdateSpriteContentStream()
 	max_queue_input(mem_actions,(m_name + "_content").c_str(), surface->pixels, surface->w * surface->h * 4);
 
 	max_run_nonblock(engine, mem_actions);
+	//max_run(engine, mem_actions);
 	max_actions_free(mem_actions);
 }
 
@@ -97,6 +98,7 @@ void Sprite::UpdateSpriteProperties()
 
 Sprite::~Sprite()
 {
+	delete properties_stream;
 //	max_wait(max_run); //we cant unload the engine until all non-blocking operations have completed.
 	SDL_FreeSurface(surface);
 }

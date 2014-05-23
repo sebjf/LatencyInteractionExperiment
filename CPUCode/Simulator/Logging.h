@@ -18,6 +18,18 @@
 #include <vector>
 #include <msgpack.hpp>
 
+template<typename T>
+inline std::ostream& operator<<(std::ostream& stm, const std::vector<T>& obj) {
+
+    if (!obj.empty()) {
+        for (size_t i = 0 ; i<obj.size()-1 ; ++i) {
+            stm << obj[i];
+        }
+        stm << obj.back();
+    }
+    return stm;
+}
+
 struct Datapoint
 {
 	/* This is the non-delayed user input - the motions the user has just made */
@@ -36,8 +48,12 @@ struct Datapoint
 	{
 	}
 
+	friend std::ostream& operator<< (std::ostream& stream, const Datapoint& dp);
+
 	MSGPACK_DEFINE(real,visible);
 };
+
+
 
 /* A log is the largest discrete object that will be stored and records a user movement under certain conditions. A
  * log should record for 500 - 1000ms typically. Multiple logs may be written to a single file to make data wrangling
@@ -59,6 +75,8 @@ struct Log
 	{
 		datapoints.push_back(dp);
 	}
+
+	friend std::ostream& operator<< (std::ostream& stream, const Log& log);
 
 	MSGPACK_DEFINE(participant_name, participant_id, datetime_human_readable, test_condition, datapoints);
 };
@@ -95,6 +113,9 @@ private:
 	void Append(char* data, int size);
 
 	std::vector<std::string> findLogFilenames();
+
+	void SaveFormatMatlab(std::ostream& os);
+	void SaveFormatMatlab(Log& log, std::ostream& os);
 
 };
 

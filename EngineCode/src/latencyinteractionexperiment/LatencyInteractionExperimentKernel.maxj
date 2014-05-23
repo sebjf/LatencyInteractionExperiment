@@ -7,6 +7,7 @@ import types.fRGBA;
 import types.uRGB;
 import types.uRGBA;
 
+import com.maxeler.maxcompiler.v0.utils.MathUtils;
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain;
@@ -31,7 +32,7 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 	public uRGB ComputePixelColour(FragmentInput input) {
 		// TODO Auto-generated method stub
 
-		uRGB colour = new uRGB(200, 0, 0, this);
+		uRGB background_colour = new uRGB(0,0,0,this);
 
 		ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
 
@@ -39,13 +40,12 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 		spriteList.add(new Sprite("sprite_1", 256, 256));
 		spriteList.add(new Sprite("sprite_2", 256, 256));
 
-
 		for(Sprite s : spriteList){
 			fRGBA sc = s.getColour(input, this);
-			colour = new uRGB(ColourFunctions.Blend(sc, new fRGBA(colour)));
+			background_colour = new uRGB(ColourFunctions.Blend(sc, new fRGBA(background_colour)));
 		}
 
-		return colour;
+		return background_colour;
 	}
 
 	public class Sprite
@@ -71,7 +71,7 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 		{
 			this.m_width = width;
 			this.m_height = height;
-			m_spriteContent = mem.alloc(uRGBA.getDFEStructType(), width * height );
+			m_spriteContent = mem.alloc(uRGB.getDFEStructType(), width * height );
 
 			NonBlockingInput<DFEStruct> positions =
 				io.nonBlockingInput(name + "_positions", new spritePropertiesStructType(), constant.var(true),
@@ -85,11 +85,11 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 			CounterChain pc = control.count.makeCounterChain(content.valid);
 			DFEVar writeAddress = pc.addCounter(m_width * m_height, 1);
 
-			m_spriteContent.write(writeAddress, content.data, content.valid);
+			uRGB casted_colour = new uRGB(content.data);
+
+			m_spriteContent.write(writeAddress - 1, casted_colour.getDFEStruct(), content.valid);
 
 		}
-
-
 
 		fRGBA getColour(FragmentInput input, LatencyInteractionExperimentKernel kernel)
 		{
@@ -97,12 +97,15 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 			DFEVar y = m_properties["y"];
 			DFEVar x_offset = input.m_x.cast(dfeUInt(32)) - x;
 			DFEVar y_offset = input.m_y.cast(dfeUInt(32)) + y;
-			DFEVar readAddress = ((y_offset * m_width) + x_offset).cast(dfeUInt(16));
+			DFEVar readAddress = ((y_offset * m_width) + x_offset).cast(dfeUInt(MathUtils.bitsToAddress(m_width * m_height)));
 
 			DFEVar isValid = (x_offset >= 0) & (x_offset < m_width) & (y_offset >= 0) & (y_offset < m_height);
-			DFEStruct colour = isValid.cast(dfeBool()) ?  m_spriteContent.read(readAddress) : uRGBA.Transparent(kernel).getDFEStruct();
+			DFEStruct colour = isValid.cast(dfeBool()) ?  m_spriteContent.read(readAddress) : uRGB.Black(kernel).getDFEStruct();
 
-			return ColourFunctions.Multiply(new fRGBA(colour), new fRGBA(m_properties));
+			uRGB masked_colour = new uRGB(colour);
+			DFEStruct expanded_colour = masked_colour.Equals(uRGB.Black(kernel)) ? fRGBA.Transparent(kernel).getDFEStruct() : new fRGBA(masked_colour).getDFEStruct();
+
+			return ColourFunctions.Multiply(new fRGBA(expanded_colour), new fRGBA(m_properties));
 		}
 
 	}

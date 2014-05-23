@@ -26,19 +26,27 @@ struct MouseState
 		lmb = false;
 	}
 
+	bool Equals(const MouseState& a)
+	{
+		return (x == a.x) && (y == a.y) && (lmb == a.lmb);
+	}
+
+	friend std::ostream& operator<< (std::ostream& stream, const MouseState& mousestate);
+
 	MSGPACK_DEFINE(x,y,lmb,timestamp_ms);
 };
+
 
 class DelayedInputController
 {
 public:
-	DelayedInputController(float average_period_ms, float max_delay, Mouse* input_device);
+	DelayedInputController(float average_period_ms, float max_delay, Mouse& input_device);
 	MouseState GetState(float delay_ms);
 	MouseState GetCurrentState();
 	void Update();
 
 private:
-	Mouse* input_device;
+	Mouse& input_device;
 
 	float acc_x;
 	float acc_y;

@@ -22,13 +22,16 @@ public:
 
 	bool isCursorInRect(int x, int y)
 	{
-		return ((abs(center_x - x) <= width)
+		return ((abs(center_x - x) <= (width/2))
 				&&
-				(abs(center_y - y) <= height));
+				(abs(center_y - y) <= (height/2)));
 	}
+
+	friend std::ostream& operator<< (std::ostream& stream, const Rectangle& rect);
 
 	MSGPACK_DEFINE(center_x, center_y, width, height);
 };
+
 
 class FittsLawTestCondition
 {
@@ -63,8 +66,12 @@ public:
 		latency_in_ms = 0;
 	}
 
+	friend std::ostream& operator<< (std::ostream& stream, const FittsLawTestCondition& condition);
+
 	MSGPACK_DEFINE(staging_area,target,latency_in_ms);
 };
+
+
 
 class FittsLawTestConditionLoader
 {

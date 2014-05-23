@@ -174,12 +174,49 @@ void Logger::AppendAll()
 	std::vector<std::string> filenames = findLogFilenames();
 	for(int i = 0; i < filenames.size(); i++)
 	{
-		std::cout << filenames[i];
 		Append(filenames[i]);
 	}
 }
 
 void Logger::SaveFormatMatlab()
 {
+	std::cout << "Writing " << logs.size() << " logs.";
 	AppendAll();
+
+	std::fstream myfile;
+	std::string filename = directory + filename_format + "MATLAB" + ".csv";
+	myfile.open(filename.c_str(), std::ios::out);
+
+	myfile.precision(std::numeric_limits<double>::digits10 + 2);
+
+	myfile << logs;
+	myfile.close();
 }
+
+
+
+std::ostream& operator<< (std::ostream& stream, const Log& log)
+{
+	stream << log.participant_name << ",";
+	stream << log.participant_id   << ",";
+	stream << log.datetime_human_readable << ",";
+	stream << log.test_condition << ",";
+	stream << log.datapoints.size() << ",";
+	//stream << log.datapoints;
+
+	for(int i = 0; i < log.datapoints.size()-1; i++){
+		stream << log.datapoints[i] << ",";
+	}
+	stream << log.datapoints.back();
+
+	stream << std::endl;
+
+	return stream;
+}
+
+std::ostream& operator<< (std::ostream& stream, const Datapoint& dp)
+{
+	stream << dp.real << "," << dp.visible;
+	return stream;
+}
+

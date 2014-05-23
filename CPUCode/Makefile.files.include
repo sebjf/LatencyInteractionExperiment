@@ -1,5 +1,5 @@
 #
 # This file is managed by MaxIDE. Do NOT change.
 #
-HEADERS:= Keyboard/Keyboard.h Metrics/metrics.h Simulator/Context.h Simulator/Delay.h Simulator/FittsLawTest.h Simulator/FittsLawTestConditions.h Simulator/Logging.h Simulator/SimulatorWrapper.h Simulator/Simulators.h Simulator/Sprite.h Simulator/ts_util.h 
-SOURCES:= Keyboard/Keyboard.cpp LatencyInteractionExperiment.cpp Metrics/metrics.cpp Simulator/Delay.cpp Simulator/FittsLawTest.cpp Simulator/FittsLawTestConditions.cpp Simulator/Logging.cpp Simulator/SimulatorFitts.cpp Simulator/SimulatorWrapper.cpp Simulator/Sprite.cpp Simulator/ts_util.c 
+HEADERS:= Keyboard/Keyboard.h Metrics/metrics.h Simulator/Context.h Simulator/Delay.h Simulator/FittsLawTest.h Simulator/FittsLawTestConditions.h Simulator/Logging.h Simulator/Plane.h Simulator/SimulatorWrapper.h Simulator/Simulators.h Simulator/Sprite.h Simulator/ts_util.h 
+SOURCES:= Keyboard/Keyboard.cpp LatencyInteractionExperiment.cpp Metrics/metrics.cpp Simulator/Delay.cpp Simulator/FittsLawTest.cpp Simulator/FittsLawTestConditions.cpp Simulator/Logging.cpp Simulator/Plane.cpp Simulator/SimulatorFitts.cpp Simulator/SimulatorWrapper.cpp Simulator/Sprite.cpp Simulator/ts_util.c 

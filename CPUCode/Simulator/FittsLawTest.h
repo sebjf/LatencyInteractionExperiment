@@ -14,11 +14,13 @@
 
 
 enum FittsStage {
-	InitialiseStage,
-	BeginWaitForStartStage,
-	WaitForStartStage,
-	BeginMoveToTargetStage,
-	MoveToTargetStage,
+	InitialiseState,
+	BeginMoveToStagingState,
+	MoveToStagingState,
+	BeginMoveToTargetState,
+	MoveToTargetState,
+	BeginMoveToStagingEndState,
+	MoveToStagingEndState,
 	CompleteStage };
 
 
@@ -26,10 +28,10 @@ enum FittsStage {
 class FittsLawTestRunner
 {
 public:
-	FittsLawTestRunner(Sprite* staging_sprite, Sprite* target_sprite);
+	FittsLawTestRunner(Sprite& staging_sprite, Sprite& target_sprite);
 
-	Sprite* staging_area;
-	Sprite* target;
+	Sprite& staging_area;
+	Sprite& target;
 
 	/*Begins a new test with the specified conditions*/
 	void Begin(FittsLawTestCondition* condition);
@@ -50,11 +52,15 @@ private:
 
 	/*These are the implementations for each stage - returning true will advance the test to the next stage*/
 	bool Initialise();
-	bool BeginWaitForStart();
-	bool WaitForStart(int x, int y, bool lmb);
+	bool BeginMoveToStage();
+	bool WaitForStage(int x, int y, bool lmb);
 	bool BeginMoveToTarget();
 	bool MoveToTarget(int x, int y, bool lmb);
 	void Complete();
+
+	bool staging_sprite_set;
+
+	float current_latency_in_ms;
 
 	/*Utility functions*/
 	void LoadImages();

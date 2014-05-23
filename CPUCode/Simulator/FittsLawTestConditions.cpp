@@ -45,7 +45,7 @@ std::vector<FittsLawTestCondition*> FittsLawTestConditionLoader::LoadCSV(std::st
 
 		 FittsLawTestCondition* condition = new FittsLawTestCondition();
 
-		 if(items.size() < 8){
+		 if(items.size() < 9){
 			 continue; //incomplete line. skip.
 		 }
 
@@ -57,7 +57,7 @@ std::vector<FittsLawTestCondition*> FittsLawTestConditionLoader::LoadCSV(std::st
 		 condition->target.center_y 		= atoi(items[5].c_str());
 		 condition->target.width 			= atoi(items[6].c_str());
 		 condition->target.height 			= atoi(items[7].c_str());
-		 condition->latency_in_ms = 0;
+		 condition->latency_in_ms 			= atoi(items[8].c_str());
 
 		 if(condition->target.width <= 0 || //if this line is invalid, such as being the first line with headers
 			condition->target.height <= 0 ||
@@ -75,4 +75,17 @@ std::vector<FittsLawTestCondition*> FittsLawTestConditionLoader::LoadCSV(std::st
 
 	return conditions;
 
+}
+
+
+std::ostream& operator<< (std::ostream& stream, const Rectangle& rect)
+{
+	stream << rect.center_x << "," << rect.center_y << "," << rect.width << "," << rect.height;
+	return stream;
+}
+
+std::ostream& operator<< (std::ostream& stream, const FittsLawTestCondition& condition)
+{
+	stream << condition.staging_area << "," << condition.target << "," << condition.latency_in_ms;
+	return stream;
 }

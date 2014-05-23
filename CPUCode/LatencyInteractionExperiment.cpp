@@ -24,22 +24,27 @@
 #include "Simulator/SimulatorWrapper.h"
 #include "Simulator/Simulators.h"
 
-
-int main(int argc, char *argv[])
+void PrintMainMenu()
 {
-	SimulatorWrapper* simManager = new SimulatorWrapper();
-
 	std::cout <<
 	"Latency Interaction Experiment.\n"\
 	"	R: Run Simulation\n"\
 	"	E: Exit.\n"\
-	"	S: Stop Simulation";
+	"	S: Stop Simulation\n"\
+	"	C: Convert all available logs to Matlab\n";
+}
+
+int main(int argc, char *argv[])
+{
+	SimulatorWrapper* simManager = new SimulatorWrapper();
 
 	Logger logger("/home/sfriston/Experiments/","fitts_law_log_collection_",".fitts");
 	Simulator* sim = new SimulatorFitts(logger);
 
 	bool run = true;
 	while(run){
+
+		PrintMainMenu();
 
 		switch(std::cin.get()){
 		case 'r':
@@ -61,23 +66,12 @@ int main(int argc, char *argv[])
 			run = false;
 			break;
 
-		case 't':
-		case 'T':
-			std::cout << "Test" << std::endl;
-			break;
-
-		case 'w':	//force writing of current logs - note this is NOT threadsafe, do not call it while tests are in progress
-		case 'W':
-			logger.Save();
-			logger.Clear();
-			break;
-
 		case 'q':	//this will kill any stuck simulator threads by exiting the program.
 		case 'Q':
 			run = false;
 			break;
 
-		case 'c':	//convert the logs to matlab
+		case 'c':	//convert all available logs to matlab
 		case 'C':
 			logger.SaveFormatMatlab();
 			break;

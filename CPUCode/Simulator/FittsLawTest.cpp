@@ -9,63 +9,85 @@
 
 #include "SDL/SDL_image.h"
 
-FittsLawTestRunner::FittsLawTestRunner(Sprite* staging_sprite, Sprite* target_sprite)
+FittsLawTestRunner::FittsLawTestRunner(Sprite& staging_sprite, Sprite& target_sprite)
+:staging_area(staging_sprite),
+ target(target_sprite),
+ staging_sprite_set(false),
+ current_latency_in_ms(0)
 {
-	this->staging_area = staging_sprite;
-	this->target = target_sprite;
-
 	stage = CompleteStage;
-
 	LoadImages();
 }
 
 void FittsLawTestRunner::Begin(FittsLawTestCondition* condition)
 {
 	this->condition = condition;
-	stage = InitialiseStage;
+	stage = InitialiseState;
 }
+
+/* At the end of each motion there are two stages that ensure the user moves back to the original staging area.
+ * This is because the next condition could introduce artificial latency. It only takes 500ms for a user to adapt
+ * to latency, so we do not want them experiencing it while moving to begin the next trial.*/
+
 
 bool FittsLawTestRunner::Update(int x, int y, bool lmb)
 {
 	switch(stage)
 	{
-	case InitialiseStage:
+	case InitialiseState:
 		/* In this stage the sprites are intialised with the correct content and size and the buffers for the
 		 * latency emulation are configured */
 		if(Initialise()){
-			stage = BeginWaitForStartStage;
+			stage = BeginMoveToStagingState;
 		}
 		break;
 
-	case BeginWaitForStartStage:
-
-		if(BeginWaitForStart()){
-			stage = WaitForStartStage;
+	case BeginMoveToStagingState:
+		if(BeginMoveToStage()){
+			stage = MoveToStagingState;
 		}
 		break;
 
-	case WaitForStartStage:
+	case MoveToStagingState:
 		/* In this stage the user is prompted to click on the starting point to begin the timed test. The staging
 		 * area is green and the next target is visible. */
-		if(WaitForStart(x,y,lmb)){
-			stage = BeginMoveToTargetStage;
+		if(WaitForStage(x,y,lmb)){
+			stage = BeginMoveToTargetState;
+
+			/*When the user is moving back to the stage to begin the next experiment, we do not want them to adapt
+			 *to the new latency, so current_latency_in_ms contains the previous conditions latency, until this point*/
+			current_latency_in_ms = condition->latency_in_ms;
 		}
 		break;
 
-	case BeginMoveToTargetStage:
+	case BeginMoveToTargetState:
 		if(BeginMoveToTarget()){
-			stage = MoveToTargetStage;
+			stage = MoveToTargetState;
 		}
 		break;
 
-	case MoveToTargetStage:
+	case MoveToTargetState:
 		/* In this stage the user is to move to the target. The staging area disappears and the target becomes
 		 * green drawing the user to it */
 		if(MoveToTarget(x,y,lmb)){
 			stage = CompleteStage;
 		}
-
 		break;
+
+	/*Skip these*/
+
+	case BeginMoveToStagingEndState:
+		if(BeginMoveToStage()){
+			stage = MoveToStagingEndState;
+		}
+		break;
+
+	case MoveToStagingEndState:
+		if(WaitForStage(x,y,lmb)){
+			stage = CompleteStage;
+		}
+		break;
+
 	case CompleteStage:
 		/* The user has clicked on the target and the test is now complete */
 
@@ -81,45 +103,46 @@ bool FittsLawTestRunner::Initialise()
 {
 	//Reset the sprite properties in accordance with the conditions
 
-	staging_area->SetSpriteColour(255,255,255,255);
-	target->SetSpriteColour(255,255,255,255);
+	staging_area.SetSpriteColour(255,255,255,255);
+	staging_area.SetSpriteCenterLocation(condition->staging_area.center_x, condition->staging_area.center_y);
+	staging_area.UpdateSpriteProperties();
 
-	//Reset the sprite content, scaling and off-setting to match the intended appearance
+	if(!staging_sprite_set){
+		staging_area.SetSpriteSurface(staging_area_texture, condition->staging_area.width, condition->staging_area.height);
+		staging_area.UpdateSpriteContent();
+		staging_sprite_set = true;
+	}
 
-	staging_area->SetSpriteCenterLocation(condition->staging_area.center_x, condition->staging_area.center_y);
-	target->SetSpriteCenterLocation(condition->target.center_x, condition->target.center_y);
-
-	staging_area->UpdateSpriteProperties();
-	target->UpdateSpriteProperties();
-
-	staging_area->SetSpriteSurface(staging_area_texture, condition->staging_area.width, condition->staging_area.height);
-	target->SetSpriteSurface(target_texture, condition->target.width, condition->target.height);
-
-	staging_area->UpdateSpriteContent();
-	target->UpdateSpriteContent();
+	target.SetSpriteColour(0,255,255,255);
+	target.SetSpriteCenterLocation(condition->target.center_x, condition->target.center_y);
+	target.UpdateSpriteProperties();
+	target.SetSpriteSurface(target_texture, condition->target.width, condition->target.height);
+	target.UpdateSpriteContent();
 
 	return true;
 }
 
-bool FittsLawTestRunner::BeginWaitForStart()
+bool FittsLawTestRunner::BeginMoveToStage()
 {
-	staging_area->SetSpriteColour(255,200,255,200);
-	staging_area->UpdateSpriteProperties();
+	staging_area.SetSpriteColour(255,200,255,200);
+	staging_area.UpdateSpriteProperties();
+	target.SetSpriteColour(0,255,255,255);
+	target.UpdateSpriteProperties();
 
 	return true;
 }
 
-bool FittsLawTestRunner::WaitForStart(int x, int y, bool lmb)
+bool FittsLawTestRunner::WaitForStage(int x, int y, bool lmb)
 {
 	return (condition->staging_area.isCursorInRect(x,y) && lmb);
 }
 
 bool FittsLawTestRunner::BeginMoveToTarget()
 {
-	staging_area->SetSpriteColour(255,255,255,255);
-	staging_area->UpdateSpriteProperties();
-	target->SetSpriteColour(255,200,255,200);
-	target->UpdateSpriteProperties();
+	staging_area.SetSpriteColour(255,255,255,255);
+	staging_area.UpdateSpriteProperties();
+	target.SetSpriteColour(255,200,255,200);
+	target.UpdateSpriteProperties();
 
 	return true;
 }
@@ -131,20 +154,15 @@ bool FittsLawTestRunner::MoveToTarget(int x, int y, bool lmb)
 
 void FittsLawTestRunner::Complete()
 {
-	staging_area->SetSpriteColour(0,255,255,255);
-	target->SetSpriteColour(0,255,255,255);
-	staging_area->UpdateSpriteProperties();
-	target->UpdateSpriteProperties();
+	staging_area.SetSpriteColour(255,255,255,255);
+	target.SetSpriteColour(0,255,255,255);
+	staging_area.UpdateSpriteProperties();
+	target.UpdateSpriteProperties();
 }
 
 double FittsLawTestRunner::GetDelay()
 {
-	double d = 0;
-	if(condition != NULL)
-	{
-		d = condition->latency_in_ms;
-	}
-	return d;
+	return current_latency_in_ms;
 }
 
 void FittsLawTestRunner::LoadImages()
