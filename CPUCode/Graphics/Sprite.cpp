@@ -64,10 +64,17 @@ void Sprite::SetSpriteColour(char a, char r, char g, char b)
 
 void Sprite::SetSpriteCenterLocation(int x, int y)
 {
+	centre.x = x;
+	centre.y = y;
 	int offset_x = surface->w/2;
 	int offset_y = surface->h/2;
 	properties.x = x - offset_x;
 	properties.y = y - offset_y;
+}
+
+Point Sprite::GetSpriteCenterLocation()
+{
+	return centre;
 }
 
 void Sprite::UpdateSpriteContent()

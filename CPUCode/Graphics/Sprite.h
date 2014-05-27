@@ -24,6 +24,12 @@ struct spriteproperties
 	char a;
 };
 
+struct Point
+{
+	int x;
+	int y;
+};
+
 class Sprite
 {
 public:
@@ -40,6 +46,7 @@ public:
 	void SetSpriteColour(char a, char r, char g, char b);
 
 	void SetSpriteCenterLocation(int x, int y);
+	Point GetSpriteCenterLocation();
 
 	void UpdateSpriteContent();
 
@@ -53,6 +60,8 @@ private:
 	max_engine_t* engine;
 	max_file_t* maxfile;
 	max_run_t* max_running;
+
+	Point centre;
 
 	void CreateContentStream();
 	void UpdateSpriteContentStream();

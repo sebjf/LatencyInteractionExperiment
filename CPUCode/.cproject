@@ -40,6 +40,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_RunRules/Simulation/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode/Metrics}&quot;"/>
 									<listOptionValue builtIn="false" value="/usr/include/c++/4.1.2"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.811804367" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -61,9 +62,13 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Simulator|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Keyboard"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
+						<entry excluding="Utils|Steering|Graphics|Fitts|Simulator|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Graphics"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Steering"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Utils"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -437,9 +442,13 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Simulator|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Keyboard"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Steering"/>
+						<entry excluding="Utils|Steering|Graphics|Fitts|Simulator|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Graphics"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Keyboard"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Utils"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

@@ -43,4 +43,14 @@ public:
 	virtual void MainLoop();
 };
 
+class SimulatorSteering : public Simulator
+{
+public:
+	SimulatorSteering(Logger& logger)
+	 :Simulator(logger)
+	{}
+
+	virtual void MainLoop();
+};
+
 #endif /* SIMULATORS_H_ */

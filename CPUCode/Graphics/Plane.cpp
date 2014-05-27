@@ -32,11 +32,9 @@ Plane::~Plane()
 
 }
 
-void Plane::SetPlaneContent(std::string filename)
+void Plane::SetPlaneContent(SDL_Surface* img)
 {
-///	SDL_FillRect(m_surface, NULL, SDL_MapRGBA(m_surface->format,0,0,127,255));
-
-	SDL_Surface* img = IMG_Load(filename.c_str());
+	///	SDL_FillRect(m_surface, NULL, SDL_MapRGBA(m_surface->format,0,0,127,255));
 
 	SDL_Rect dest;
 	dest.x = m_offsetx;
@@ -44,7 +42,12 @@ void Plane::SetPlaneContent(std::string filename)
 	dest.w = m_width;
 	dest.h = m_height;
 	SDL_BlitSurface(img, NULL, m_surface, &dest);
+}
 
+void Plane::SetPlaneContent(std::string filename)
+{
+	SDL_Surface* img = IMG_Load(filename.c_str());
+	SetPlaneContent(img);
 	SDL_FreeSurface(img);
 }
 

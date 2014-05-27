@@ -65,7 +65,7 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 			m_colourdata = content.data;
 
 			int frame_size_in_bytes = display.TotalWidth * display.TotalHeight * (uRGBA.getDFEStructType().getTotalBits() / 8);
-			int frame_size_in_bursts = frame_size_in_bytes / 384;
+			int frame_size_in_bursts = (frame_size_in_bytes / 384) - 1;
 
 			int number_of_pixels = display.TotalWidth * display.TotalHeight;
 
@@ -89,13 +89,14 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 			int pixels_per_burst = 384/4;
 
 			DFEVar ready = KernelMath.modulo(pixel_counter, pixels_per_burst).eq(0);
-			DFEVar address = (pixel_counter / pixels_per_burst) - 1;
+			DFEVar address = (pixel_counter / pixels_per_burst);
+			DFEVar real_address = pixel_counter.eq(0) ? constant.var(0) : address;
 
 			LMemCommandStream.makeKernelOutput(name + "_commands",
-			//		ready,
-			//		address.cast(dfeUInt(28)),
-					burst_counter.getCount().eq(0),
-					burst_counter.getCount().cast(dfeUInt(28)),
+					ready,
+					real_address.cast(dfeUInt(28)),
+			//		burst_counter.getCount() < frame_size_in_bursts,
+			//		burst_counter.getCount().cast(dfeUInt(28)),
 					constant.var(dfeUInt(8),1),
 					constant.var(dfeUInt(7),1),
 					constant.var(dfeUInt(4),0),

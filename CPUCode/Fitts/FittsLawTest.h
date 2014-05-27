@@ -9,7 +9,7 @@
 #define FITTSLAWTEST_H_
 
 #include "SDL/SDL.h"
-#include "Sprite.h"
+#include <Graphics/Sprite.h>
 #include "FittsLawTestConditions.h"
 
 

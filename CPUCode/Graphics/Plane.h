@@ -21,6 +21,7 @@ public:
 	~Plane();
 
 	void SetPlaneContent(std::string image);
+	void SetPlaneContent(SDL_Surface* image);
 	void UpdatePlaneContent();
 
 private:

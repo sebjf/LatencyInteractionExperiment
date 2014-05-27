@@ -8,7 +8,7 @@
 #ifndef EXPERIMENT_H_
 #define EXPERIMENT_H_
 
-#include "FittsLawTestConditions.h"
+#include "../Fitts/FittsLawTestConditions.h"
 #include "Delay.h"
 
 #include <ostream>

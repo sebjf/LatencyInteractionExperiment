@@ -1,5 +1,5 @@
 #
 # This file is managed by MaxIDE. Do NOT change.
 #
-HEADERS:= Keyboard/Keyboard.h Metrics/metrics.h Simulator/Context.h Simulator/Delay.h Simulator/FittsLawTest.h Simulator/FittsLawTestConditions.h Simulator/Logging.h Simulator/Plane.h Simulator/SimulatorWrapper.h Simulator/Simulators.h Simulator/Sprite.h Simulator/ts_util.h 
-SOURCES:= Keyboard/Keyboard.cpp LatencyInteractionExperiment.cpp Metrics/metrics.cpp Simulator/Delay.cpp Simulator/FittsLawTest.cpp Simulator/FittsLawTestConditions.cpp Simulator/Logging.cpp Simulator/Plane.cpp Simulator/SimulatorFitts.cpp Simulator/SimulatorWrapper.cpp Simulator/Sprite.cpp Simulator/ts_util.c 
+HEADERS:= Fitts/FittsLawTest.h Fitts/FittsLawTestConditions.h Graphics/Cursor.h Graphics/Plane.h Graphics/Sprite.h Keyboard/Keyboard.h Metrics/metrics.h Simulator/Context.h Simulator/Delay.h Simulator/Logging.h Simulator/SimulatorWrapper.h Simulator/Simulators.h Steering/Path.h Steering/PathFollower.h Steering/SteeringConditionBuilder.h Steering/SteeringLawTest.h Steering/SteeringLawTestConditions.h Utils/Split.h Utils/ts_util.h 
+SOURCES:= Fitts/FittsLawTest.cpp Fitts/FittsLawTestConditions.cpp Graphics/Cursor.cpp Graphics/Plane.cpp Graphics/Sprite.cpp Keyboard/Keyboard.cpp LatencyInteractionExperiment.cpp Metrics/metrics.cpp Simulator/Delay.cpp Simulator/Logging.cpp Simulator/SimulatorFitts.cpp Simulator/SimulatorSteering.cpp Simulator/SimulatorWrapper.cpp Steering/PathFollower.cpp Steering/SteeringConditionBuilder.cpp Steering/SteeringLawTest.cpp Utils/Split.cpp Utils/ts_util.c 

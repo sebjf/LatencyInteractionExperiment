@@ -1,3 +1,10 @@
+/*
+ * SimulatorSteering.cpp
+ *
+ *  Created on: 27 May 2014
+ *      Author: sfriston
+ */
+
 #include <stdio.h>
 #include <MaxVideoCpuResources.h>
 #include <iostream>
@@ -6,26 +13,17 @@
 #include "MaxSLiCInterface.h"
 
 #include "Simulators.h"
-
 #include "Delay.h"
 #include "Logging.h"
-#include <Fitts/FittsLawTest.h>
+#include <Steering/SteeringLawTest.h>
+#include <Steering/SteeringConditionBuilder.h>
 #include <Graphics/Sprite.h>
 #include <Graphics/Plane.h>
 #include <Graphics/Cursor.h>
 
-struct InputUpdate
+void SimulatorSteering::MainLoop()
 {
-	uint x;
-	uint y;
-	uint padding;
-	uint padding2;
-};
-
-
-void SimulatorFitts::MainLoop()
-{
-	std::cout << "Beginning main loop Fitts Law Test Simulator" << std::endl;
+	std::cout << "Beginning main loop Steering Law Test Simulator" << std::endl;
 
 	Mouse mouse;
 
@@ -56,7 +54,7 @@ void SimulatorFitts::MainLoop()
 
 	/* This object will control the logic of the Fitts Law Tests */
 
-	FittsLawTestRunner runner(sprite_0, sprite_1);
+	SteeringLawTestRunner runner(plane_0, sprite_0);
 
 	/* This will control the cursor sprite */
 
@@ -69,14 +67,11 @@ void SimulatorFitts::MainLoop()
 
 	/* This object will load the conditions that drive the state of the tests */
 
-	FittsLawTestConditionLoader loader;
-	std::vector<FittsLawTestCondition*> conditions = loader.LoadCSV("/home/sfriston/Experiments/fittsLawConditions.csv");
-	std::vector<FittsLawTestCondition*>::iterator conditions_interator = conditions.begin();
+	SteeringConditionBuilder builder("/home/sfriston/Experiments/");
+	builder.LoadFromCSV("/home/sfriston/Experiments/steeringLawConditions.csv");
+	std::vector<SteeringLawTestCondition*>::iterator conditions_interator = builder.m_conditions.begin();
 
 	MouseState last_input;
-
-	plane_0.SetPlaneContent("/home/sfriston/Experiments/Bezier_700.gif");
-	plane_0.UpdatePlaneContent(); //this will cause a reset
 
 	while(do_simulation()){
 
@@ -100,22 +95,22 @@ void SimulatorFitts::MainLoop()
 
 		/* Update returns true when the test is complete, so load the next one until all are exhausted */
 
-		if(runner.Update(input.x,input.y, input.lmb)){
+		if(runner.Update(input.x,input.y)){
 
 			runner.Begin(*conditions_interator);
 			conditions_interator++;
 
-			if(conditions_interator == conditions.end()){
+			if(conditions_interator == builder.m_conditions.end()){
 				std::cout << "All Conditions Complete." << std::endl;
 				do_simuation(false);
 
 				break;
 			}
 
-			logger.AddNewLog(Log("unknown",0,*(runner.condition)));
+		//	logger.AddNewLog(Log("unknown",0,*(runner.condition)));
 		}
 
-		logger.CurrentLog().Add(Datapoint(real,input));
+		//logger.CurrentLog().Add(Datapoint(real,input));
 
 	}
 
@@ -125,8 +120,5 @@ void SimulatorFitts::MainLoop()
 	max_actions_free(actions);
 
 	max_reset_engine(engine);
-
-//	max_unlock(engine);
-//	max_unload(engine);
 
 }
