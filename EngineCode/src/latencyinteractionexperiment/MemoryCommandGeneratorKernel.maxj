@@ -1,7 +1,5 @@
 package latencyinteractionexperiment;
 
-import types.uRGBA;
-
 import com.maxeler.maxcompiler.v0.utils.MathUtils;
 import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
@@ -31,7 +29,7 @@ public class MemoryCommandGeneratorKernel extends Kernel {
 
 		DFEVar start_of_frame = sof.valid & sof.data;
 
-		int frame_size_in_bytes = display.TotalWidth * display.TotalHeight * (uRGBA.getDFEStructType().getTotalBits() / 8);
+		int frame_size_in_bytes = display.TotalWidth * display.TotalHeight * 4;
 		int frame_size_in_bursts = (frame_size_in_bytes / 384)/2 - 1;
 
 		/* Generate commands to read a frame from memory.
@@ -48,10 +46,12 @@ public class MemoryCommandGeneratorKernel extends Kernel {
 
 		Counter burst_counter = control.count.makeCounter(burst_counter_params);
 
+
+
 		LMemCommandStream.makeKernelOutput(
 				"memory_commands",
 				burst_counter.getCount() < (frame_size_in_bursts - 1),
-				burst_counter.getCount().cast(dfeUInt(28)),
+				(burst_counter.getCount() + 2).cast(dfeUInt(28)),
 				constant.var(dfeUInt(8),1),
 				constant.var(dfeUInt(7),1),
 				constant.var(dfeUInt(4),0),
