@@ -1,16 +1,61 @@
 package latencyinteractionexperiment;
 
+import types.uRGBA;
+
+import com.maxeler.maxcompiler.v0.utils.MathUtils;
 import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.LMemCommandStream;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.Counter;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.Params;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.WrapMode;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.DelimiterMode;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingInput;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingMode;
 import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
+
+import displaystandards.DisplayStandard;
 
 
 public class MemoryCommandGeneratorKernel extends Kernel {
 
-	protected MemoryCommandGeneratorKernel(KernelParameters parameters) {
+	protected MemoryCommandGeneratorKernel(KernelParameters parameters, DisplayStandard display) {
 		super(parameters);
 
-		DFEVar frame_sync = io.input("frame_sync_in", dfeBool());
+		//DFEVar start_of_frame = io.input("frame_sync_in", dfeBool());
+
+		flush.disabled();
+
+		NonBlockingInput<DFEVar> sof =
+			io.nonBlockingInput("frame_sync_in", dfeBool(), constant.var(true), 1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
+
+		DFEVar start_of_frame = sof.valid & sof.data;
+
+		int frame_size_in_bytes = display.TotalWidth * display.TotalHeight * (uRGBA.getDFEStructType().getTotalBits() / 8);
+		int frame_size_in_bursts = (frame_size_in_bytes / 384)/2 - 1;
+
+		/* Generate commands to read a frame from memory.
+		 * The following code creates a counter, that will count up from 0-the final address of the plane in burst sizes, and then stop.
+		 * The DFEVar valid, will indicate when the counter is counting up (because the count will be less than the final address), and this is
+		 * used to add new commands to the stream.
+		 * When a new frame begins, the counter is reset and the process repeats.
+		 *  */
+
+		Params burst_counter_params =  control.count.makeParams(MathUtils.bitsToRepresent(frame_size_in_bursts))
+													.withMax(frame_size_in_bursts)
+													.withWrapMode(WrapMode.STOP_AT_MAX)
+													.withReset(start_of_frame);
+
+		Counter burst_counter = control.count.makeCounter(burst_counter_params);
+
+		LMemCommandStream.makeKernelOutput(
+				"memory_commands",
+				burst_counter.getCount() < (frame_size_in_bursts - 1),
+				burst_counter.getCount().cast(dfeUInt(28)),
+				constant.var(dfeUInt(8),1),
+				constant.var(dfeUInt(7),1),
+				constant.var(dfeUInt(4),0),
+				constant.var(false));
 
 	}
 

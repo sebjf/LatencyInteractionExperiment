@@ -10,12 +10,7 @@ import types.uRGBA;
 
 import com.maxeler.maxcompiler.v0.utils.MathUtils;
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.KernelMath;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.LMemCommandStream;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.Counter;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.Params;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.WrapMode;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.DelimiterMode;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingInput;
@@ -40,6 +35,8 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 
 		Plane background = new Plane("plane_0", Display, input);
 
+		io.output("start_of_frame", dfeBool(), input.m_start_of_frame) <== input.m_start_of_frame;
+
 		uRGB background_colour = new uRGB(background.getColour());
 
 		ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
@@ -63,45 +60,6 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 			NonBlockingInput<DFEStruct> content =
 				io.nonBlockingInput(name + "_content", uRGBA.getDFEStructType(), constant.var(true), 1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
 			m_colourdata = content.data;
-
-			int frame_size_in_bytes = display.TotalWidth * display.TotalHeight * (uRGBA.getDFEStructType().getTotalBits() / 8);
-			int frame_size_in_bursts = (frame_size_in_bytes / 384) - 1;
-
-			int number_of_pixels = display.TotalWidth * display.TotalHeight;
-
-			/* Generate commands to read a frame from memory.
-			 * The following code creates a counter, that will count up from 0-the final address of the plane in burst sizes, and then stop.
-			 * The DFEVar valid, will indicate when the counter is counting up (because the count will be less than the final address), and this is
-			 * used to add new commands to the stream.
-			 * When a new frame begins, the counter is reset and the process repeats.
-			 *  */
-
-			Params burst_counter_params =  control.count.makeParams(MathUtils.bitsToRepresent(frame_size_in_bursts))
-														.withMax(frame_size_in_bursts)
-														.withWrapMode(WrapMode.STOP_AT_MAX)
-														.withReset(input.m_start_of_frame);
-
-			Counter burst_counter = control.count.makeCounter(burst_counter_params);
-
-
-			DFEVar pixel_counter = control.count.simpleCounter(MathUtils.bitsToRepresent(number_of_pixels), number_of_pixels);
-
-			int pixels_per_burst = 384/4;
-
-			DFEVar ready = KernelMath.modulo(pixel_counter, pixels_per_burst).eq(0);
-			DFEVar address = (pixel_counter / pixels_per_burst);
-			DFEVar real_address = pixel_counter.eq(0) ? constant.var(0) : address;
-
-			LMemCommandStream.makeKernelOutput(name + "_commands",
-					ready,
-					real_address.cast(dfeUInt(28)),
-			//		burst_counter.getCount() < frame_size_in_bursts,
-			//		burst_counter.getCount().cast(dfeUInt(28)),
-					constant.var(dfeUInt(8),1),
-					constant.var(dfeUInt(7),1),
-					constant.var(dfeUInt(4),0),
-					constant.var(false));
-
 		}
 
 		private final DFEStruct m_colourdata; //without data.valid this will be nonsense sometimes, but we will have a max under-run of 96 pixels, which will be off screen anyway

@@ -34,13 +34,14 @@ Plane::~Plane()
 
 void Plane::SetPlaneContent(SDL_Surface* img)
 {
-	///	SDL_FillRect(m_surface, NULL, SDL_MapRGBA(m_surface->format,0,0,127,255));
-
 	SDL_Rect dest;
 	dest.x = m_offsetx;
 	dest.y = m_offsety;
-	dest.w = m_width;
-	dest.h = m_height;
+	dest.w = img->w;
+	dest.h = img->h;
+
+	SDL_FillRect(m_surface, &dest, SDL_MapRGBA(m_surface->format,0,0,127,255));
+
 	SDL_BlitSurface(img, NULL, m_surface, &dest);
 }
 
