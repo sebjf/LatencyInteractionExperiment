@@ -1,6 +1,5 @@
 package latencyinteractionexperiment;
 
-import com.maxeler.maxcompiler.v0.utils.MathUtils;
 import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.LMemCommandStream;
@@ -29,8 +28,7 @@ public class MemoryCommandGeneratorKernel extends Kernel {
 
 		DFEVar start_of_frame = sof.valid & sof.data;
 
-		int frame_size_in_bytes = display.TotalWidth * display.TotalHeight * 4;
-		int frame_size_in_bursts = (frame_size_in_bytes / 384)/2 - 1;
+		DFEVar length = io.scalarInput("FrameSizeBursts", dfeUInt(32));
 
 		/* Generate commands to read a frame from memory.
 		 * The following code creates a counter, that will count up from 0-the final address of the plane in burst sizes, and then stop.
@@ -39,19 +37,19 @@ public class MemoryCommandGeneratorKernel extends Kernel {
 		 * When a new frame begins, the counter is reset and the process repeats.
 		 *  */
 
-		Params burst_counter_params =  control.count.makeParams(MathUtils.bitsToRepresent(frame_size_in_bursts))
-													.withMax(frame_size_in_bursts)
+		Params burst_counter_params =  control.count.makeParams(32)
+													.withMax(length)
 													.withWrapMode(WrapMode.STOP_AT_MAX)
 													.withReset(start_of_frame);
 
 		Counter burst_counter = control.count.makeCounter(burst_counter_params);
 
-
+		DFEVar offset = io.scalarInput("BurstOffset", dfeUInt(32));
 
 		LMemCommandStream.makeKernelOutput(
 				"memory_commands",
-				burst_counter.getCount() < (frame_size_in_bursts - 1),
-				(burst_counter.getCount() + 2).cast(dfeUInt(28)),
+				burst_counter.getCount() < (length - 1),
+				(burst_counter.getCount() + offset).cast(dfeUInt(28)),
 				constant.var(dfeUInt(8),1),
 				constant.var(dfeUInt(7),1),
 				constant.var(dfeUInt(4),0),

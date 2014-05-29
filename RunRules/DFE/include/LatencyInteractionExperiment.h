@@ -21,6 +21,8 @@ extern "C" {
 /**
  * \brief Basic static function for the interface 'default'.
  * 
+ * \param [in] inscalar_mcp_kernel_BurstOffset Input scalar parameter "mcp_kernel.BurstOffset".
+ * \param [in] inscalar_mcp_kernel_FrameSizeBursts Input scalar parameter "mcp_kernel.FrameSizeBursts".
  * \param [in] instream_cpu_to_plane_0 Stream "cpu_to_plane_0".
  * \param [in] instream_size_cpu_to_plane_0 The size of the stream instream_cpu_to_plane_0 in bytes.
  * \param [in] instream_sprite_0_content Stream "sprite_0_content".
@@ -39,6 +41,8 @@ extern "C" {
  * \param [in] lmem_arr_size_plane_0_write Linear LMem control for "plane_0_write" stream: array size, in bytes.
  */
 void LatencyInteractionExperiment(
+	uint64_t inscalar_mcp_kernel_BurstOffset,
+	uint64_t inscalar_mcp_kernel_FrameSizeBursts,
 	const void *instream_cpu_to_plane_0,
 	size_t instream_size_cpu_to_plane_0,
 	const void *instream_sprite_0_content,
@@ -64,6 +68,8 @@ void LatencyInteractionExperiment(
  * note that one of these *must* be called, so that associated memory can be released.
  * 
  * 
+ * \param [in] inscalar_mcp_kernel_BurstOffset Input scalar parameter "mcp_kernel.BurstOffset".
+ * \param [in] inscalar_mcp_kernel_FrameSizeBursts Input scalar parameter "mcp_kernel.FrameSizeBursts".
  * \param [in] instream_cpu_to_plane_0 Stream "cpu_to_plane_0".
  * \param [in] instream_size_cpu_to_plane_0 The size of the stream instream_cpu_to_plane_0 in bytes.
  * \param [in] instream_sprite_0_content Stream "sprite_0_content".
@@ -83,6 +89,8 @@ void LatencyInteractionExperiment(
  * \return A handle on the execution status, or NULL in case of error.
  */
 max_run_t *LatencyInteractionExperiment_nonblock(
+	uint64_t inscalar_mcp_kernel_BurstOffset,
+	uint64_t inscalar_mcp_kernel_FrameSizeBursts,
 	const void *instream_cpu_to_plane_0,
 	size_t instream_size_cpu_to_plane_0,
 	const void *instream_sprite_0_content,
@@ -105,6 +113,8 @@ max_run_t *LatencyInteractionExperiment_nonblock(
  * 
  */
 typedef struct { 
+	uint64_t inscalar_mcp_kernel_BurstOffset; /**<  [in] Input scalar parameter "mcp_kernel.BurstOffset". */
+	uint64_t inscalar_mcp_kernel_FrameSizeBursts; /**<  [in] Input scalar parameter "mcp_kernel.FrameSizeBursts". */
 	const void *instream_cpu_to_plane_0; /**<  [in] Stream "cpu_to_plane_0". */
 	size_t instream_size_cpu_to_plane_0; /**<  [in] The size of the stream instream_cpu_to_plane_0 in bytes. */
 	const void *instream_sprite_0_content; /**<  [in] Stream "sprite_0_content". */

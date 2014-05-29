@@ -37,6 +37,8 @@ private:
 	int m_offsety;
 
 	int m_burst_size;
+	int m_burst_offset;
+	int m_front_porch;
 };
 
 #endif /* PLANE_H_ */
