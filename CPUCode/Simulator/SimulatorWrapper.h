@@ -13,10 +13,12 @@
 
 #include <iostream>
 
-class SimulatorWrapper
+
+
+class SimulatorManager
 {
 public:
-	SimulatorWrapper()
+	SimulatorManager()
 	 :thread_running(false)
 	{}
 

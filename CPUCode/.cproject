@@ -22,7 +22,7 @@
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug.1569338340" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
 							<builder enabledIncrementalBuild="false" id="cdt.managedbuild.target.gnu.builder.exe.debug.2035502097" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.exe.debug">
 								<outputEntries>
-									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="/LatencyInteractionExperiment_CPUCode/Debug"/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Debug"/>
 								</outputEntries>
 							</builder>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1323778728" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
@@ -36,15 +36,22 @@
 								<option id="gnu.c.compiler.option.include.paths.1074735921" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/mkl/include"/>
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/tbb/include"/>
-									<listOptionValue builtIn="false" value="&quot;${MAXCOMPILERDIR}/include/slic&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_RunRules/Simulation/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode/Metrics}&quot;"/>
-									<listOptionValue builtIn="false" value="/usr/include/c++/4.1.2"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode}&quot;"/>
+									<listOptionValue builtIn="false" value="/network-raid/opt/maxcompiler-2013.3/include/slic"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_RunRules/Simulation/include}&quot;"/>
+									<listOptionValue builtIn="false" value="../LatencyInteractionExperiment_CPUCode/Metrics"/>
+									<listOptionValue builtIn="false" value="/usr/include/c++/4.1.1"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_CPUCode}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.811804367" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1270727551" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
+								<option id="gnu.c.link.option.paths.1169695117" superClass="gnu.c.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/compiler/lib/intel64"/>
+									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/ipp/../compiler/lib/intel64"/>
+									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/ipp/lib/intel64"/>
+									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/mkl/lib/intel64"/>
+									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/tbb/lib/intel64//cc4.1.0_libc2.4_kernel2.6.16.21"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.1644971630" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -55,16 +62,19 @@
 								<option id="gnu.both.asm.option.include.paths.181386907" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/mkl/include"/>
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/tbb/include"/>
-									<listOptionValue builtIn="false" value="&quot;${MAXCOMPILERDIR}/include/slic&quot;"/>
+									<listOptionValue builtIn="false" value="/network-raid/opt/maxcompiler-2013.3/include/slic"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_RunRules/Simulation/include}&quot;"/>
+									<listOptionValue builtIn="false" value="../LatencyInteractionExperiment_CPUCode/Metrics"/>
+									<listOptionValue builtIn="false" value="/usr/include/c++/4.1.1"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_CPUCode}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1535065412" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Keyboard"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
-						<entry excluding="Utils|Steering|Graphics|Fitts|Simulator|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Steering|Fitts|Graphics|Keyboard|Utils|Simulator" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Graphics"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Steering"/>
@@ -446,7 +456,6 @@
 						<entry excluding="Utils|Steering|Graphics|Fitts|Simulator|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Graphics"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Keyboard"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Utils"/>
 					</sourceEntries>

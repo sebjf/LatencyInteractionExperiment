@@ -60,6 +60,7 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 			NonBlockingInput<DFEStruct> content =
 				io.nonBlockingInput(name + "_content", uRGBA.getDFEStructType(), constant.var(true), 1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
 			m_colourdata = content.data;
+
 		}
 
 		private final DFEStruct m_colourdata; //without data.valid this will be nonsense sometimes, but we will have a max under-run of 96 pixels, which will be off screen anyway

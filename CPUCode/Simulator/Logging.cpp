@@ -17,7 +17,6 @@
 #include <boost/algorithm/string_regex.hpp>
 
 #include "Logging.h"
-#include "Context.h"
 
 // Get current date/time, format is YYYY-MM-DD.HH:mm:ss
 const std::string currentDateTime() {
@@ -172,7 +171,7 @@ void Logger::Append(std::string filename)
 void Logger::AppendAll()
 {
 	std::vector<std::string> filenames = findLogFilenames();
-	for(int i = 0; i < filenames.size(); i++)
+	for(unsigned int i = 0; i < filenames.size(); i++)
 	{
 		Append(filenames[i]);
 	}
@@ -193,8 +192,6 @@ void Logger::SaveFormatMatlab()
 	myfile.close();
 }
 
-
-
 std::ostream& operator<< (std::ostream& stream, const Log& log)
 {
 	stream << log.participant_name << ",";
@@ -204,7 +201,7 @@ std::ostream& operator<< (std::ostream& stream, const Log& log)
 	stream << log.datapoints.size() << ",";
 	//stream << log.datapoints;
 
-	for(int i = 0; i < log.datapoints.size()-1; i++){
+	for(unsigned int i = 0; i < log.datapoints.size()-1; i++){
 		stream << log.datapoints[i] << ",";
 	}
 	stream << log.datapoints.back();

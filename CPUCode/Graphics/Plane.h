@@ -24,9 +24,13 @@ public:
 	void SetPlaneContent(SDL_Surface* image);
 	void UpdatePlaneContent();
 
+	void SetPlaneContentInteractive();
+
+	max_engine_t* m_engine;
+
 private:
 	std::string m_name;
-	max_engine_t* m_engine;
+
 	max_file_t* m_maxfile;
 
 	SDL_Surface* m_surface;

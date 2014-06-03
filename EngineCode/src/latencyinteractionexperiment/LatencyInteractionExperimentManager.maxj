@@ -18,6 +18,7 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 
 		MemoryCommandGeneratorKernel mcp_kernel_inner = new MemoryCommandGeneratorKernel(makeKernelParameters("mcp_kernel"), framegenkernel_inner.Display);
 		KernelBlock mcp_kernel = addKernel(mcp_kernel_inner);
+		mcp_kernel.setClock(framegenkernel_inner.clock);
 
 		framegenkernel.getInput("sprite_0_positions") <== addStreamFromCPU("sprite_0_positions");
 		framegenkernel.getInput("sprite_1_positions") <== addStreamFromCPU("sprite_1_positions");
@@ -32,6 +33,8 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 		addStreamToOnCardMemory("plane_0_write", MemoryAccessPattern.LINEAR_1D) <== addStreamFromCPU("cpu_to_plane_0");
 
 		createSLiCinterface(interfaceDefault());
+
+		getManagerConfiguration().dram.setOnCardMemoryFrequency(475);
 
 	}
 

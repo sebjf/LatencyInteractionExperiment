@@ -8,7 +8,8 @@
 #ifndef SIMULATORS_H_
 #define SIMULATORS_H_
 
-#include "Logging.h"
+
+#include "Resources.h"
 
 class Simulator
 {
@@ -16,9 +17,10 @@ private:
 	bool m_do_simulation;
 
 public:
-	Simulator(Logger& logger)
+	Simulator(Resources& resources, Logger& logger)
 		:m_do_simulation(false),
-		logger(logger)
+		m_resources(resources),
+		m_logger(logger)
 	{}
 
 	virtual void MainLoop() = 0;
@@ -26,7 +28,8 @@ public:
 	const bool& do_simulation() const { return m_do_simulation; }
 	void do_simuation(const bool& val) { m_do_simulation = val; }
 
-	Logger& logger;
+	Resources& m_resources;
+	Logger& m_logger;
 
 	//volatile bool DoSimulation;
 	virtual ~Simulator()
@@ -36,8 +39,8 @@ public:
 class SimulatorFitts : public Simulator
 {
 public:
-	SimulatorFitts(Logger& logger)
-	 :Simulator(logger)
+	SimulatorFitts(Resources& resources, Logger& logger)
+	 :Simulator(resources, logger)
 	{}
 
 	virtual void MainLoop();
@@ -46,8 +49,8 @@ public:
 class SimulatorSteering : public Simulator
 {
 public:
-	SimulatorSteering(Logger& logger)
-	 :Simulator(logger)
+	SimulatorSteering(Resources& resources, Logger& logger)
+	 :Simulator(resources, logger)
 	{}
 
 	virtual void MainLoop();

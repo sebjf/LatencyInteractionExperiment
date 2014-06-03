@@ -63,7 +63,7 @@ bool SteeringLawTestRunner::Trace(int x, int y)
 	m_tracer->Update(x,y);
 
 	Vector ball_location = m_tracer->GetBallLocation();
-	m_ball.SetSpriteCenterLocation(ball_location(0),ball_location(1));
+	m_ball.SetSpriteCenterLocation((int)ball_location(0),(int)ball_location(1));
 
 	return m_tracer->IsComplete();
 }

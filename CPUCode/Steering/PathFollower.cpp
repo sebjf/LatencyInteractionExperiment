@@ -11,7 +11,8 @@ using namespace boost::numeric::ublas;
 
 PathFollower::PathFollower(Path& path)
 :m_path(path),
- m_s(0)
+ m_s(0),
+ m_tolerance(2)
 {
 
 }
@@ -38,14 +39,15 @@ Polar PathFollower::GetCoordinateAroundBall(Vector C, Vector B)
 
 	vector<float_t> d = C - B;
 
+	float distance = norm_2(d);
+
 	//check what side of the ball the cursor is on and add the angle offset if necessary
 
+	d = normalized(d);
 	float angle = acos(inner_prod(d, up));
 	if(C(0) < B(0)){
 		angle += 3.14;
 	}
-
-	float distance = norm_2(d);
 
 	Polar p;
 	p.a = angle;
@@ -53,13 +55,26 @@ Polar PathFollower::GetCoordinateAroundBall(Vector C, Vector B)
 	return p;
 }
 
+Vector PathFollower::GetBallForwardVector()
+{
+	int i1 = m_s;
+	int i2 = m_s + 1;
+
+	if(i2 == m_path.m_points.size())
+	{
+		i1--;
+		i2--;
+	}
+
+	Vector v1 = m_path.m_points[i1].ToVector();
+	Vector v2 = m_path.m_points[i2].ToVector();
+
+	return normalized(v2 - v1);
+}
+
 Vector PathFollower::GetBallLocation()
 {
-	Vector v;
-	PathSegment s = m_path.m_points[m_s];
-	v(0) = s.x;
-	v(1) = s.y;
-	return v;
+	return m_path.m_points[m_s].ToVector();
 }
 
 float PathFollower::GetBallRadius()
@@ -70,6 +85,34 @@ float PathFollower::GetBallRadius()
 bool PathFollower::IsComplete()
 {
 	return m_s >= m_path.m_points.size();
+}
+
+bool PathFollower::IsBehindBall(Vector cursor)
+{
+	Vector ball = GetBallLocation();
+	Vector cb = cursor - ball;
+	Vector forward = GetBallForwardVector();
+	float angle = acos(inner_prod(cb, forward));
+	if(angle > 3.14 / 2)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool PathFollower::IsWithinBall(Vector cursor)
+{
+	Vector ball = GetBallLocation();
+	Vector cb = ball - cursor;
+	float distance = norm_2(cb);
+	if(distance < (GetBallRadius() + m_tolerance))
+	{
+		return true;
+	}
+
+	return false;
+
 }
 
 void PathFollower::Update(int x, int y)
@@ -92,11 +135,8 @@ void PathFollower::Update(int x, int y)
 	C(1) = y;
 
 	do{
-		Polar p = GetCoordinateAroundBall(C,GetBallLocation());
-
-		// Check if cursor is pushing ball down path
-
-		if(p.d < GetBallRadius())
+		bool moveon = IsBehindBall(C) & IsWithinBall(C);
+		if(moveon)
 		{
 			m_s++; //if so move it on
 		}

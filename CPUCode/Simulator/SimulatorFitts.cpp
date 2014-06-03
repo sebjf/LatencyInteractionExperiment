@@ -27,49 +27,18 @@ void SimulatorFitts::MainLoop()
 {
 	std::cout << "Beginning main loop Fitts Law Test Simulator" << std::endl;
 
-	Mouse mouse;
-
-	/* Configure the card and start the kernel running */
-
-	max_file_t* maxfile = LatencyInteractionExperiment_init();
-	max_engine_t* engine = max_load(maxfile, "local:*");
-	max_actions_t* actions = max_actions_init(maxfile, "default");
-
-	bool IsSimulation = max_get_constant_uint64t(maxfile,"IS_SIMULATION");
-
-	VirtualMonitor monitor(maxfile);
-
-	if(IsSimulation){
-		monitor.Connect(engine);
-	}
-
-	mouse.Scale = 0.4f;
-
-
-	Plane plane_0("plane_0", engine, maxfile);
-	plane_0.SetPlaneContent("/home/sfriston/Experiments/Bezier_700.gif");
-	plane_0.UpdatePlaneContent(); //this will cause a reset
-
-
-	Sprite sprite_0("sprite_0",engine,maxfile,256,256);
-	Sprite sprite_1("sprite_1",engine,maxfile,256,256);
-	Sprite sprite_2("sprite_2",engine,maxfile,256,256);
-
-	max_disable_validation(actions); //we wont have set the sprite content yet.
-	max_run(engine, actions);
-
 	/* This object will control the logic of the Fitts Law Tests */
 
-	FittsLawTestRunner runner(sprite_0, sprite_1);
+	FittsLawTestRunner runner(m_resources.sprite_0, m_resources.sprite_1);
 
 	/* This will control the cursor sprite */
 
-	Cursor cursor(sprite_2);
+	Cursor cursor(m_resources.sprite_2);
 
 	/* This will control the input device, reading it and storing a history of its state so that delayed input
 	 * may be provided to the tests */
 
-	DelayedInputController input_controller(0.060f,1000,mouse);
+	DelayedInputController input_controller(0.060f,1000,m_resources.mouse);
 
 	/* This object will load the conditions that drive the state of the tests */
 
@@ -81,7 +50,7 @@ void SimulatorFitts::MainLoop()
 
 	while(do_simulation()){
 
-		monitor.Refresh(1066);
+		m_resources.monitor.Refresh(1066);
 
 		input_controller.Update();
 		MouseState real  = input_controller.GetCurrentState();
@@ -113,21 +82,14 @@ void SimulatorFitts::MainLoop()
 				break;
 			}
 
-			logger.AddNewLog(Log("unknown",0,*(runner.condition)));
+			m_logger.AddNewLog(Log("unknown",0,*(runner.condition)));
 		}
 
-		logger.CurrentLog().Add(Datapoint(real,input));
+		m_logger.CurrentLog().Add(Datapoint(real,input));
 
 	}
 
-	logger.Save(); //saves to the default directory with an unused filename
-	logger.Clear();
-
-	max_actions_free(actions);
-
-	max_reset_engine(engine);
-
-//	max_unlock(engine);
-//	max_unload(engine);
+	m_logger.Save(); //saves to the default directory with an unused filename
+	m_logger.Clear();
 
 }

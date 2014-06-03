@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "Maxfiles.h"
 #include "MaxSLiCInterface.h"
 
 #include <MaxVideoCpuResources.h>
@@ -19,15 +18,15 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "Keyboard/Keyboard.h"
-
 #include "Simulator/SimulatorWrapper.h"
 #include "Simulator/Simulators.h"
+#include "Simulator/Resources.h"
 
 void PrintMainMenu()
 {
 	std::cout <<
 	"Latency Interaction Experiment.\n"\
+	"	I: Initialise resources for experiments.\n"\
 	"	R: Run Simulation\n"\
 	"	E: Exit.\n"\
 	"	S: Stop Simulation\n"\
@@ -36,10 +35,11 @@ void PrintMainMenu()
 
 int main(int argc, char *argv[])
 {
-	SimulatorWrapper* simManager = new SimulatorWrapper();
-
+	SimulatorManager manager;
 	Logger logger("/home/sfriston/Experiments/","fitts_law_log_collection_",".fitts");
-	Simulator* sim = new SimulatorFitts(logger);
+
+	Resources* resources;
+	Simulator* sim;
 
 	bool run = true;
 	while(run){
@@ -47,22 +47,28 @@ int main(int argc, char *argv[])
 		PrintMainMenu();
 
 		switch(std::cin.get()){
+		case 'i':
+		case 'I':
+			resources = InitialiseResources();
+			sim = new SimulatorFitts(*resources, logger);
+			break;
+
 		case 'r':
 		case 'R':
 
-			simManager->RunSimulation(sim);
+			manager.RunSimulation(sim);
 			break;
 
 		case 's':
 		case 'S':
 
-			simManager->StopSimulation();
+			manager.StopSimulation();
 			break;
 
 		case 'e':
 		case 'E':
 
-			simManager->StopSimulation();
+			manager.StopSimulation();
 			run = false;
 			break;
 
@@ -75,6 +81,10 @@ int main(int argc, char *argv[])
 		case 'C':
 			logger.SaveFormatMatlab();
 			break;
+
+		case 'm':
+		case 'M':
+			resources->plane_0.SetPlaneContentInteractive();
 
 		case '\n':
 		case '\r':

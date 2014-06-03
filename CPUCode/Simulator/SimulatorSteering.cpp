@@ -9,9 +9,6 @@
 #include <MaxVideoCpuResources.h>
 #include <iostream>
 
-#include "Maxfiles.h"
-#include "MaxSLiCInterface.h"
-
 #include "Simulators.h"
 #include "Delay.h"
 #include "Logging.h"
@@ -25,45 +22,18 @@ void SimulatorSteering::MainLoop()
 {
 	std::cout << "Beginning main loop Steering Law Test Simulator" << std::endl;
 
-	Mouse mouse;
-
-	/* Configure the card and start the kernel running */
-
-	max_file_t* maxfile = LatencyInteractionExperiment_init();
-	max_engine_t* engine = max_load(maxfile, "local:*");
-	max_actions_t* actions = max_actions_init(maxfile, "default");
-
-	bool IsSimulation = max_get_constant_uint64t(maxfile,"IS_SIMULATION");
-
-	VirtualMonitor monitor(maxfile);
-
-	if(IsSimulation){
-		monitor.Connect(engine);
-	}
-
-	mouse.Scale = 0.4f;
-
-	Sprite sprite_0("sprite_0",engine,maxfile,256,256);
-	Sprite sprite_1("sprite_1",engine,maxfile,256,256);
-	Sprite sprite_2("sprite_2",engine,maxfile,256,256);
-
-	Plane plane_0("plane_0", engine, maxfile);
-
-	max_disable_validation(actions); //we wont have set the sprite content yet.
-	max_run(engine, actions);
-
 	/* This object will control the logic of the Fitts Law Tests */
 
-	SteeringLawTestRunner runner(plane_0, sprite_0);
+	SteeringLawTestRunner runner(m_resources.plane_0, m_resources.sprite_0);
 
 	/* This will control the cursor sprite */
 
-	Cursor cursor(sprite_2);
+	Cursor cursor(m_resources.sprite_2);
 
 	/* This will control the input device, reading it and storing a history of its state so that delayed input
 	 * may be provided to the tests */
 
-	DelayedInputController input_controller(0.060f,1000,mouse);
+	DelayedInputController input_controller(0.060f,1000,m_resources.mouse);
 
 	/* This object will load the conditions that drive the state of the tests */
 
@@ -75,7 +45,7 @@ void SimulatorSteering::MainLoop()
 
 	while(do_simulation()){
 
-		monitor.Refresh(1066);
+		m_resources.monitor.Refresh(1066);
 
 		input_controller.Update();
 		MouseState real  = input_controller.GetCurrentState();
@@ -113,12 +83,5 @@ void SimulatorSteering::MainLoop()
 		//logger.CurrentLog().Add(Datapoint(real,input));
 
 	}
-
-	logger.Save(); //saves to the default directory with an unused filename
-	logger.Clear();
-
-	max_actions_free(actions);
-
-	max_reset_engine(engine);
 
 }

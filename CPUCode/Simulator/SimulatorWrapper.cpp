@@ -7,9 +7,10 @@
 
 #include "SimulatorWrapper.h"
 #include "MaxVideoCpuResources.h"
+#include "MaxSLiCInterface.h"
 
 /* This one creates the thread the simulator will run in and returns immediately */
-void SimulatorWrapper::RunSimulation(Simulator* simulator)
+void SimulatorManager::RunSimulation(Simulator* simulator)
 {
 	if(thread_running){
 		StopSimulation();
@@ -18,7 +19,7 @@ void SimulatorWrapper::RunSimulation(Simulator* simulator)
 	std::cout << "Starting simulator...\n";
 
 	this->simulator = simulator;
-	int res = pthread_create(&thread_info, NULL, &SimulatorWrapper::SimulationMainLoop, this);
+	int res = pthread_create(&thread_info, NULL, &SimulatorManager::SimulationMainLoop, this);
 	if(res != 0){
 		std::cout << "Could not create thread: " << strerror(res) << "\n";
 		return;
@@ -26,7 +27,7 @@ void SimulatorWrapper::RunSimulation(Simulator* simulator)
 	thread_running = true;
 }
 
-void SimulatorWrapper::StopSimulation()
+void SimulatorManager::StopSimulation()
 {
 	if(!thread_running){
 		return;
@@ -43,13 +44,13 @@ void SimulatorWrapper::StopSimulation()
 	std::cout << "Shutdown Complete.\n";
 }
 
-void* SimulatorWrapper::SimulationMainLoop(void* c)
+void* SimulatorManager::SimulationMainLoop(void* c)
 {
 	makeRealtime();
 
 	std::cout << "Started.\n";
 
-	SimulatorWrapper* wrapper = (SimulatorWrapper*)c;
+	SimulatorManager* wrapper = (SimulatorManager*)c;
 	Simulator* simulator = wrapper->simulator;
 
 	simulator->do_simuation(true);

@@ -2,6 +2,7 @@ package latencyinteractionexperiment;
 
 import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.KernelMath;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.LMemCommandStream;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.Counter;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.Params;
@@ -28,7 +29,7 @@ public class MemoryCommandGeneratorKernel extends Kernel {
 
 		DFEVar start_of_frame = sof.valid & sof.data;
 
-		DFEVar length = io.scalarInput("FrameSizeBursts", dfeUInt(32));
+		DFEVar num_pixels = io.scalarInput("FrameSizePixels", dfeUInt(32));
 
 		/* Generate commands to read a frame from memory.
 		 * The following code creates a counter, that will count up from 0-the final address of the plane in burst sizes, and then stop.
@@ -38,19 +39,24 @@ public class MemoryCommandGeneratorKernel extends Kernel {
 		 *  */
 
 		Params burst_counter_params =  control.count.makeParams(32)
-													.withMax(length)
+													.withMax(num_pixels)
 													.withWrapMode(WrapMode.STOP_AT_MAX)
-													.withReset(start_of_frame);
+													.withReset(start_of_frame)
+													.withInc(1);
 
 		Counter burst_counter = control.count.makeCounter(burst_counter_params);
 
-		DFEVar offset = io.scalarInput("BurstOffset", dfeUInt(32));
+		final int pixels_per_burst = 384 / 4;
+		final int bursts_per_command = 10;
+
+		DFEVar address = burst_counter.getCount() / pixels_per_burst;
+		DFEVar isBoundary = KernelMath.modulo(burst_counter.getCount(), pixels_per_burst * bursts_per_command).eq(0) | burst_counter.getCount().eq(0);
 
 		LMemCommandStream.makeKernelOutput(
 				"memory_commands",
-				burst_counter.getCount() < (length - 1),
-				(burst_counter.getCount() + offset).cast(dfeUInt(28)),
-				constant.var(dfeUInt(8),1),
+				isBoundary,
+				address.cast(dfeUInt(28)),
+				constant.var(dfeUInt(8),bursts_per_command),
 				constant.var(dfeUInt(7),1),
 				constant.var(dfeUInt(4),0),
 				constant.var(false));

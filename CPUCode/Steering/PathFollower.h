@@ -13,14 +13,6 @@
 #include <math.h>
 #include <boost/numeric/ublas/vector.hpp>
 
-typedef boost::numeric::ublas::vector<float_t> Vector ;
-
-struct Polar
-{
-	float d;
-	float a;
-};
-
 class PathFollower
 {
 public:
@@ -33,10 +25,16 @@ public:
 
 private:
 	Path& m_path;
-	int m_s; //current abscissa
+	uint m_s; //current abscissa
 
+	uint m_tolerance; //in pixels
+
+	Vector GetBallForwardVector();
 	Polar GetCoordinateAroundBall(Vector Cursor, Vector Ball);
 	float GetBallRadius();
+
+	bool IsBehindBall(Vector cursor);
+	bool IsWithinBall(Vector cursor);
 };
 
 #endif /* PATHFOLLOWER_H_ */
