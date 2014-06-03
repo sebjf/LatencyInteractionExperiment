@@ -40,9 +40,12 @@ private:
 	int m_offsetx;
 	int m_offsety;
 
+	int m_pixelsperburst;
+
 	int m_burst_size;
 	int m_burst_offset;
-	int m_front_porch;
+
+	int m_map_width; //the number of pixels that will actually be read per line (will likely be larger than m_width)
 };
 
 #endif /* PLANE_H_ */

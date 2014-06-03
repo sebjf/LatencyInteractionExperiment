@@ -48,23 +48,12 @@ build: maxfiles
 maxfiles: $(MAXFILES_MAX)
 
 #
-# MaxFile: plane_0
-#
-
-
-BUILDNAME_MAXFILE_1:=plane_0
-MAXFILE_1:=plane_0.max
-
-maxfiles/plane_0.max:
-	ln -sf '/home/sfriston/maxworkspace/MemoryLoader/RunRules/Simulation/maxfiles/plane_0.max' $@
-
-#
 # MaxFile: LatencyInteractionExperiment
 #
 
 
-BUILDNAME_MAXFILE_2:=LatencyInteractionExperiment
-MAXFILE_2:=LatencyInteractionExperiment.max
+BUILDNAME_MAXFILE_1:=LatencyInteractionExperiment
+MAXFILE_1:=LatencyInteractionExperiment.max
 
 include/LatencyInteractionExperiment.h: maxfiles/LatencyInteractionExperiment.h
 	cp $< $@

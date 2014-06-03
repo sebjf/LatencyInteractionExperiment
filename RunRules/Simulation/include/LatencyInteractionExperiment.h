@@ -8,6 +8,8 @@ extern "C" {
 
 #define LatencyInteractionExperiment_DisplayTotalHeight (1066)
 #define LatencyInteractionExperiment_DisplayTotalWidth (1688)
+#define LatencyInteractionExperiment_DisplayHeight (1024)
+#define LatencyInteractionExperiment_DisplayWidth (1280)
 #define LatencyInteractionExperiment_DisplayStartY (41)
 #define LatencyInteractionExperiment_DisplayStartX (392)
 
@@ -21,7 +23,8 @@ extern "C" {
 /**
  * \brief Basic static function for the interface 'default'.
  * 
- * \param [in] inscalar_mcp_kernel_FrameSizePixels Input scalar parameter "mcp_kernel.FrameSizePixels".
+ * \param [in] inscalar_LatencyInteractionExperimentKernel_Enable Input scalar parameter "LatencyInteractionExperimentKernel.Enable".
+ * \param [in] inscalar_mcp_kernel_frame_offset Input scalar parameter "mcp_kernel.frame_offset".
  * \param [in] instream_cpu_to_plane_0 Stream "cpu_to_plane_0".
  * \param [in] instream_size_cpu_to_plane_0 The size of the stream instream_cpu_to_plane_0 in bytes.
  * \param [in] instream_sprite_0_content Stream "sprite_0_content".
@@ -37,11 +40,16 @@ extern "C" {
  * \param [in] instream_sprite_2_positions Stream "sprite_2_positions".
  * \param [in] instream_size_sprite_2_positions The size of the stream instream_sprite_2_positions in bytes.
  * \param [out] outstream_displayDataOut The stream should be of size 8 bytes.
+ * \param [out] outstream_plane_0_to_cpu Stream "plane_0_to_cpu".
+ * \param [in] outstream_size_plane_0_to_cpu The size of the stream outstream_plane_0_to_cpu in bytes.
+ * \param [in] lmem_address_plane_0_read Linear LMem control for "plane_0_read" stream: base address, in bytes.
+ * \param [in] lmem_arr_size_plane_0_read Linear LMem control for "plane_0_read" stream: array size, in bytes.
  * \param [in] lmem_address_plane_0_write Linear LMem control for "plane_0_write" stream: base address, in bytes.
  * \param [in] lmem_arr_size_plane_0_write Linear LMem control for "plane_0_write" stream: array size, in bytes.
  */
 void LatencyInteractionExperiment(
-	uint64_t inscalar_mcp_kernel_FrameSizePixels,
+	uint64_t inscalar_LatencyInteractionExperimentKernel_Enable,
+	uint64_t inscalar_mcp_kernel_frame_offset,
 	const void *instream_cpu_to_plane_0,
 	size_t instream_size_cpu_to_plane_0,
 	const void *instream_sprite_0_content,
@@ -57,6 +65,10 @@ void LatencyInteractionExperiment(
 	const void *instream_sprite_2_positions,
 	size_t instream_size_sprite_2_positions,
 	uint64_t *outstream_displayDataOut,
+	void *outstream_plane_0_to_cpu,
+	size_t outstream_size_plane_0_to_cpu,
+	size_t lmem_address_plane_0_read,
+	size_t lmem_arr_size_plane_0_read,
 	size_t lmem_address_plane_0_write,
 	size_t lmem_arr_size_plane_0_write);
 
@@ -68,7 +80,8 @@ void LatencyInteractionExperiment(
  * note that one of these *must* be called, so that associated memory can be released.
  * 
  * 
- * \param [in] inscalar_mcp_kernel_FrameSizePixels Input scalar parameter "mcp_kernel.FrameSizePixels".
+ * \param [in] inscalar_LatencyInteractionExperimentKernel_Enable Input scalar parameter "LatencyInteractionExperimentKernel.Enable".
+ * \param [in] inscalar_mcp_kernel_frame_offset Input scalar parameter "mcp_kernel.frame_offset".
  * \param [in] instream_cpu_to_plane_0 Stream "cpu_to_plane_0".
  * \param [in] instream_size_cpu_to_plane_0 The size of the stream instream_cpu_to_plane_0 in bytes.
  * \param [in] instream_sprite_0_content Stream "sprite_0_content".
@@ -84,12 +97,17 @@ void LatencyInteractionExperiment(
  * \param [in] instream_sprite_2_positions Stream "sprite_2_positions".
  * \param [in] instream_size_sprite_2_positions The size of the stream instream_sprite_2_positions in bytes.
  * \param [out] outstream_displayDataOut The stream should be of size 8 bytes.
+ * \param [out] outstream_plane_0_to_cpu Stream "plane_0_to_cpu".
+ * \param [in] outstream_size_plane_0_to_cpu The size of the stream outstream_plane_0_to_cpu in bytes.
+ * \param [in] lmem_address_plane_0_read Linear LMem control for "plane_0_read" stream: base address, in bytes.
+ * \param [in] lmem_arr_size_plane_0_read Linear LMem control for "plane_0_read" stream: array size, in bytes.
  * \param [in] lmem_address_plane_0_write Linear LMem control for "plane_0_write" stream: base address, in bytes.
  * \param [in] lmem_arr_size_plane_0_write Linear LMem control for "plane_0_write" stream: array size, in bytes.
  * \return A handle on the execution status, or NULL in case of error.
  */
 max_run_t *LatencyInteractionExperiment_nonblock(
-	uint64_t inscalar_mcp_kernel_FrameSizePixels,
+	uint64_t inscalar_LatencyInteractionExperimentKernel_Enable,
+	uint64_t inscalar_mcp_kernel_frame_offset,
 	const void *instream_cpu_to_plane_0,
 	size_t instream_size_cpu_to_plane_0,
 	const void *instream_sprite_0_content,
@@ -105,6 +123,10 @@ max_run_t *LatencyInteractionExperiment_nonblock(
 	const void *instream_sprite_2_positions,
 	size_t instream_size_sprite_2_positions,
 	uint64_t *outstream_displayDataOut,
+	void *outstream_plane_0_to_cpu,
+	size_t outstream_size_plane_0_to_cpu,
+	size_t lmem_address_plane_0_read,
+	size_t lmem_arr_size_plane_0_read,
 	size_t lmem_address_plane_0_write,
 	size_t lmem_arr_size_plane_0_write);
 
@@ -113,7 +135,8 @@ max_run_t *LatencyInteractionExperiment_nonblock(
  * 
  */
 typedef struct { 
-	uint64_t inscalar_mcp_kernel_FrameSizePixels; /**<  [in] Input scalar parameter "mcp_kernel.FrameSizePixels". */
+	uint64_t inscalar_LatencyInteractionExperimentKernel_Enable; /**<  [in] Input scalar parameter "LatencyInteractionExperimentKernel.Enable". */
+	uint64_t inscalar_mcp_kernel_frame_offset; /**<  [in] Input scalar parameter "mcp_kernel.frame_offset". */
 	const void *instream_cpu_to_plane_0; /**<  [in] Stream "cpu_to_plane_0". */
 	size_t instream_size_cpu_to_plane_0; /**<  [in] The size of the stream instream_cpu_to_plane_0 in bytes. */
 	const void *instream_sprite_0_content; /**<  [in] Stream "sprite_0_content". */
@@ -129,6 +152,10 @@ typedef struct {
 	const void *instream_sprite_2_positions; /**<  [in] Stream "sprite_2_positions". */
 	size_t instream_size_sprite_2_positions; /**<  [in] The size of the stream instream_sprite_2_positions in bytes. */
 	uint64_t *outstream_displayDataOut; /**<  [out] The stream should be of size 8 bytes. */
+	void *outstream_plane_0_to_cpu; /**<  [out] Stream "plane_0_to_cpu". */
+	size_t outstream_size_plane_0_to_cpu; /**<  [in] The size of the stream outstream_plane_0_to_cpu in bytes. */
+	size_t lmem_address_plane_0_read; /**<  [in] Linear LMem control for "plane_0_read" stream: base address, in bytes. */
+	size_t lmem_arr_size_plane_0_read; /**<  [in] Linear LMem control for "plane_0_read" stream: array size, in bytes. */
 	size_t lmem_address_plane_0_write; /**<  [in] Linear LMem control for "plane_0_write" stream: base address, in bytes. */
 	size_t lmem_arr_size_plane_0_write; /**<  [in] Linear LMem control for "plane_0_write" stream: array size, in bytes. */
 } LatencyInteractionExperiment_actions_t;

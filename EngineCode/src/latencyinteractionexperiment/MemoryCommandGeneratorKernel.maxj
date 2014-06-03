@@ -2,11 +2,7 @@ package latencyinteractionexperiment;
 
 import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.KernelMath;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.LMemCommandStream;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.Counter;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.Params;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.WrapMode;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.DelimiterMode;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingInput;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingMode;
@@ -20,43 +16,25 @@ public class MemoryCommandGeneratorKernel extends Kernel {
 	protected MemoryCommandGeneratorKernel(KernelParameters parameters, DisplayStandard display) {
 		super(parameters);
 
-		//DFEVar start_of_frame = io.input("frame_sync_in", dfeBool());
-
 		flush.disabled();
 
-		NonBlockingInput<DFEVar> sof =
-			io.nonBlockingInput("frame_sync_in", dfeBool(), constant.var(true), 1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
+		NonBlockingInput<DFEVar> line_number =
+			io.nonBlockingInput("line_number_in", dfeUInt(16), constant.var(true), 1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
 
-		DFEVar start_of_frame = sof.valid & sof.data;
+		DFEVar frame_offset = io.scalarInput("frame_offset", dfeUInt(32));
 
-		DFEVar num_pixels = io.scalarInput("FrameSizePixels", dfeUInt(32));
+		final double burst_size = 384;
+		final double pixels_per_burst = burst_size / 4;
+		final double line_size = display.H_Active;
+		final int bursts_per_line = (int)Math.ceil(line_size/pixels_per_burst);
 
-		/* Generate commands to read a frame from memory.
-		 * The following code creates a counter, that will count up from 0-the final address of the plane in burst sizes, and then stop.
-		 * The DFEVar valid, will indicate when the counter is counting up (because the count will be less than the final address), and this is
-		 * used to add new commands to the stream.
-		 * When a new frame begins, the counter is reset and the process repeats.
-		 *  */
-
-		Params burst_counter_params =  control.count.makeParams(32)
-													.withMax(num_pixels)
-													.withWrapMode(WrapMode.STOP_AT_MAX)
-													.withReset(start_of_frame)
-													.withInc(1);
-
-		Counter burst_counter = control.count.makeCounter(burst_counter_params);
-
-		final int pixels_per_burst = 384 / 4;
-		final int bursts_per_command = 10;
-
-		DFEVar address = burst_counter.getCount() / pixels_per_burst;
-		DFEVar isBoundary = KernelMath.modulo(burst_counter.getCount(), pixels_per_burst * bursts_per_command).eq(0) | burst_counter.getCount().eq(0);
+		DFEVar address = frame_offset.cast(dfeUInt(28)) + (line_number.data * bursts_per_line).cast(dfeUInt(28));
 
 		LMemCommandStream.makeKernelOutput(
 				"memory_commands",
-				isBoundary,
+				line_number.valid,
 				address.cast(dfeUInt(28)),
-				constant.var(dfeUInt(8),bursts_per_command),
+				constant.var(dfeUInt(8),bursts_per_line),
 				constant.var(dfeUInt(7),1),
 				constant.var(dfeUInt(4),0),
 				constant.var(false));

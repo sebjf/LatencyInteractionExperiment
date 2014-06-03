@@ -1,10 +1,14 @@
 package latencyinteractionexperiment;
 
 import maxvideo.MaxVideoManager;
+import types.uRGBA;
 
+import com.maxeler.maxcompiler.v2.managers.custom._CustomManagers;
 import com.maxeler.maxcompiler.v2.managers.custom.blocks.KernelBlock;
 import com.maxeler.maxcompiler.v2.managers.custom.stdlib.MemoryControlGroup.MemoryAccessPattern;
 import com.maxeler.maxcompiler.v2.managers.engine_interfaces.EngineInterface;
+
+import displaystandards.DisplayStandard;
 
 public class LatencyInteractionExperimentManager extends MaxVideoManager {
 
@@ -13,13 +17,33 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 	public LatencyInteractionExperimentManager(LatencyInteractionExperimentEngineParameters engineParameters) {
 		super(engineParameters);
 
-		LatencyInteractionExperimentKernel framegenkernel_inner = new LatencyInteractionExperimentKernel(makeKernelParameters(m_kernelName));
+		/* Memory Initialisation Separate to Kernel */
+		addStreamToOnCardMemory("plane_0_write", MemoryAccessPattern.LINEAR_1D) <== addStreamFromCPU("cpu_to_plane_0");
+		addStreamToCPU("plane_0_to_cpu") <== addStreamFromOnCardMemory("plane_0_read", MemoryAccessPattern.LINEAR_1D);
+
+		/* Main Image Generator Kernel */
+		DisplayStandard displayparams = DisplayStandard.make_1280x1024x75();
+
+		LatencyInteractionExperimentKernel framegenkernel_inner =
+			new LatencyInteractionExperimentKernel(makeKernelParameters(m_kernelName), displayparams);
+
 		KernelBlock framegenkernel = addVideoKernel(framegenkernel_inner);
 
-		MemoryCommandGeneratorKernel mcp_kernel_inner = new MemoryCommandGeneratorKernel(makeKernelParameters("mcp_kernel"), framegenkernel_inner.Display);
-		KernelBlock mcp_kernel = addKernel(mcp_kernel_inner);
-		mcp_kernel.setClock(framegenkernel_inner.clock);
+		/* Background Map Memory Control */
 
+		MemoryCommandGeneratorKernel mcp_kernel_inner =
+			new MemoryCommandGeneratorKernel(makeKernelParameters("mcp_kernel"), displayparams);
+		KernelBlock mcp_kernel = addKernel(mcp_kernel_inner);
+
+		mcp_kernel.getInput("line_number_in") <== framegenkernel.getOutput("line_number_out");
+		framegenkernel.getInput("line_data_in") <== addStreamFromOnCardMemory("line_data_out", mcp_kernel.getOutput("memory_commands"));
+
+		final int buffer_space_in_bits = uRGBA.getDFEStructType().getTotalBits() * ((displayparams.H_Active + 1)/96);
+		_CustomManagers.setStreamBufferSpaceRequirement(framegenkernel.getInput("line_data_in"), buffer_space_in_bits);
+
+		mcp_kernel.setClock(generateStreamClock("memory_controller_clock", 300));
+
+		/* CPU IO Connections */
 		framegenkernel.getInput("sprite_0_positions") <== addStreamFromCPU("sprite_0_positions");
 		framegenkernel.getInput("sprite_1_positions") <== addStreamFromCPU("sprite_1_positions");
 		framegenkernel.getInput("sprite_2_positions") <== addStreamFromCPU("sprite_2_positions");
@@ -28,9 +52,6 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 		framegenkernel.getInput("sprite_1_content") <== addStreamFromCPU("sprite_1_content");
 		framegenkernel.getInput("sprite_2_content") <== addStreamFromCPU("sprite_2_content");
 
-		mcp_kernel.getInput("frame_sync_in") <== framegenkernel.getOutput("start_of_frame");
-		framegenkernel.getInput("plane_0_content") <== addStreamFromOnCardMemory("plane_0_read", mcp_kernel.getOutput("memory_commands"));
-		addStreamToOnCardMemory("plane_0_write", MemoryAccessPattern.LINEAR_1D) <== addStreamFromCPU("cpu_to_plane_0");
 
 		createSLiCinterface(interfaceDefault());
 

@@ -11,6 +11,8 @@ import types.uRGBA;
 import com.maxeler.maxcompiler.v0.utils.MathUtils;
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.Counter;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.WrapMode;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.DelimiterMode;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingInput;
@@ -25,8 +27,8 @@ import functions.ColourFunctions;
 
 class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 
-	protected LatencyInteractionExperimentKernel(KernelParameters parameters) {
-		super(parameters, DisplayStandard.make_1280x1024x75());
+	protected LatencyInteractionExperimentKernel(KernelParameters parameters, DisplayStandard displayparameters) {
+		super(parameters, displayparameters);
 	}
 
 	@Override
@@ -34,8 +36,6 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 		// TODO Auto-generated method stub
 
 		Plane background = new Plane("plane_0", Display, input);
-
-		io.output("start_of_frame", dfeBool(), input.m_start_of_frame) <== input.m_start_of_frame;
 
 		uRGB background_colour = new uRGB(background.getColour());
 
@@ -57,13 +57,48 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 	{
 		public Plane(String name, DisplayStandard display, FragmentInput input)
 		{
-			NonBlockingInput<DFEStruct> content =
-				io.nonBlockingInput(name + "_content", uRGBA.getDFEStructType(), constant.var(true), 1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
-			m_colourdata = content.data;
+			/*At the start of each line, request the next one so it is ready for reading when we get to it.*/
+
+			DFEVar y_req_enable = (input.m_y >= -1) & (input.m_y < (display.V_Active - 1));
+			DFEVar x_req_enable = input.m_x.eq(0);
+
+			io.output("line_number_out",
+					(input.m_y + 1).cast(dfeUInt(16)),
+					dfeUInt(16),
+					(x_req_enable & y_req_enable)); //the dataenable is for Y
+
+			final double line_width = display.H_Active;
+			final double pixels_per_burst = 384/4;
+			final int pixels_read_per_line = (int)(Math.ceil(line_width/pixels_per_burst) * pixels_per_burst);
+
+
+			DFEVar start_reading_padding = input.m_x.eq(line_width) & (input.m_y < display.V_Active);
+
+			final int padding = (int)(pixels_read_per_line - line_width);
+
+			Counter padding_counter = control.count.makeCounter(
+					control.count.makeParams(MathUtils.bitsToRepresent(display.TotalWidth))
+									.withMax(padding)
+									.withWrapMode(WrapMode.STOP_AT_MAX)
+									.withReset(start_reading_padding));
+
+			DFEVar padding_enable = (padding_counter.getCount() < padding) & (input.m_y > 0);
+
+
+			DFEVar active_area_enable = (input.m_y >= 0) & (input.m_y < display.V_Active) & (input.m_x >= 0) & (input.m_x < pixels_read_per_line);
+
+			DFEVar read_enable = active_area_enable | padding_enable;
+
+			input.m_x.simWatch("x");
+			input.m_y.simWatch("y");
+			active_area_enable.simWatch("active");
+			padding_enable.simWatch("padding");
+
+			m_colourdata = io.input("line_data_in", uRGBA.getDFEStructType(), read_enable);
 
 		}
 
-		private final DFEStruct m_colourdata; //without data.valid this will be nonsense sometimes, but we will have a max under-run of 96 pixels, which will be off screen anyway
+		private final DFEStruct m_colourdata;
 
 		fRGBA getColour()
 		{

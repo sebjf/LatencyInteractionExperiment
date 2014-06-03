@@ -82,10 +82,6 @@ int main(int argc, char *argv[])
 			logger.SaveFormatMatlab();
 			break;
 
-		case 'm':
-		case 'M':
-			resources->plane_0.SetPlaneContentInteractive();
-
 		case '\n':
 		case '\r':
 			break;
