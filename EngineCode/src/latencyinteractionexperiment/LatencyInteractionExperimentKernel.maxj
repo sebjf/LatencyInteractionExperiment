@@ -89,11 +89,6 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 
 			DFEVar read_enable = active_area_enable | padding_enable;
 
-			input.m_x.simWatch("x");
-			input.m_y.simWatch("y");
-			active_area_enable.simWatch("active");
-			padding_enable.simWatch("padding");
-
 			m_colourdata = io.input("line_data_in", uRGBA.getDFEStructType(), read_enable);
 
 		}

@@ -38,10 +38,10 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 		mcp_kernel.getInput("line_number_in") <== framegenkernel.getOutput("line_number_out");
 		framegenkernel.getInput("line_data_in") <== addStreamFromOnCardMemory("line_data_out", mcp_kernel.getOutput("memory_commands"));
 
-		final int buffer_space_in_bits = uRGBA.getDFEStructType().getTotalBits() * ((displayparams.H_Active + 1)/96);
+		final int buffer_space_in_bits = uRGBA.getDFEStructType().getTotalBits() * displayparams.TotalWidth;
 		_CustomManagers.setStreamBufferSpaceRequirement(framegenkernel.getInput("line_data_in"), buffer_space_in_bits);
 
-		mcp_kernel.setClock(generateStreamClock("memory_controller_clock", 300));
+		mcp_kernel.setClock(generateStreamClock("memory_controller_clock", 210));
 
 		/* CPU IO Connections */
 		framegenkernel.getInput("sprite_0_positions") <== addStreamFromCPU("sprite_0_positions");
