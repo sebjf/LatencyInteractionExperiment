@@ -22,6 +22,10 @@
 #include "Simulator/Simulators.h"
 #include "Simulator/Resources.h"
 
+#include "Steering/SteeringConditionBuilder.h"
+
+#include <SDL/SDL_image.h>
+
 void PrintMainMenu()
 {
 	std::cout <<
@@ -35,11 +39,21 @@ void PrintMainMenu()
 
 int main(int argc, char *argv[])
 {
+	std::string experiments_root = "/home/sfriston/Experiments/";
+
 	SimulatorManager manager;
-	Logger logger("/home/sfriston/Experiments/","fitts_law_log_collection_",".fitts");
+	Logger logger(experiments_root,"fitts_law_log_collection_",".fitts");
+
+	SteeringConditionBuilder steering_conditions(experiments_root);
+	steering_conditions.LoadSingle("steering_conditions.bin");
 
 	Resources* resources;
-	Simulator* sim;
+	Simulator* fitts;
+	Simulator* steering;
+
+//the issue is the reference in plane made from sdl_surface pointer. the cast from void* to uint64_t makes it go to zero.
+	SDL_Surface* img1 = IMG_Load("/home/sfriston/Experiments/path1.bmp");
+	SDL_Surface* img2 = IMG_Load("/home/sfriston/Experiments/background.bmp");
 
 	bool run = true;
 	while(run){
@@ -49,14 +63,38 @@ int main(int argc, char *argv[])
 		switch(std::cin.get()){
 		case 'i':
 		case 'I':
+
 			resources = InitialiseResources();
-			sim = new SimulatorFitts(*resources, logger);
+
+			resources->plane_0.SetPlaneContent(steering_conditions.GetMaps());
+
+			resources->plane_0.SetPlaneContent(img1,1);
+			resources->plane_0.SetPlaneContent(img2,2);
+
+			resources->plane_0.UpdatePlaneContent();
+
+			fitts = new SimulatorFitts(*resources, logger);
+			steering = new SimulatorSteering(*resources, logger, steering_conditions);
+			break;
+
+		case 'b':
+		case 'B':
+			int v;
+			std::cout << "Plane No." << std::endl;
+			std::cin >> v;
+			resources->plane_0.ShowPlane(v);
 			break;
 
 		case 'r':
 		case 'R':
 
-			manager.RunSimulation(sim);
+			manager.RunSimulation(fitts);
+			break;
+
+		case 't':
+		case 'T':
+
+			manager.RunSimulation(steering);
 			break;
 
 		case 's':

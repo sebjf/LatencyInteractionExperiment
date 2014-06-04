@@ -11,6 +11,8 @@
 #include <string>
 #include <MaxSLiCInterface.h>
 #include <SDL/SDL.h>
+#include <vector>
+#include <map>
 
 /* A plane is a special type of sprite that does not move, and instead takes up the whole screen, stored in LMEM */
 
@@ -20,32 +22,37 @@ public:
 	Plane(std::string name, max_engine_t* engine, max_file_t* maxfile);
 	~Plane();
 
-	void SetPlaneContent(std::string image);
+	/*This overload will use the SDL_Surface pointer itself as an id { (int)surfaces[i] }*/
+	void SetPlaneContent(std::vector<SDL_Surface*> surfaces);
+	void SetPlaneContent(std::vector<SDL_Surface*> surfaces, std::vector<uint64_t> refs);
+	void SetPlaneContent(SDL_Surface* image, uint64_t ref);
+	void SetPlaneContent(std::string& image);
 	void SetPlaneContent(SDL_Surface* image);
 	void UpdatePlaneContent();
 
-	void SetPlaneContentInteractive();
-
-	max_engine_t* m_engine;
+	void ShowPlane(uint64_t ref);
 
 private:
 	std::string m_name;
 
+	max_engine_t* m_engine;
 	max_file_t* m_maxfile;
-
 	SDL_Surface* m_surface;
 
 	int m_width;
 	int m_height;
-	int m_offsetx;
-	int m_offsety;
 
 	int m_pixelsperburst;
-
 	int m_burst_size;
-	int m_burst_offset;
 
 	int m_map_width; //the number of pixels that will actually be read per line (will likely be larger than m_width)
+	int m_map_size;
+
+	SDL_Surface* AddSurface(uint64_t ref);
+	std::vector<SDL_Surface*> m_surfaces;
+	std::map<uint64_t,int> m_surfacemap;
+
+	bool m_is_simulation;
 };
 
 #endif /* PLANE_H_ */

@@ -75,7 +75,7 @@ void SimulatorFitts::MainLoop()
 			runner.Begin(*conditions_interator);
 			conditions_interator++;
 
-			if(conditions_interator == conditions.end()){
+			if(conditions_interator == conditions.end()+1){
 				std::cout << "All Conditions Complete." << std::endl;
 				do_simuation(false);
 

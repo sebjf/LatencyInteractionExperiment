@@ -46,14 +46,20 @@ public:
 	virtual void MainLoop();
 };
 
+class SteeringConditionBuilder;
+
 class SimulatorSteering : public Simulator
 {
 public:
-	SimulatorSteering(Resources& resources, Logger& logger)
-	 :Simulator(resources, logger)
+	SimulatorSteering(Resources& resources, Logger& logger, SteeringConditionBuilder& conditions)
+	 :Simulator(resources, logger),
+	  m_conditions(conditions)
 	{}
 
 	virtual void MainLoop();
+
+private:
+	SteeringConditionBuilder& m_conditions;
 };
 
 #endif /* SIMULATORS_H_ */

@@ -20,7 +20,7 @@ public:
 
 	void Update(int x, int y);
 
-	Vector GetBallLocation();
+	Vector2 GetBallLocation();
 	bool IsComplete();
 
 private:
@@ -29,12 +29,12 @@ private:
 
 	uint m_tolerance; //in pixels
 
-	Vector GetBallForwardVector();
-	Polar GetCoordinateAroundBall(Vector Cursor, Vector Ball);
+	Vector2 GetBallForwardVector();
+	Polar GetCoordinateAroundBall(Vector2 Cursor, Vector2 Ball);
 	float GetBallRadius();
 
-	bool IsBehindBall(Vector cursor);
-	bool IsWithinBall(Vector cursor);
+	bool IsBehindBall(Vector2 cursor);
+	bool IsWithinBall(Vector2 cursor);
 };
 
 #endif /* PATHFOLLOWER_H_ */

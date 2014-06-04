@@ -25,13 +25,13 @@ void normalize( vector_expression<E> &vector )
 	vector() /= ((len > 0) ? len : (float_t)NAN);
 }
 
-Vector normalized(Vector vector )
+Vector2 normalized(Vector2 vector )
 {
 	normalize( vector );
 	return vector;
 }
 
-Polar PathFollower::GetCoordinateAroundBall(Vector C, Vector B)
+Polar PathFollower::GetCoordinateAroundBall(Vector2 C, Vector2 B)
 {
 	vector<float_t> up(2);
 	up(0) = 0;
@@ -55,10 +55,10 @@ Polar PathFollower::GetCoordinateAroundBall(Vector C, Vector B)
 	return p;
 }
 
-Vector PathFollower::GetBallForwardVector()
+Vector2 PathFollower::GetBallForwardVector()
 {
-	int i1 = m_s;
-	int i2 = m_s + 1;
+	unsigned int i1 = m_s;
+	unsigned int i2 = m_s + 1;
 
 	if(i2 == m_path.m_points.size())
 	{
@@ -66,13 +66,13 @@ Vector PathFollower::GetBallForwardVector()
 		i2--;
 	}
 
-	Vector v1 = m_path.m_points[i1].ToVector();
-	Vector v2 = m_path.m_points[i2].ToVector();
+	Vector2 v1 = m_path.m_points[i1].ToVector();
+	Vector2 v2 = m_path.m_points[i2].ToVector();
 
 	return normalized(v2 - v1);
 }
 
-Vector PathFollower::GetBallLocation()
+Vector2 PathFollower::GetBallLocation()
 {
 	return m_path.m_points[m_s].ToVector();
 }
@@ -87,11 +87,11 @@ bool PathFollower::IsComplete()
 	return m_s >= m_path.m_points.size();
 }
 
-bool PathFollower::IsBehindBall(Vector cursor)
+bool PathFollower::IsBehindBall(Vector2 cursor)
 {
-	Vector ball = GetBallLocation();
-	Vector cb = cursor - ball;
-	Vector forward = GetBallForwardVector();
+	Vector2 ball = GetBallLocation();
+	Vector2 cb = cursor - ball;
+	Vector2 forward = GetBallForwardVector();
 	float angle = acos(inner_prod(cb, forward));
 	if(angle > 3.14 / 2)
 	{
@@ -101,10 +101,10 @@ bool PathFollower::IsBehindBall(Vector cursor)
 	return false;
 }
 
-bool PathFollower::IsWithinBall(Vector cursor)
+bool PathFollower::IsWithinBall(Vector2 cursor)
 {
-	Vector ball = GetBallLocation();
-	Vector cb = ball - cursor;
+	Vector2 ball = GetBallLocation();
+	Vector2 cb = ball - cursor;
 	float distance = norm_2(cb);
 	if(distance < (GetBallRadius() + m_tolerance))
 	{

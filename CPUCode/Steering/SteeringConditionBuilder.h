@@ -12,20 +12,26 @@
 #include <SDL/SDL.h>
 #include "SteeringLawTestConditions.h"
 
+
 class SteeringConditionBuilder
 {
 public:
 	SteeringConditionBuilder(std::string map_search_dir);
 
-	void LoadFromCSV(std::string filename);
-
 	std::vector<SteeringLawTestCondition*> m_conditions;
+
+
+	void LoadSingle(std::string filename);
+	void LoadSingle(std::istream& is);
+
+	std::vector<SDL_Surface*> GetMaps();
 
 private:
 
-	std::string m_map_search_dir;
+	std::string m_search_dir;
 
-	void LoadPath(std::string filename, SteeringLawTestCondition* condition);
+
+	void InitialiseCondition(SteeringLawTestCondition* condition, std::istream& stream);
 
 };
 

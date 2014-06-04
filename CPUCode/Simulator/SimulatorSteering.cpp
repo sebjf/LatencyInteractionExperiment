@@ -37,9 +37,7 @@ void SimulatorSteering::MainLoop()
 
 	/* This object will load the conditions that drive the state of the tests */
 
-	SteeringConditionBuilder builder("/home/sfriston/Experiments/");
-	builder.LoadFromCSV("/home/sfriston/Experiments/steeringLawConditions.csv");
-	std::vector<SteeringLawTestCondition*>::iterator conditions_interator = builder.m_conditions.begin();
+	std::vector<SteeringLawTestCondition*>::iterator conditions_interator = m_conditions.m_conditions.begin();
 
 	MouseState last_input;
 
@@ -70,7 +68,7 @@ void SimulatorSteering::MainLoop()
 			runner.Begin(*conditions_interator);
 			conditions_interator++;
 
-			if(conditions_interator == builder.m_conditions.end()){
+			if(conditions_interator == m_conditions.m_conditions.end()+1){
 				std::cout << "All Conditions Complete." << std::endl;
 				do_simuation(false);
 

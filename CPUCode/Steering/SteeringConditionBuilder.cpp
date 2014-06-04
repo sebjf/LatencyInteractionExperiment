@@ -9,77 +9,84 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <istream>
 #include <errno.h>
+#include <vector>
 #include <Utils/Split.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
+std::istream& operator >>(std::istream& is, PathSegment& segment)
+{
+	is >> segment.x;
+	is >> segment.y;
+	is >> segment.forward;
+	return is;
+}
+
+std::istream& operator >>(std::istream& is, Path& path)
+{
+	is >> path.m_width;
+
+	int num_segments;
+	is >> num_segments;
+	for(int i = 0; i < num_segments; i++)
+	{
+		PathSegment s;
+		is >> s;
+		path.m_points.push_back(s);
+	}
+
+	return is;
+}
+
 SteeringConditionBuilder::SteeringConditionBuilder(std::string dir)
-:m_map_search_dir(dir)
+:m_search_dir(dir)
 {
 
 }
 
-void SteeringConditionBuilder::LoadFromCSV(std::string filename)
+void SteeringConditionBuilder::InitialiseCondition(SteeringLawTestCondition* condition, std::istream& stream)
 {
-	std::ifstream file(filename.c_str(), std::ifstream::in);
+	stream >> condition->m_latency_in_ms;
+	stream >> condition->path;
+
+	int length;
+	stream >> length;
+
+	uint8_t img_data[length];
+	stream.read((char*)img_data,length);
+	SDL_RWops* img_ops = SDL_RWFromMem(stream,length);
+
+	condition->m_map = IMG_LoadBMP_RW(img_ops);
+}
+
+void SteeringConditionBuilder::LoadSingle(std::string filename)
+{
+	std::ifstream file((m_search_dir + filename).c_str(), std::ifstream::in);
 	if(file.fail())
 	{
 		std::cout << "Could not open file: " << filename << " " << strerror(errno) << std::endl;
 	}
 
-	std::string value;
-	while(file.good())
-	{
-		 getline (file, value);
-
-		 std::vector<std::string> items;
-		 split(value,',',items);
-
-		 SteeringLawTestCondition* condition = new SteeringLawTestCondition();
-
-		 if(items.size() < 4){
-			 continue; //incomplete line. skip.
-		 }
-
-		 LoadPath(items[0].c_str(), condition);
-		 condition->path.m_width 	= atoi(items[1].c_str());
-		 condition->m_curvature 	= atoi(items[2].c_str());
-		 condition->m_latency_in_ms = atoi(items[3].c_str());
-
-		 m_conditions.push_back(condition);
-	}
-
-	if(m_conditions.size() <= 0){
-		std::cout << "No conditions were loaded from the CSV, there may be a problem with it." << std::endl;
-	}
+	LoadSingle(file);
 }
 
-void SteeringConditionBuilder::LoadPath(std::string filename, SteeringLawTestCondition* condition )
+void SteeringConditionBuilder::LoadSingle(std::istream& is)
 {
-	SDL_Surface* path_map = IMG_Load((m_map_search_dir + filename).c_str());
-	condition->m_map = path_map;
+	 SteeringLawTestCondition* condition = new SteeringLawTestCondition();
+	 InitialiseCondition(condition, is);
+	 m_conditions.push_back(condition);
+}
 
-	Uint32 mask = SDL_MapRGBA(path_map->format,255,0,0,255);
+std::vector<SDL_Surface*> SteeringConditionBuilder::GetMaps()
+{
+	std::vector<SDL_Surface*> surfaces;
 
-	for(int x = 0; x < path_map->w; x++)
+	for(unsigned int i = 0; i < m_conditions.size(); i++)
 	{
-		for(int y = 0; y < path_map->h; y++)
-		{
-			Uint32 pixel = ((Uint32*)path_map->pixels)[y * path_map->pitch + x];
-			if(pixel == mask)
-			{
-				PathSegment s;
-				s.x = x;
-				s.y = y;
-				s.forward = 0;
-
-				condition->path.m_points.push_back(s);
-
-				break;
-			}
-		}
-
+		surfaces.push_back(m_conditions[i]->m_map);
 	}
 
+	return surfaces;
 }

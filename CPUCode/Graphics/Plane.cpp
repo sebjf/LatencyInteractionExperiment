@@ -20,18 +20,15 @@ Plane::Plane(std::string name, max_engine_t* engine, max_file_t* maxfile)
 {
 	m_width = (int)max_get_constant_uint64t(maxfile, "DisplayWidth");
 	m_height = (int)max_get_constant_uint64t(maxfile, "DisplayHeight");
-	m_offsetx = (int)max_get_constant_uint64t(maxfile, "DisplayStartX");
-	m_offsety = (int)max_get_constant_uint64t(maxfile, "DisplayStartY");
 
 	m_burst_size = max_get_burst_size(maxfile, NULL);
 
 	m_pixelsperburst = m_burst_size/4;
 
-	m_map_width = ceil((float)m_width / (float)m_pixelsperburst) * m_pixelsperburst;
+	m_map_width = (int)(ceil((float)m_width / (float)m_pixelsperburst) * (float)m_pixelsperburst);
+	m_map_size = m_map_width * m_height * 4;
 
-	m_burst_offset = 0;
-
-	m_surface = SDL_CreateRGBSurface(0, m_map_width, m_height, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+	m_is_simulation = max_get_constant_uint64t(m_maxfile,"IS_SIMULATION");
 }
 
 Plane::~Plane()
@@ -39,22 +36,73 @@ Plane::~Plane()
 
 }
 
-void Plane::SetPlaneContent(SDL_Surface* img)
+SDL_Surface* Plane::AddSurface(uint64_t ref)
 {
-	SDL_Rect dest;
-	dest.x = 0;
-	dest.y = 0;
-	dest.w = 0;
-	dest.h = 0;
-
-	SDL_BlitSurface(img, NULL, m_surface, &dest);
+	SDL_Surface* surface = SDL_CreateRGBSurface(0, m_map_width, m_height, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+	int offset = m_surfaces.size() * m_map_size;
+	m_surfaces.push_back(surface);
+	m_surfacemap[ref] = offset/m_burst_size;
+	return surface;
 }
 
-void Plane::SetPlaneContent(std::string filename)
+void Plane::SetPlaneContent(std::vector<SDL_Surface*> surfaces)
+{
+	std::vector<uint64_t> refs;
+	for(unsigned int i = 0; i < surfaces.size(); i++)
+	{
+		SDL_Surface* ptr = surfaces[i];
+		refs.push_back((uint64_t)ptr);
+	}
+	SetPlaneContent(surfaces,refs);
+}
+
+void Plane::SetPlaneContent(std::vector<SDL_Surface*> surfaces, std::vector<uint64_t> refs)
+{
+	for(unsigned int i = 0; i < surfaces.size(); i++)
+	{
+		SDL_Surface* src = surfaces[i];
+		SDL_Surface* dest = AddSurface(refs[i]);
+		SDL_BlitSurface(src,NULL,dest,NULL);
+	}
+}
+
+void Plane::SetPlaneContent(SDL_Surface* src, uint64_t ref)
+{
+	SDL_Surface* dest = AddSurface(ref);
+	SDL_BlitSurface(src,NULL,dest,NULL);
+}
+
+void Plane::SetPlaneContent(SDL_Surface* src)
+{
+	SetPlaneContent(src, 0);
+}
+
+void Plane::SetPlaneContent(std::string& filename)
 {
 	SDL_Surface* img = IMG_Load(filename.c_str());
 	SetPlaneContent(img);
 	SDL_FreeSurface(img);
+}
+
+void Plane::ShowPlane(uint64_t ref)
+{
+	max_actions_t* mem_actions = max_actions_init(m_maxfile, "default");
+	max_disable_reset(mem_actions);
+	max_enable_partial_memory(mem_actions);
+	max_disable_validation(mem_actions);
+
+	int offset = m_surfacemap[ref];
+	max_set_uint64t(mem_actions, "mcp_kernel", "frame_offset", offset);
+
+	if(m_is_simulation)
+	{
+		max_run_nonblock(m_engine, mem_actions);
+	}
+	else
+	{
+		max_run(m_engine, mem_actions);
+	}
+	max_actions_free(mem_actions);
 }
 
 void Plane::UpdatePlaneContent()
@@ -66,13 +114,14 @@ void Plane::UpdatePlaneContent()
 
 	max_set_uint64t(mem_actions, "mcp_kernel", "frame_offset", 0);
 
-	//The surface has been sized so its width is a multiple of the burst size, so we do not have to worry about that here
-	const int map_size_bytes = m_surface->w * m_surface->h * 4;
+	max_lmem_linear(mem_actions, "plane_0_write", 0, m_map_size * m_surfaces.size());
 
-	max_lmem_linear(mem_actions, "plane_0_write", 0, map_size_bytes);
-	max_queue_input(mem_actions,"cpu_to_plane_0", m_surface->pixels, map_size_bytes);
+	for(unsigned int i = 0; i < m_surfaces.size(); i++)
+	{
+		max_queue_input(mem_actions,"cpu_to_plane_0", m_surfaces[i]->pixels, m_map_size);
+	}
 
-	if(max_get_constant_uint64t(m_maxfile,"IS_SIMULATION"))
+	if(m_is_simulation)
 	{
 		max_run_nonblock(m_engine, mem_actions);
 	}

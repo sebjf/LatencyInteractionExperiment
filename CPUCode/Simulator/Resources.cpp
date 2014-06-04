@@ -32,7 +32,8 @@ Resources* InitialiseResources()
 	Sprite* sprite_2 = new Sprite("sprite_2",engine,maxfile,256,256);
 
 	Plane* plane_0 = new Plane("plane_0", engine, maxfile);
-	plane_0->SetPlaneContent("/home/sfriston/Experiments/1280x1024.jpg");
+	std::string s("/home/sfriston/Experiments/1280x1024.jpg");
+	plane_0->SetPlaneContent(s);
 
 	plane_0->UpdatePlaneContent(); //this will cause a reset
 

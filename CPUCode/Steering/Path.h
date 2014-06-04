@@ -11,7 +11,7 @@
 #include <vector>
 #include <boost/numeric/ublas/vector.hpp>
 
-typedef boost::numeric::ublas::vector<float_t> Vector ;
+typedef boost::numeric::ublas::vector<float_t> Vector2 ;
 
 struct Polar
 {
@@ -25,14 +25,16 @@ struct PathSegment
 	int y;
 	float forward; //angle in radians from 0 to 2*pi
 
-	Vector ToVector()
+	Vector2 ToVector()
 	{
-		Vector v;
+		Vector2 v(2);
 		v(0) = x;
 		v(1) = y;
 		return v;
 	}
 };
+
+std::istream& operator >>(std::istream& is, PathSegment& segment);
 
 class Path
 {
@@ -40,5 +42,7 @@ public:
 	std::vector<PathSegment> m_points;
 	int m_width;
 };
+
+std::istream& operator >>(std::istream& is, Path& path);
 
 #endif /* PATH_H_ */

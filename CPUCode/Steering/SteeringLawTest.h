@@ -43,6 +43,7 @@ private:
 	void Initialise();
 	bool Trace(int x, int y);
 
+	int m_latency;
 
 };
 
