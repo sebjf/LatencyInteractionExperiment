@@ -25,6 +25,7 @@ public:
 	void LoadSingle(std::istream& is);
 
 	std::vector<SDL_Surface*> GetMaps();
+	std::vector<int> GetRefs();
 
 private:
 

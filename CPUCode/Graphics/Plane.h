@@ -22,15 +22,13 @@ public:
 	Plane(std::string name, max_engine_t* engine, max_file_t* maxfile);
 	~Plane();
 
-	/*This overload will use the SDL_Surface pointer itself as an id { (int)surfaces[i] }*/
-	void SetPlaneContent(std::vector<SDL_Surface*> surfaces);
-	void SetPlaneContent(std::vector<SDL_Surface*> surfaces, std::vector<uint64_t> refs);
-	void SetPlaneContent(SDL_Surface* image, uint64_t ref);
+	void SetPlaneContent(std::vector<SDL_Surface*> surfaces, std::vector<int> refs);
+	void SetPlaneContent(SDL_Surface* image, int ref);
 	void SetPlaneContent(std::string& image);
 	void SetPlaneContent(SDL_Surface* image);
 	void UpdatePlaneContent();
 
-	void ShowPlane(uint64_t ref);
+	void ShowPlane(int ref);
 
 private:
 	std::string m_name;
@@ -48,9 +46,9 @@ private:
 	int m_map_width; //the number of pixels that will actually be read per line (will likely be larger than m_width)
 	int m_map_size;
 
-	SDL_Surface* AddSurface(uint64_t ref);
+	SDL_Surface* AddSurface(int ref);
 	std::vector<SDL_Surface*> m_surfaces;
-	std::map<uint64_t,int> m_surfacemap;
+	std::map<int,int> m_surfacemap;
 
 	bool m_is_simulation;
 };

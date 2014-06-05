@@ -50,7 +50,7 @@ bool SteeringLawTestRunner::Update(int x, int y)
 void SteeringLawTestRunner::Initialise()
 {
 	m_tracer = new PathFollower(m_condition->path);
-	m_background.ShowPlane((uint64_t)m_condition->m_map);
+	m_background.ShowPlane(m_condition->m_ref);
 	m_latency = m_condition->m_latency_in_ms;
 
 	//load up images for background, and ball

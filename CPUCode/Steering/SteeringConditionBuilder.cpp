@@ -54,11 +54,13 @@ void SteeringConditionBuilder::InitialiseCondition(SteeringLawTestCondition* con
 	int length;
 	stream >> length;
 
-	uint8_t img_data[length];
-	stream.read((char*)img_data,length);
-	SDL_RWops* img_ops = SDL_RWFromMem(stream,length);
+	char img_data[length];
+	stream.get(); //remove the new line character from after the length value.
+	stream.read(img_data,length);
+	SDL_RWops* img_ops = SDL_RWFromMem(img_data,length);
 
 	condition->m_map = IMG_LoadBMP_RW(img_ops);
+
 }
 
 void SteeringConditionBuilder::LoadSingle(std::string filename)
@@ -89,4 +91,18 @@ std::vector<SDL_Surface*> SteeringConditionBuilder::GetMaps()
 	}
 
 	return surfaces;
+}
+
+std::vector<int> SteeringConditionBuilder::GetRefs()
+{
+	std::vector<int> refs;
+
+	for(unsigned int i = 0; i < m_conditions.size(); i++)
+	{
+		m_conditions[i]->m_ref = i+10;
+		refs.push_back(m_conditions[i]->m_ref);
+	}
+
+	return refs;
+
 }

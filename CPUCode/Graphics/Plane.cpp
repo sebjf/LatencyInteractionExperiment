@@ -36,7 +36,7 @@ Plane::~Plane()
 
 }
 
-SDL_Surface* Plane::AddSurface(uint64_t ref)
+SDL_Surface* Plane::AddSurface(int ref)
 {
 	SDL_Surface* surface = SDL_CreateRGBSurface(0, m_map_width, m_height, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 	int offset = m_surfaces.size() * m_map_size;
@@ -45,18 +45,7 @@ SDL_Surface* Plane::AddSurface(uint64_t ref)
 	return surface;
 }
 
-void Plane::SetPlaneContent(std::vector<SDL_Surface*> surfaces)
-{
-	std::vector<uint64_t> refs;
-	for(unsigned int i = 0; i < surfaces.size(); i++)
-	{
-		SDL_Surface* ptr = surfaces[i];
-		refs.push_back((uint64_t)ptr);
-	}
-	SetPlaneContent(surfaces,refs);
-}
-
-void Plane::SetPlaneContent(std::vector<SDL_Surface*> surfaces, std::vector<uint64_t> refs)
+void Plane::SetPlaneContent(std::vector<SDL_Surface*> surfaces, std::vector<int> refs)
 {
 	for(unsigned int i = 0; i < surfaces.size(); i++)
 	{
@@ -66,7 +55,7 @@ void Plane::SetPlaneContent(std::vector<SDL_Surface*> surfaces, std::vector<uint
 	}
 }
 
-void Plane::SetPlaneContent(SDL_Surface* src, uint64_t ref)
+void Plane::SetPlaneContent(SDL_Surface* src, int ref)
 {
 	SDL_Surface* dest = AddSurface(ref);
 	SDL_BlitSurface(src,NULL,dest,NULL);
@@ -84,7 +73,7 @@ void Plane::SetPlaneContent(std::string& filename)
 	SDL_FreeSurface(img);
 }
 
-void Plane::ShowPlane(uint64_t ref)
+void Plane::ShowPlane(int ref)
 {
 	max_actions_t* mem_actions = max_actions_init(m_maxfile, "default");
 	max_disable_reset(mem_actions);

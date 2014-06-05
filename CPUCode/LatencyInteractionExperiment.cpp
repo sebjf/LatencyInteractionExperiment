@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
 	Logger logger(experiments_root,"fitts_law_log_collection_",".fitts");
 
 	SteeringConditionBuilder steering_conditions(experiments_root);
-	steering_conditions.LoadSingle("steering_conditions.bin");
 
 	Resources* resources;
 	Simulator* fitts;
@@ -63,10 +62,11 @@ int main(int argc, char *argv[])
 		switch(std::cin.get()){
 		case 'i':
 		case 'I':
+			steering_conditions.LoadSingle("steering_conditions.bin");
 
 			resources = InitialiseResources();
 
-			resources->plane_0.SetPlaneContent(steering_conditions.GetMaps());
+			resources->plane_0.SetPlaneContent(steering_conditions.GetMaps(), steering_conditions.GetRefs());
 
 			resources->plane_0.SetPlaneContent(img1,1);
 			resources->plane_0.SetPlaneContent(img2,2);
