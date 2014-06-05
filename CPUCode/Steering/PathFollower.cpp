@@ -12,7 +12,7 @@ using namespace boost::numeric::ublas;
 PathFollower::PathFollower(Path& path)
 :m_path(path),
  m_s(0),
- m_tolerance(2)
+ m_tolerance(1)
 {
 
 }
@@ -92,8 +92,12 @@ bool PathFollower::IsBehindBall(Vector2 cursor)
 	Vector2 ball = GetBallLocation();
 	Vector2 cb = cursor - ball;
 	Vector2 forward = GetBallForwardVector();
+
+	normalize(cb);
+	normalize(forward);
+
 	float angle = acos(inner_prod(cb, forward));
-	if(angle > 3.14 / 2)
+	if(angle >= 3.14 / 2)
 	{
 		return true;
 	}
