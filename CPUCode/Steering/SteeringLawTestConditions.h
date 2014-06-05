@@ -15,7 +15,7 @@
 class SteeringLawTestCondition
 {
 public:
-	int m_ref;
+	int m_condition_id;
 
 	int m_latency_in_ms;
 	Path path;

@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	std::string experiments_root = "/home/sfriston/Experiments/";
 
 	SimulatorManager manager;
-	Logger logger(experiments_root,"fitts_law_log_collection_",".fitts");
+	Logger logger(experiments_root,"test_results_collection",".logs");
 
 	SteeringConditionBuilder steering_conditions(experiments_root);
 
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 		switch(std::cin.get()){
 		case 'i':
 		case 'I':
-			steering_conditions.LoadSingle("steering_conditions.bin");
+			steering_conditions.Load("steering_conditions.mbin");
 
 			resources = InitialiseResources();
 

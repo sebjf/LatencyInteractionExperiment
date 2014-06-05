@@ -69,18 +69,20 @@ void SimulatorSteering::MainLoop()
 			runner.Begin(*conditions_interator);
 			conditions_interator++;
 
-			if(conditions_interator == m_conditions.m_conditions.end()+1){
+			if(conditions_interator == m_conditions.m_conditions.end()){
 				std::cout << "All Conditions Complete." << std::endl;
 				do_simuation(false);
 
 				break;
 			}
 
-		//	logger.AddNewLog(Log("unknown",0,*(runner.condition)));
+			m_logger.AddNewLog(Log("unknown",0,Steering,(*conditions_interator)->m_condition_id));
 		}
 
-		//logger.CurrentLog().Add(Datapoint(real,input));
-
+		m_logger.CurrentLog().Add(Datapoint(real,input));
 	}
+
+	m_logger.Save(); //saves to the default directory with an unused filename
+	m_logger.Clear();
 
 }

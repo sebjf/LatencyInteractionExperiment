@@ -20,8 +20,7 @@ public:
 
 	std::vector<SteeringLawTestCondition*> m_conditions;
 
-
-	void LoadSingle(std::string filename);
+	void Load(std::string filename);
 	void LoadSingle(std::istream& is);
 
 	std::vector<SDL_Surface*> GetMaps();

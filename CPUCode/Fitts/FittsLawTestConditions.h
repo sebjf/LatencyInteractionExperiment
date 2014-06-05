@@ -36,6 +36,8 @@ public:
 class FittsLawTestCondition
 {
 public:
+	int m_condition_id;
+
 	Rectangle staging_area;
 	Rectangle target;
 	int latency_in_ms;
@@ -68,7 +70,7 @@ public:
 
 	friend std::ostream& operator<< (std::ostream& stream, const FittsLawTestCondition& condition);
 
-	MSGPACK_DEFINE(staging_area,target,latency_in_ms);
+	MSGPACK_DEFINE(m_condition_id,staging_area,target,latency_in_ms);
 };
 
 

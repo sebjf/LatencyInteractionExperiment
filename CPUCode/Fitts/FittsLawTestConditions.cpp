@@ -37,19 +37,20 @@ std::vector<FittsLawTestCondition*> FittsLawTestConditionLoader::LoadCSV(std::st
 
 		 FittsLawTestCondition* condition = new FittsLawTestCondition();
 
-		 if(items.size() < 9){
+		 if(items.size() < 10){
 			 continue; //incomplete line. skip.
 		 }
 
-		 condition->staging_area.center_x 	= atoi(items[0].c_str());
-		 condition->staging_area.center_y 	= atoi(items[1].c_str());
-		 condition->staging_area.width 		= atoi(items[2].c_str());
-		 condition->staging_area.height 	= atoi(items[3].c_str());
-		 condition->target.center_x 		= atoi(items[4].c_str());
-		 condition->target.center_y 		= atoi(items[5].c_str());
-		 condition->target.width 			= atoi(items[6].c_str());
-		 condition->target.height 			= atoi(items[7].c_str());
-		 condition->latency_in_ms 			= atoi(items[8].c_str());
+		 condition->m_condition_id 			= atoi(items[0].c_str());
+		 condition->staging_area.center_x 	= atoi(items[1].c_str());
+		 condition->staging_area.center_y 	= atoi(items[2].c_str());
+		 condition->staging_area.width 		= atoi(items[3].c_str());
+		 condition->staging_area.height 	= atoi(items[4].c_str());
+		 condition->target.center_x 		= atoi(items[5].c_str());
+		 condition->target.center_y 		= atoi(items[6].c_str());
+		 condition->target.width 			= atoi(items[7].c_str());
+		 condition->target.height 			= atoi(items[8].c_str());
+		 condition->latency_in_ms 			= atoi(items[9].c_str());
 
 		 if(condition->target.width <= 0 || //if this line is invalid, such as being the first line with headers
 			condition->target.height <= 0 ||

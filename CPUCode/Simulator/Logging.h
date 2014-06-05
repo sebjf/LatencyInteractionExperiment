@@ -60,16 +60,25 @@ struct Datapoint
  * easier but there is no higher level of information, a Log should store everything required to peform analysis for
  * all experiments */
 
+enum TestType
+{
+	Fitts,
+	Steering
+};
+
 struct Log
 {
 	std::string participant_name;
 	int participant_id;
 	std::string datetime_human_readable;
-	FittsLawTestCondition test_condition;
+
+	int type;
+	int condition_id;
+
 	std::vector<Datapoint> datapoints;
 
 	Log();
-	Log(std::string name, int id, const FittsLawTestCondition& condition);
+	Log(std::string name, int id, TestType type, int condition_id);
 
 	void Add(const Datapoint& dp)
 	{
@@ -78,7 +87,7 @@ struct Log
 
 	friend std::ostream& operator<< (std::ostream& stream, const Log& log);
 
-	MSGPACK_DEFINE(participant_name, participant_id, datetime_human_readable, test_condition, datapoints);
+	MSGPACK_DEFINE(participant_name, participant_id, datetime_human_readable, type, condition_id, datapoints);
 };
 
 class Logger

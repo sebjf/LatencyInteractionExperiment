@@ -52,7 +52,7 @@ void SteeringLawTestRunner::Initialise()
 	m_tracer = new PathFollower(m_condition->path);
 	m_latency = m_condition->m_latency_in_ms;
 
-	m_background.ShowPlane(m_condition->m_ref);
+	m_background.ShowPlane(m_condition->m_condition_id);
 
 	m_ball.SetSpriteSurface(m_condition->m_ball);
 	m_ball.SetSpriteColour(255,255,255,255);

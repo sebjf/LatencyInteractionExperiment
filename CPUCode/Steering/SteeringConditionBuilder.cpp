@@ -61,6 +61,7 @@ SDL_Surface* SteeringConditionBuilder::ReadBitmap(std::istream& stream)
 
 void SteeringConditionBuilder::InitialiseCondition(SteeringLawTestCondition* condition, std::istream& stream)
 {
+	stream >> condition->m_condition_id;
 	stream >> condition->m_latency_in_ms;
 	stream >> condition->path;
 
@@ -68,7 +69,7 @@ void SteeringConditionBuilder::InitialiseCondition(SteeringLawTestCondition* con
 	condition->m_ball = ReadBitmap(stream);
 }
 
-void SteeringConditionBuilder::LoadSingle(std::string filename)
+void SteeringConditionBuilder::Load(std::string filename)
 {
 	std::ifstream file((m_search_dir + filename).c_str(), std::ifstream::in);
 	if(file.fail())
@@ -76,7 +77,15 @@ void SteeringConditionBuilder::LoadSingle(std::string filename)
 		std::cout << "Could not open file: " << filename << " " << strerror(errno) << std::endl;
 	}
 
-	LoadSingle(file);
+	int count = 1;
+
+	if(filename.find(".mbin") != std::string::npos){
+		file >> count;
+	}
+
+	for(int i = 0; i < count; i++){
+		LoadSingle(file);
+	}
 }
 
 void SteeringConditionBuilder::LoadSingle(std::istream& is)
@@ -104,8 +113,7 @@ std::vector<int> SteeringConditionBuilder::GetRefs()
 
 	for(unsigned int i = 0; i < m_conditions.size(); i++)
 	{
-		m_conditions[i]->m_ref = i+10;
-		refs.push_back(m_conditions[i]->m_ref);
+		refs.push_back(m_conditions[i]->m_condition_id);
 	}
 
 	return refs;

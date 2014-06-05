@@ -75,14 +75,14 @@ void SimulatorFitts::MainLoop()
 			runner.Begin(*conditions_interator);
 			conditions_interator++;
 
-			if(conditions_interator == conditions.end()+1){
+			if(conditions_interator == conditions.end()){
 				std::cout << "All Conditions Complete." << std::endl;
 				do_simuation(false);
 
 				break;
 			}
 
-			m_logger.AddNewLog(Log("unknown",0,*(runner.condition)));
+			m_logger.AddNewLog(Log("unknown",0,Fitts,(*conditions_interator)->m_condition_id));
 		}
 
 		m_logger.CurrentLog().Add(Datapoint(real,input));

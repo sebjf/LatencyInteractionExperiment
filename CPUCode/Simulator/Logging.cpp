@@ -36,10 +36,11 @@ Log::Log()
 	//this exists soley for msgpack
 }
 
-Log::Log(std::string name, int id, const FittsLawTestCondition& condition)
+Log::Log(std::string name, int id, TestType type, int condition_id)
 :participant_name(name),
  participant_id(id),
- test_condition(condition)
+ type(type),
+ condition_id(condition_id)
 {
 	datetime_human_readable = currentDateTime();
 }
@@ -179,8 +180,8 @@ void Logger::AppendAll()
 
 void Logger::SaveFormatMatlab()
 {
-	std::cout << "Writing " << logs.size() << " logs.";
 	AppendAll();
+	std::cout << "Writing " << logs.size() << " logs.";
 
 	std::fstream myfile;
 	std::string filename = directory + filename_format + "MATLAB" + ".csv";
@@ -197,7 +198,9 @@ std::ostream& operator<< (std::ostream& stream, const Log& log)
 	stream << log.participant_name << ",";
 	stream << log.participant_id   << ",";
 	stream << log.datetime_human_readable << ",";
-	stream << log.test_condition << ",";
+
+	stream << log.type << ",";
+	stream << log.condition_id << ",";
 	stream << log.datapoints.size() << ",";
 	//stream << log.datapoints;
 
