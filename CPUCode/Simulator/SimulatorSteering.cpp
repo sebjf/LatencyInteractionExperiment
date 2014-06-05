@@ -29,6 +29,7 @@ void SimulatorSteering::MainLoop()
 	/* This will control the cursor sprite */
 
 	Cursor cursor(m_resources.sprite_2);
+	Cursor bc(m_resources.sprite_0);
 
 	/* This will control the input device, reading it and storing a history of its state so that delayed input
 	 * may be provided to the tests */
@@ -40,6 +41,8 @@ void SimulatorSteering::MainLoop()
 	std::vector<SteeringLawTestCondition*>::iterator conditions_interator = m_conditions.m_conditions.begin();
 
 	MouseState last_input;
+
+	//runner.m_ball_cursor = &bc;
 
 	while(do_simulation()){
 
@@ -60,6 +63,7 @@ void SimulatorSteering::MainLoop()
 		last_input = input;
 
 		cursor.Update(input.x, input.y);
+		//bc.Update(100, 100);
 
 		/* Update returns true when the test is complete, so load the next one until all are exhausted */
 

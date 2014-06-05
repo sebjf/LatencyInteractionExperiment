@@ -46,11 +46,8 @@ SteeringConditionBuilder::SteeringConditionBuilder(std::string dir)
 
 }
 
-void SteeringConditionBuilder::InitialiseCondition(SteeringLawTestCondition* condition, std::istream& stream)
+SDL_Surface* SteeringConditionBuilder::ReadBitmap(std::istream& stream)
 {
-	stream >> condition->m_latency_in_ms;
-	stream >> condition->path;
-
 	int length;
 	stream >> length;
 
@@ -59,8 +56,16 @@ void SteeringConditionBuilder::InitialiseCondition(SteeringLawTestCondition* con
 	stream.read(img_data,length);
 	SDL_RWops* img_ops = SDL_RWFromMem(img_data,length);
 
-	condition->m_map = IMG_LoadBMP_RW(img_ops);
+	return IMG_LoadBMP_RW(img_ops);
+}
 
+void SteeringConditionBuilder::InitialiseCondition(SteeringLawTestCondition* condition, std::istream& stream)
+{
+	stream >> condition->m_latency_in_ms;
+	stream >> condition->path;
+
+	condition->m_map = ReadBitmap(stream);
+	condition->m_ball = ReadBitmap(stream);
 }
 
 void SteeringConditionBuilder::LoadSingle(std::string filename)

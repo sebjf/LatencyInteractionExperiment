@@ -28,7 +28,7 @@ Plane::Plane(std::string name, max_engine_t* engine, max_file_t* maxfile)
 	m_map_width = (int)(ceil((float)m_width / (float)m_pixelsperburst) * (float)m_pixelsperburst);
 	m_map_size = m_map_width * m_height * 4;
 
-	m_is_simulation = max_get_constant_uint64t(m_maxfile,"IS_SIMULATION");
+	m_is_simulation = max_get_constant_uint64t(m_maxfile,"IS_SIMULATION") > 0;
 }
 
 Plane::~Plane()

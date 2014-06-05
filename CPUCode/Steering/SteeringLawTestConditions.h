@@ -24,6 +24,7 @@ public:
 	int m_curvature;
 
 	SDL_Surface* m_map;
+	SDL_Surface* m_ball;
 
 };
 

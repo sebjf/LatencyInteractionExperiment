@@ -50,10 +50,6 @@ int main(int argc, char *argv[])
 	Simulator* fitts;
 	Simulator* steering;
 
-//the issue is the reference in plane made from sdl_surface pointer. the cast from void* to uint64_t makes it go to zero.
-	SDL_Surface* img1 = IMG_Load("/home/sfriston/Experiments/path1.bmp");
-	SDL_Surface* img2 = IMG_Load("/home/sfriston/Experiments/background.bmp");
-
 	bool run = true;
 	while(run){
 
@@ -67,22 +63,10 @@ int main(int argc, char *argv[])
 			resources = InitialiseResources();
 
 			resources->plane_0.SetPlaneContent(steering_conditions.GetMaps(), steering_conditions.GetRefs());
-
-			resources->plane_0.SetPlaneContent(img1,1);
-			resources->plane_0.SetPlaneContent(img2,2);
-
 			resources->plane_0.UpdatePlaneContent();
 
 			fitts = new SimulatorFitts(*resources, logger);
 			steering = new SimulatorSteering(*resources, logger, steering_conditions);
-			break;
-
-		case 'b':
-		case 'B':
-			int v;
-			std::cout << "Plane No." << std::endl;
-			std::cin >> v;
-			resources->plane_0.ShowPlane(v);
 			break;
 
 		case 'r':

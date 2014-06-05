@@ -28,6 +28,11 @@ Sprite::Sprite(std::string name, max_engine_t* engine, max_file_t* maxfile, int 
 	properties.a = 255;
 }
 
+void Sprite::SetSpriteSurface(SDL_Surface* source)
+{
+	SetSpriteSurface(source, source->w, source->h);
+}
+
 void Sprite::SetSpriteSurface(SDL_Surface* source, int width, int height)
 {
 	int x = (surface->w / 2) - (width / 2);
@@ -100,7 +105,9 @@ void Sprite::UpdateSpriteContentStream()
 
 void Sprite::UpdateSpriteProperties()
 {
-	properties_stream->Write(&properties);
+	spriteproperties s = properties; //this corrects for a mistake in the y direction in the kernel which needs a recompile
+	s.y = -s.y;
+	properties_stream->Write(&s);
 }
 
 Sprite::~Sprite()

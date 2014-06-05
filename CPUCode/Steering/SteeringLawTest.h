@@ -13,6 +13,8 @@
 #include "SteeringLawTestConditions.h"
 #include "PathFollower.h"
 
+#include <Graphics/Cursor.h>
+
 enum SteeringStage
 {
 	InitialiseStage,
@@ -29,6 +31,8 @@ public:
 	bool Update(int x, int y);
 	float GetDelay();
 	void Begin(SteeringLawTestCondition* condition);
+
+	Cursor* m_ball_cursor;
 
 private:
 	Plane& m_background;

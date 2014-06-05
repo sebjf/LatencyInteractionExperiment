@@ -50,10 +50,15 @@ bool SteeringLawTestRunner::Update(int x, int y)
 void SteeringLawTestRunner::Initialise()
 {
 	m_tracer = new PathFollower(m_condition->path);
-	m_background.ShowPlane(m_condition->m_ref);
 	m_latency = m_condition->m_latency_in_ms;
 
-	//load up images for background, and ball
+	m_background.ShowPlane(m_condition->m_ref);
+
+	m_ball.SetSpriteSurface(m_condition->m_ball);
+	m_ball.SetSpriteColour(255,255,255,255);
+	m_ball.UpdateSpriteContent();
+
+	Trace(0,0);
 }
 
 float SteeringLawTestRunner::GetDelay()
@@ -67,6 +72,7 @@ bool SteeringLawTestRunner::Trace(int x, int y)
 
 	Vector2 ball_location = m_tracer->GetBallLocation();
 	m_ball.SetSpriteCenterLocation((int)ball_location(0),(int)ball_location(1));
+	m_ball.UpdateSpriteProperties();
 
 	return m_tracer->IsComplete();
 }

@@ -51,6 +51,7 @@ private:
 	std::map<int,int> m_surfacemap;
 
 	bool m_is_simulation;
+
 };
 
 #endif /* PLANE_H_ */

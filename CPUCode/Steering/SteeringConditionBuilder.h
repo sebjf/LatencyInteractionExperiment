@@ -33,6 +33,7 @@ private:
 
 
 	void InitialiseCondition(SteeringLawTestCondition* condition, std::istream& stream);
+	SDL_Surface* ReadBitmap(std::istream& stream);
 
 };
 

@@ -12,7 +12,7 @@ Resources* InitialiseResources()
 {
 	std::cout << "Initialising resources." << std::endl;
 
-	Mouse* mouse = new Mouse();
+	Mouse* mouse = new Mouse(true);
 	mouse->Scale = 0.4f;
 
 	max_file_t* maxfile = LatencyInteractionExperiment_init();

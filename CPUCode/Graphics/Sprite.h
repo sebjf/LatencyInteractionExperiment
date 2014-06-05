@@ -40,6 +40,7 @@ public:
 	spriteproperties properties;
 
 	/*scales the source surface and writes it into the sprite at the location specified*/
+	void SetSpriteSurface(SDL_Surface* source);
 	void SetSpriteSurface(SDL_Surface* source, int width, int height);
 	void SetSpriteSurface(SDL_Surface* source, int x, int y, int width, int height);
 
