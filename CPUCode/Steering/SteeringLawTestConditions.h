@@ -15,6 +15,7 @@
 class SteeringLawTestCondition
 {
 public:
+	std::string m_filename;
 	int m_condition_id;
 
 	int m_latency_in_ms;

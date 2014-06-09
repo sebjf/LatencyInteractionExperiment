@@ -42,13 +42,16 @@ int main(int argc, char *argv[])
 	std::string experiments_root = "/home/sfriston/Experiments/";
 
 	SimulatorManager manager;
-	Logger logger(experiments_root,"test_results_collection",".logs");
+	Logger logger(experiments_root + "Logs/","test_results_collection",".logs");
 
 	SteeringConditionBuilder steering_conditions(experiments_root);
 
+	FittsLawTestConditionLoader loader;
+	std::vector<FittsLawTestCondition*> fitts_conditions = loader.LoadCSV("/home/sfriston/Experiments/fittsLawConditions_1.csv");
+
 	Resources* resources;
-	Simulator* fitts;
-	Simulator* steering;
+	SimulatorFitts* 	fitts;
+	SimulatorSteering* 	steering;
 
 	bool run = true;
 	while(run){
@@ -58,26 +61,28 @@ int main(int argc, char *argv[])
 		switch(std::cin.get()){
 		case 'i':
 		case 'I':
-			steering_conditions.Load("steering_conditions.mbin");
-
 			resources = InitialiseResources();
 
+			steering_conditions.Load("steering_conditions_1.mbin");
 			resources->plane_0.SetPlaneContent(steering_conditions.GetMaps(), steering_conditions.GetRefs());
 			resources->plane_0.UpdatePlaneContent();
+			resources->plane_0.ShowPlane(MAP_DEFAULT);
 
 			fitts = new SimulatorFitts(*resources, logger);
-			steering = new SimulatorSteering(*resources, logger, steering_conditions);
+			steering = new SimulatorSteering(*resources, logger);
 			break;
 
 		case 'r':
 		case 'R':
 
+			fitts->SetConditions(fitts_conditions);
 			manager.RunSimulation(fitts);
 			break;
 
 		case 't':
 		case 'T':
 
+			steering->SetConditions(steering_conditions);
 			manager.RunSimulation(steering);
 			break;
 
@@ -102,6 +107,11 @@ int main(int argc, char *argv[])
 		case 'c':	//convert all available logs to matlab
 		case 'C':
 			logger.SaveFormatMatlab();
+			break;
+
+		case 'p':
+		case 'P':
+			resources->input_controller.Reset();
 			break;
 
 		case '\n':

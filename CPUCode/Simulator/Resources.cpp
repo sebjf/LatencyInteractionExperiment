@@ -15,6 +15,11 @@ Resources* InitialiseResources()
 	Mouse* mouse = new Mouse(true);
 	mouse->Scale = 0.4f;
 
+	/* This will control the input device, reading it and storing a history of its state so that delayed input
+	 * may be provided to the tests */
+
+	DelayedInputController* input_controller = new DelayedInputController(0.060f,1000,*mouse);
+
 	max_file_t* maxfile = LatencyInteractionExperiment_init();
 	max_engine_t* engine = max_load(maxfile, "local:*");
 	max_actions_t* actions = max_actions_init(maxfile, "default");
@@ -44,6 +49,7 @@ Resources* InitialiseResources()
 
 	Resources* resources = new Resources(
 			mouse,
+			input_controller,
 			maxfile,
 			engine,
 			actions,

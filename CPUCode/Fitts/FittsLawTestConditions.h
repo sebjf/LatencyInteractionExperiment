@@ -36,6 +36,7 @@ public:
 class FittsLawTestCondition
 {
 public:
+	std::string m_filename;
 	int m_condition_id;
 
 	Rectangle staging_area;
@@ -73,7 +74,9 @@ public:
 	MSGPACK_DEFINE(m_condition_id,staging_area,target,latency_in_ms);
 };
 
-
+class FittsLawTestConditions : std::vector<FittsLawTestCondition*>
+{
+};
 
 class FittsLawTestConditionLoader
 {

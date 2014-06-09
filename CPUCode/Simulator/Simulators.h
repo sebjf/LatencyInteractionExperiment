@@ -43,7 +43,15 @@ public:
 	 :Simulator(resources, logger)
 	{}
 
+	void SetConditions(std::vector<FittsLawTestCondition*>& conditions)
+	{
+		m_conditions = &conditions;
+	}
+
 	virtual void MainLoop();
+
+private:
+	std::vector<FittsLawTestCondition*>* m_conditions;
 };
 
 class SteeringConditionBuilder;
@@ -51,15 +59,19 @@ class SteeringConditionBuilder;
 class SimulatorSteering : public Simulator
 {
 public:
-	SimulatorSteering(Resources& resources, Logger& logger, SteeringConditionBuilder& conditions)
-	 :Simulator(resources, logger),
-	  m_conditions(conditions)
+	SimulatorSteering(Resources& resources, Logger& logger)
+	 :Simulator(resources, logger)
 	{}
 
 	virtual void MainLoop();
 
+	void SetConditions(SteeringConditionBuilder& conditions)
+	{
+		m_conditions = &conditions;
+	}
+
 private:
-	SteeringConditionBuilder& m_conditions;
+	SteeringConditionBuilder* m_conditions;
 };
 
 #endif /* SIMULATORS_H_ */

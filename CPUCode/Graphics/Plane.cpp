@@ -29,11 +29,19 @@ Plane::Plane(std::string name, max_engine_t* engine, max_file_t* maxfile)
 	m_map_size = m_map_width * m_height * 4;
 
 	m_is_simulation = max_get_constant_uint64t(m_maxfile,"IS_SIMULATION") > 0;
+
+	makeDefaultPlanes();
 }
 
 Plane::~Plane()
 {
 
+}
+
+void Plane::makeDefaultPlanes()
+{
+	SDL_Surface* surf = AddSurface(MAP_BLACK);
+	SDL_FillRect(surf, NULL, SDL_MapRGBA(surf->format, 0,0,0,255));
 }
 
 SDL_Surface* Plane::AddSurface(int ref)
@@ -63,7 +71,7 @@ void Plane::SetPlaneContent(SDL_Surface* src, int ref)
 
 void Plane::SetPlaneContent(SDL_Surface* src)
 {
-	SetPlaneContent(src, 0);
+	SetPlaneContent(src, MAP_DEFAULT);
 }
 
 void Plane::SetPlaneContent(std::string& filename)

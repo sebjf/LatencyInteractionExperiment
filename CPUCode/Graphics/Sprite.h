@@ -53,6 +53,8 @@ public:
 
 	void UpdateSpriteProperties();
 
+	void Hide();
+
 private:
 	std::string m_name;
 

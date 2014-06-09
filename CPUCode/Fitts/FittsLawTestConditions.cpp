@@ -12,11 +12,7 @@
 #include <iostream>
 #include <errno.h>
 #include <Utils/Split.h>
-
-std::vector<FittsLawTestCondition*> FittsLawTestConditionLoader::LoadHardcoded()
-{
-	return std::vector<FittsLawTestCondition*>();
-}
+#include <boost/filesystem/path.hpp>
 
 std::vector<FittsLawTestCondition*> FittsLawTestConditionLoader::LoadCSV(std::string filename)
 {
@@ -41,6 +37,7 @@ std::vector<FittsLawTestCondition*> FittsLawTestConditionLoader::LoadCSV(std::st
 			 continue; //incomplete line. skip.
 		 }
 
+		 condition->m_filename 				= boost::filesystem::path(filename).leaf();
 		 condition->m_condition_id 			= atoi(items[0].c_str());
 		 condition->staging_area.center_x 	= atoi(items[1].c_str());
 		 condition->staging_area.center_y 	= atoi(items[2].c_str());
@@ -69,7 +66,6 @@ std::vector<FittsLawTestCondition*> FittsLawTestConditionLoader::LoadCSV(std::st
 	return conditions;
 
 }
-
 
 std::ostream& operator<< (std::ostream& stream, const Rectangle& rect)
 {

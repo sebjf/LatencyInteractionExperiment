@@ -44,6 +44,8 @@ public:
 	MouseState GetState(float delay_ms);
 	MouseState GetCurrentState();
 	void Update();
+	void Reset();
+	void ResetHistory();
 
 private:
 	Mouse& input_device;

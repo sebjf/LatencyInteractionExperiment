@@ -72,13 +72,14 @@ struct Log
 	int participant_id;
 	std::string datetime_human_readable;
 
+	std::string conditions_filename;
 	int type;
 	int condition_id;
 
 	std::vector<Datapoint> datapoints;
 
 	Log();
-	Log(std::string name, int id, TestType type, int condition_id);
+	Log(std::string name, int id, std::string conditions_filename, TestType type, int condition_id);
 
 	void Add(const Datapoint& dp)
 	{
@@ -87,7 +88,7 @@ struct Log
 
 	friend std::ostream& operator<< (std::ostream& stream, const Log& log);
 
-	MSGPACK_DEFINE(participant_name, participant_id, datetime_human_readable, type, condition_id, datapoints);
+	MSGPACK_DEFINE(participant_name, participant_id, datetime_human_readable, conditions_filename, type, condition_id, datapoints);
 };
 
 class Logger

@@ -29,15 +29,11 @@ void SimulatorSteering::MainLoop()
 	/* This will control the cursor sprite */
 
 	Cursor cursor(m_resources.sprite_2);
-
-	/* This will control the input device, reading it and storing a history of its state so that delayed input
-	 * may be provided to the tests */
-
-	DelayedInputController input_controller(0.060f,1000,m_resources.mouse);
+	m_resources.input_controller.ResetHistory();
 
 	/* This object will load the conditions that drive the state of the tests */
 
-	std::vector<SteeringLawTestCondition*>::iterator conditions_interator = m_conditions.m_conditions.begin();
+	std::vector<SteeringLawTestCondition*>::iterator conditions_interator = m_conditions->m_conditions.begin();
 
 	MouseState last_input;
 
@@ -46,9 +42,9 @@ void SimulatorSteering::MainLoop()
 
 		m_resources.monitor.Refresh(1066);
 
-		input_controller.Update();
-		MouseState real  = input_controller.GetCurrentState();
-		MouseState input = input_controller.GetState(runner.GetDelay());
+		m_resources.input_controller.Update();
+		MouseState real  = m_resources.input_controller.GetCurrentState();
+		MouseState input = m_resources.input_controller.GetState(runner.GetDelay());
 
 		/* This loop runs at ~ 1/60us /s (very fast), and will quickly saturate the pci-ex link, computer memory and make
 		 * handling the large amount of data in the logs difficult. So we only do all of the above when the user input
@@ -69,14 +65,14 @@ void SimulatorSteering::MainLoop()
 			runner.Begin(*conditions_interator);
 			conditions_interator++;
 
-			if(conditions_interator == m_conditions.m_conditions.end()){
+			if(conditions_interator == m_conditions->m_conditions.end()){
 				std::cout << "All Conditions Complete." << std::endl;
 				do_simuation(false);
 
 				break;
 			}
 
-			m_logger.AddNewLog(Log("unknown",0,Steering,(*conditions_interator)->m_condition_id));
+			m_logger.AddNewLog(Log("unknown",0,(*conditions_interator)->m_filename,Steering,(*conditions_interator)->m_condition_id));
 		}
 
 		m_logger.CurrentLog().Add(Datapoint(real,input));
@@ -84,5 +80,9 @@ void SimulatorSteering::MainLoop()
 
 	m_logger.Save(); //saves to the default directory with an unused filename
 	m_logger.Clear();
+
+	m_resources.sprite_0.Hide();
+	m_resources.sprite_1.Hide();
+	m_resources.plane_0.ShowPlane(MAP_DEFAULT);
 
 }

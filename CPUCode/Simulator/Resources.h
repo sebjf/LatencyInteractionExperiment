@@ -13,6 +13,7 @@
 #include <Graphics/Plane.h>
 #include "MaxSLiCInterface.h"
 #include "MaxVideoCpuResources.h"
+#include "Delay.h"
 
 class Resources
 {
@@ -20,6 +21,7 @@ public:
 
 	Resources(
 			Mouse* mouse,
+			DelayedInputController* input_controller,
 			max_file_t* maxfile,
 			max_engine_t* engine,
 			max_actions_t* actions,
@@ -30,6 +32,7 @@ public:
 			VirtualMonitor* monitor,
 			bool isSimulation)
 	:mouse(*mouse),
+	 input_controller(*input_controller),
 	 maxfile(*maxfile),
 	 engine(*engine),
 	 actions(*actions),
@@ -42,6 +45,7 @@ public:
 	{}
 
 	Mouse& mouse;
+	DelayedInputController& input_controller;
 
 	max_file_t& maxfile;
 	max_engine_t& engine;

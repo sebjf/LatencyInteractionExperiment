@@ -110,6 +110,12 @@ void Sprite::UpdateSpriteProperties()
 	properties_stream->Write(&s);
 }
 
+void Sprite::Hide()
+{
+	SetSpriteColour(0,0,0,0);
+	UpdateSpriteProperties();
+}
+
 Sprite::~Sprite()
 {
 	delete properties_stream;

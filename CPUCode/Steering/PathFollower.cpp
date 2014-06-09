@@ -12,7 +12,7 @@ using namespace boost::numeric::ublas;
 PathFollower::PathFollower(Path& path)
 :m_path(path),
  m_s(0),
- m_tolerance(1)
+ m_tolerance(2)
 {
 
 }

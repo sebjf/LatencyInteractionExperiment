@@ -13,6 +13,7 @@
 #include <errno.h>
 #include <vector>
 #include <Utils/Split.h>
+#include <boost/filesystem/path.hpp>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
@@ -84,15 +85,17 @@ void SteeringConditionBuilder::Load(std::string filename)
 	}
 
 	for(int i = 0; i < count; i++){
-		LoadSingle(file);
+		SteeringLawTestCondition* condition = LoadSingle(file);
+		condition->m_filename = boost::filesystem::path(filename).leaf();
+		m_conditions.push_back(condition);
 	}
 }
 
-void SteeringConditionBuilder::LoadSingle(std::istream& is)
+SteeringLawTestCondition* SteeringConditionBuilder::LoadSingle(std::istream& is)
 {
 	 SteeringLawTestCondition* condition = new SteeringLawTestCondition();
 	 InitialiseCondition(condition, is);
-	 m_conditions.push_back(condition);
+	 return condition;
 }
 
 std::vector<SDL_Surface*> SteeringConditionBuilder::GetMaps()

@@ -8,6 +8,7 @@
 #include "Delay.h"
 #include <Utils/ts_util.h>
 #include <iostream>
+#include <limits>
 
 
 
@@ -15,17 +16,34 @@ DelayedInputController::DelayedInputController(float average_period_ms, float ma
 :input_device(input_device)
 {
 	buffer_length = (int)((max_delay_ms / average_period_ms) * 2.0f);
-	buffer_position = 0;
-
 	values = new MouseState[buffer_length]();
 
+	Reset();
+}
+
+/*resets everything*/
+void DelayedInputController::Reset()
+{
+	acc_x = 0;
+	acc_y = 0;
+
+	ResetHistory();
+}
+
+/*resets the history but not the position */
+void DelayedInputController::ResetHistory()
+{
 	/* Get the current time, this will be the epoch all times are from
 	 * in this class (so we can work with ms stored in smaller types
 	 * like float throughout) */
-	clock_gettime(CLOCK_REALTIME, &starttime);
 
-	acc_x = 0;
-	acc_y = 0;
+	clock_gettime(CLOCK_REALTIME, &starttime);
+	buffer_position = 0;
+
+	for(int i = 0; i < buffer_length; i++)
+	{
+		values[i].timestamp_ms = std::numeric_limits<float>::max();
+	}
 }
 
 /* Gets the number of ms that have elapsed since the class was created. */

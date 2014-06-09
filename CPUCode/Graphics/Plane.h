@@ -16,6 +16,8 @@
 
 /* A plane is a special type of sprite that does not move, and instead takes up the whole screen, stored in LMEM */
 
+enum InbuiltPlanes { MAP_DEFAULT = 0, MAP_SPLASH = 0, MAP_BLACK = -1 };
+
 class Plane
 {
 public:
@@ -51,6 +53,8 @@ private:
 	std::map<int,int> m_surfacemap;
 
 	bool m_is_simulation;
+
+	void makeDefaultPlanes();
 
 };
 
