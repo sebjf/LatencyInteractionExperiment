@@ -26,6 +26,8 @@
 
 #include <SDL/SDL_image.h>
 
+#include <Phantom/Phantom.h>
+
 void PrintMainMenu()
 {
 	std::cout <<
@@ -49,7 +51,7 @@ int main(int argc, char *argv[])
 	FittsLawTestConditionLoader loader;
 	std::vector<FittsLawTestCondition*> fitts_conditions = loader.LoadCSV("/home/sfriston/Experiments/fittsLawConditions_1.csv");
 
-	Resources* resources;
+	Resources* resources = NULL;
 	SimulatorFitts* 	fitts;
 	SimulatorSteering* 	steering;
 
@@ -59,8 +61,10 @@ int main(int argc, char *argv[])
 		PrintMainMenu();
 
 		switch(std::cin.get()){
+
 		case 'i':
 		case 'I':
+
 			resources = InitialiseResources();
 
 			steering_conditions.Load("steering_conditions_1.mbin");
@@ -109,10 +113,9 @@ int main(int argc, char *argv[])
 			logger.SaveFormatMatlab();
 			break;
 
-		case 'p':
-		case 'P':
+		case 'n':
+		case 'N':
 			resources->input_controller.Reset();
-			break;
 
 		case '\n':
 		case '\r':
@@ -123,6 +126,10 @@ int main(int argc, char *argv[])
 			break;
 		}
 	};
+
+	if(resources){
+		delete resources;
+	}
 
 	std::cout << "Done." << std::endl;
 

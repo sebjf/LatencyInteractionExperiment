@@ -12,22 +12,19 @@
 
 
 
-DelayedInputController::DelayedInputController(float average_period_ms, float max_delay_ms, Mouse& input_device)
-:input_device(input_device)
+DelayedInputController::DelayedInputController(float average_period_ms, float max_delay_ms)
+:input_device(NULL)
 {
 	buffer_length = (int)((max_delay_ms / average_period_ms) * 2.0f);
 	values = new MouseState[buffer_length]();
 
-	Reset();
+	ResetHistory();
 }
 
 /*resets everything*/
 void DelayedInputController::Reset()
 {
-	acc_x = 0;
-	acc_y = 0;
-
-	ResetHistory();
+	input_device->reset();
 }
 
 /*resets the history but not the position */
@@ -92,10 +89,12 @@ void DelayedInputController::Update()
 {
 	/* Using the latest data from the mouse, timestamp and write the state of the input device at this point in time */
 
-	MouseDelta m = input_device.readMouse(false);
+	if(!input_device)
+	{
+		std::cout << "Input Device must be provided before calling update." << std::endl;
+	}
 
-	acc_x += m.x;
-	acc_y += m.y;
+	MouseState m = input_device->read();
 
 	buffer_position++;
 
@@ -104,8 +103,8 @@ void DelayedInputController::Update()
 		buffer_position = 0;
 	}
 
-	values[buffer_position].x = (int)acc_x;
-	values[buffer_position].y = (int)acc_y;
+	values[buffer_position].x = m.x;
+	values[buffer_position].y = m.y;
 	values[buffer_position].lmb = m.lmb;
 	values[buffer_position].timestamp_ms = getCurrentTimeInMs();
 }

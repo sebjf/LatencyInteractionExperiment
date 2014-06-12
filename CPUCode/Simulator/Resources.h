@@ -14,6 +14,8 @@
 #include "MaxSLiCInterface.h"
 #include "MaxVideoCpuResources.h"
 #include "Delay.h"
+#include <Input/PhantomInputDevice.h>
+#include <Phantom/Phantom.h>
 
 class Resources
 {
@@ -21,6 +23,7 @@ public:
 
 	Resources(
 			Mouse* mouse,
+			LibPhantom::Phantom* phantom,
 			DelayedInputController* input_controller,
 			max_file_t* maxfile,
 			max_engine_t* engine,
@@ -32,6 +35,7 @@ public:
 			VirtualMonitor* monitor,
 			bool isSimulation)
 	:mouse(*mouse),
+	 phantom(*phantom),
 	 input_controller(*input_controller),
 	 maxfile(*maxfile),
 	 engine(*engine),
@@ -44,7 +48,10 @@ public:
 	 isSimulation(isSimulation)
 	{}
 
+	~Resources();
+
 	Mouse& mouse;
+	LibPhantom::Phantom &phantom;
 	DelayedInputController& input_controller;
 
 	max_file_t& maxfile;

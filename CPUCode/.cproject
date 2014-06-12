@@ -45,7 +45,7 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.811804367" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1270727551" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
-								<option id="gnu.c.link.option.paths.1169695117" superClass="gnu.c.link.option.paths" valueType="libPaths">
+								<option id="gnu.c.link.option.paths.1169695117" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/compiler/lib/intel64"/>
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/ipp/../compiler/lib/intel64"/>
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/ipp/lib/intel64"/>
@@ -73,12 +73,13 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
-						<entry excluding="Steering|Fitts|Graphics|Keyboard|Utils|Simulator" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Graphics"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
+						<entry excluding="Input|Steering|Fitts|Graphics|Keyboard|Utils|Simulator" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Input"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Steering"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Utils"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Graphics"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -452,12 +453,13 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Steering"/>
-						<entry excluding="Utils|Steering|Graphics|Fitts|Simulator|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Graphics"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Input"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Utils"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
+						<entry excluding="Input|Utils|Steering|Graphics|Fitts|Simulator|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Graphics"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Steering"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

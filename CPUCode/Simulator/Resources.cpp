@@ -15,10 +15,16 @@ Resources* InitialiseResources()
 	Mouse* mouse = new Mouse(true);
 	mouse->Scale = 0.4f;
 
+	LibPhantom::Phantom* phantom = LibPhantom::Phantom::findPhantom(0);
+
+	if(phantom == 0){
+		std::cout << "No Phantoms Connected." << std::endl;
+	}
+
 	/* This will control the input device, reading it and storing a history of its state so that delayed input
 	 * may be provided to the tests */
 
-	DelayedInputController* input_controller = new DelayedInputController(0.060f,1000,*mouse);
+	DelayedInputController* input_controller = new DelayedInputController(0.060f,1000);
 
 	max_file_t* maxfile = LatencyInteractionExperiment_init();
 	max_engine_t* engine = max_load(maxfile, "local:*");
@@ -49,6 +55,7 @@ Resources* InitialiseResources()
 
 	Resources* resources = new Resources(
 			mouse,
+			phantom,
 			input_controller,
 			maxfile,
 			engine,
@@ -62,4 +69,11 @@ Resources* InitialiseResources()
 
 	return resources;
 
+}
+
+Resources::~Resources()
+{
+	delete &input_controller;
+	delete &mouse;
+	delete &monitor;
 }

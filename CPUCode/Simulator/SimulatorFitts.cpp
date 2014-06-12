@@ -27,6 +27,9 @@ void SimulatorFitts::MainLoop()
 {
 	std::cout << "Beginning main loop Fitts Law Test Simulator" << std::endl;
 
+	PhantomInputDevice phantom_input_device(&m_resources.phantom);
+	m_resources.input_controller.input_device = &phantom_input_device;
+
 	/*Set the background for Fitts Test*/
 
 	m_resources.plane_0.ShowPlane(MAP_BLACK);

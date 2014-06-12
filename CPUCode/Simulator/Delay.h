@@ -36,22 +36,27 @@ struct MouseState
 	MSGPACK_DEFINE(x,y,lmb,timestamp_ms);
 };
 
+class InputDevice
+{
+public:
+	virtual ~InputDevice() {};
+	virtual MouseState read() = 0;
+	virtual void reset() = 0;
+};
 
 class DelayedInputController
 {
 public:
-	DelayedInputController(float average_period_ms, float max_delay, Mouse& input_device);
+	DelayedInputController(float average_period_ms, float max_delay);
 	MouseState GetState(float delay_ms);
 	MouseState GetCurrentState();
 	void Update();
 	void Reset();
 	void ResetHistory();
 
-private:
-	Mouse& input_device;
+	InputDevice* input_device;
 
-	float acc_x;
-	float acc_y;
+private:
 
 	int buffer_length;
 	int buffer_position;

@@ -22,6 +22,10 @@ void SimulatorSteering::MainLoop()
 {
 	std::cout << "Beginning main loop Steering Law Test Simulator" << std::endl;
 
+
+	PhantomInputDevice phantom_input_device;
+	m_resources.input_controller.input_device = &phantom_input_device;
+
 	/* This object will control the logic of the Fitts Law Tests */
 
 	SteeringLawTestRunner runner(m_resources.plane_0, m_resources.sprite_0);
