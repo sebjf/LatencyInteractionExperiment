@@ -10,7 +10,7 @@
 
 #include "SDL/SDL.h"
 #include "MaxSLiCInterface.h"
-#include "MaxVideoCpuResources.h"
+#include <Utils/Stream/streaming.h>
 #include <string>
 
 

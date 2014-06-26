@@ -1,22 +1,16 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "MaxSLiCInterface.h"
-
-#include <MaxVideoCpuResources.h>
-
-#include <stdio.h>
 #include <linux/input.h>
-#include <fcntl.h>
-
-#include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <linux/input.h>
 #include <string.h>
-#include <stdio.h>
+
+#include "MaxSLiCInterface.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <Phantom/Phantom.h>
 
 #include "Simulator/SimulatorWrapper.h"
 #include "Simulator/Simulators.h"
@@ -24,9 +18,7 @@
 
 #include "Steering/SteeringConditionBuilder.h"
 
-#include <SDL/SDL_image.h>
-
-#include <Phantom/Phantom.h>
+#include <signal.h>
 
 void PrintMainMenu()
 {
@@ -39,8 +31,22 @@ void PrintMainMenu()
 	"	C: Convert all available logs to Matlab\n";
 }
 
+void sigaction_handler(int signum, siginfo_t* info, void* context)
+{
+	int pid = info->si_pid;
+	std::cout << "Recieved term from " << pid << std::endl;
+}
+
 int main(int argc, char *argv[])
 {
+	struct sigaction action;
+	action.sa_handler = NULL;
+	action.sa_sigaction = &sigaction_handler;
+	action.sa_flags = SA_SIGINFO;
+	sigemptyset(&action.sa_mask);
+
+	sigaction(SIGTERM, &action, NULL );
+
 	std::string experiments_root = "/home/sfriston/Experiments/";
 
 	SimulatorManager manager;

@@ -10,7 +10,6 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <iostream>
-#include "MaxVideoCpuResources.h"
 #include <math.h>
 
 Plane::Plane(std::string name, max_engine_t* engine, max_file_t* maxfile)

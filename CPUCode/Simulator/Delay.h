@@ -8,7 +8,7 @@
 #ifndef DELAY_H_
 #define DELAY_H_
 
-#include "MaxVideoCpuResources.h"
+#include <Utils/Mouse/mouse.h>
 #include <time.h>
 #include <msgpack.hpp>
 

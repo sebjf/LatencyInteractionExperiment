@@ -6,9 +6,7 @@
  */
 
 #include <stdio.h>
-#include <MaxVideoCpuResources.h>
 #include <iostream>
-
 #include "Simulators.h"
 #include "Delay.h"
 #include "Logging.h"

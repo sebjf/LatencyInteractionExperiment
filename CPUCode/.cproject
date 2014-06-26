@@ -37,10 +37,10 @@
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/mkl/include"/>
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/tbb/include"/>
 									<listOptionValue builtIn="false" value="/network-raid/opt/maxcompiler-2013.3/include/slic"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_RunRules/Simulation/include}&quot;"/>
-									<listOptionValue builtIn="false" value="../LatencyInteractionExperiment_CPUCode/Metrics"/>
+									<listOptionValue builtIn="false" value="/home/sfriston/maxworkspace/LatencyInteractionExperiment/CPUCode/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_RunRules/Simulation/include"/>
+									<listOptionValue builtIn="false" value="/home/sfriston/maxworkspace/LatencyInteractionExperiment/CPUCode/LatencyInteractionExperiment_CPUCode/Metrics"/>
 									<listOptionValue builtIn="false" value="/usr/include/c++/4.1.1"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_CPUCode}&quot;"/>
+									<listOptionValue builtIn="false" value="/home/sfriston/maxworkspace/LatencyInteractionExperiment/CPUCode/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_CPUCode"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.811804367" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -63,23 +63,23 @@
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/mkl/include"/>
 									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/tbb/include"/>
 									<listOptionValue builtIn="false" value="/network-raid/opt/maxcompiler-2013.3/include/slic"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_RunRules/Simulation/include}&quot;"/>
-									<listOptionValue builtIn="false" value="../LatencyInteractionExperiment_CPUCode/Metrics"/>
+									<listOptionValue builtIn="false" value="/home/sfriston/maxworkspace/LatencyInteractionExperiment/CPUCode/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_RunRules/Simulation/include"/>
+									<listOptionValue builtIn="false" value="/home/sfriston/maxworkspace/LatencyInteractionExperiment/CPUCode/LatencyInteractionExperiment_CPUCode/Metrics"/>
 									<listOptionValue builtIn="false" value="/usr/include/c++/4.1.1"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_CPUCode}&quot;"/>
+									<listOptionValue builtIn="false" value="/home/sfriston/maxworkspace/LatencyInteractionExperiment/CPUCode/LatencyInteractionExperiment_CPUCode/LatencyInteractionExperiment_CPUCode"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1535065412" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
-						<entry excluding="Input|Steering|Fitts|Graphics|Keyboard|Utils|Simulator" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Input"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Steering"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Utils"/>
+						<entry excluding="VirtualMonitor" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Utils"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Graphics"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
+						<entry excluding="Steering|Input|Fitts|Graphics|Utils|Simulator|VirtualMonitor|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Input"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Steering"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -453,13 +453,13 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Input"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Utils"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
-						<entry excluding="Input|Utils|Steering|Graphics|Fitts|Simulator|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Graphics"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Input"/>
+						<entry excluding="VirtualMonitor" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Utils"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Steering"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
+						<entry excluding="VirtualMonitor|Input|Utils|Steering|Graphics|Fitts|Simulator|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

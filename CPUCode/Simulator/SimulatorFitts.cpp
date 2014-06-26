@@ -1,12 +1,8 @@
+
 #include <stdio.h>
-#include <MaxVideoCpuResources.h>
 #include <iostream>
-
-#include "Maxfiles.h"
 #include "MaxSLiCInterface.h"
-
 #include "Simulators.h"
-
 #include "Delay.h"
 #include "Logging.h"
 #include <Fitts/FittsLawTest.h>

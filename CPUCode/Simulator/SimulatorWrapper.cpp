@@ -6,8 +6,8 @@
  */
 
 #include "SimulatorWrapper.h"
-#include "MaxVideoCpuResources.h"
 #include "MaxSLiCInterface.h"
+#include <Utils/Scheduling/scheduling.h>
 
 /* This one creates the thread the simulator will run in and returns immediately */
 void SimulatorManager::RunSimulation(Simulator* simulator)

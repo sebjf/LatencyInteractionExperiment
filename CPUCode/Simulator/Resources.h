@@ -9,13 +9,14 @@
 #define RESOURCES_H_
 
 #include "Logging.h"
+#include "Delay.h"
+#include <Utils/Mouse/mouse.h>
+#include <Utils/VirtualMonitor/virtualmonitor.h>
 #include <Graphics/Sprite.h>
 #include <Graphics/Plane.h>
-#include "MaxSLiCInterface.h"
-#include "MaxVideoCpuResources.h"
-#include "Delay.h"
-#include <Input/PhantomInputDevice.h>
 #include <Phantom/Phantom.h>
+#include <Input/PhantomInputDevice.h>
+#include "MaxSLiCInterface.h"
 
 class Resources
 {
