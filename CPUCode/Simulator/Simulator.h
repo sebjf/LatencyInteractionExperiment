@@ -22,8 +22,8 @@ public:
 		m_logger(logger)
 	{}
 
-	const bool& do_simulation() const { return m_do_simulation; }
-	void do_simuation(const bool& val) { m_do_simulation = val; }
+	bool do_simulation() { return m_do_simulation; }
+	void do_simuation(bool val) { m_do_simulation = val; }
 
 	Resources& m_resources;
 	Logger& m_logger;

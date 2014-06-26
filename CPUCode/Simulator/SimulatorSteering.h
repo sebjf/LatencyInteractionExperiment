@@ -11,6 +11,10 @@
 #include "BasicSimulator.h"
 
 class SteeringConditionBuilder;
+class SteeringLawTestCondition;
+class SteeringLawTestRunner;
+class PhantomInputDevice;
+class Cursor;
 
 class SimulatorSteering : public BasicSimulator
 {
@@ -19,7 +23,9 @@ public:
 	 :BasicSimulator(resources, logger)
 	{}
 
-	virtual void MainLoop();
+	virtual void Initialise();
+	virtual bool Iterate();
+	virtual void Finish();
 
 	void SetConditions(SteeringConditionBuilder& conditions)
 	{
@@ -28,6 +34,11 @@ public:
 
 private:
 	SteeringConditionBuilder* m_conditions;
+	std::vector<SteeringLawTestCondition*>::iterator m_conditions_interator;
+	SteeringLawTestRunner* m_runner;
+	MouseState m_last_input;
+	Cursor* m_cursor;
+	PhantomInputDevice* m_phantom_input_device;
 };
 
 #endif /* SIMULATORSTEERING_H_ */

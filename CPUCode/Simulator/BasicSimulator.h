@@ -21,7 +21,9 @@ public:
 	virtual void Start();
 	virtual void Stop();
 
-	virtual void MainLoop()=0;
+	virtual void Initialise()=0;
+	virtual bool Iterate()=0;
+	virtual void Finish()=0;
 
 private:
 	pthread_t thread_info;

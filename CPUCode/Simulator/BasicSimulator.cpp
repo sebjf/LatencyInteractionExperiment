@@ -61,7 +61,13 @@ void* BasicSimulator::SimulationMainLoop(void* c)
 	BasicSimulator* simulator = (BasicSimulator*)c;
 
 	simulator->do_simuation(true);
-	simulator->MainLoop();
+	simulator->Initialise();
+	while(simulator->do_simulation())
+	{
+		bool b = simulator->Iterate() && simulator->do_simulation();
+		simulator->do_simuation( b );
+	}
+	simulator->Finish();
 
 	pthread_exit(NULL);
 	return NULL;
