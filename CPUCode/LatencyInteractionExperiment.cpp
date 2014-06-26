@@ -11,10 +11,10 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <Phantom/Phantom.h>
-
-#include "Simulator/SimulatorWrapper.h"
-#include "Simulator/Simulators.h"
 #include "Simulator/Resources.h"
+
+#include <Simulator/SimulatorFitts.h>
+#include <Simulator/SimulatorSteering.h>
 
 #include "Steering/SteeringConditionBuilder.h"
 
@@ -34,7 +34,7 @@ void PrintMainMenu()
 void sigaction_handler(int signum, siginfo_t* info, void* context)
 {
 	int pid = info->si_pid;
-	std::cout << "Recieved term from " << pid << std::endl;
+	std::cout << "Received term from " << pid << std::endl;
 }
 
 int main(int argc, char *argv[])
@@ -49,7 +49,6 @@ int main(int argc, char *argv[])
 
 	std::string experiments_root = "/home/sfriston/Experiments/";
 
-	SimulatorManager manager;
 	Logger logger(experiments_root + "Logs/","test_results_collection",".logs");
 
 	SteeringConditionBuilder steering_conditions(experiments_root);
@@ -60,6 +59,8 @@ int main(int argc, char *argv[])
 	Resources* resources = NULL;
 	SimulatorFitts* 	fitts;
 	SimulatorSteering* 	steering;
+
+	Simulator* running = NULL;
 
 	bool run = true;
 	while(run){
@@ -86,26 +87,47 @@ int main(int argc, char *argv[])
 		case 'R':
 
 			fitts->SetConditions(fitts_conditions);
-			manager.RunSimulation(fitts);
+
+			if(running != NULL)
+			{
+				running->Stop();
+			}
+			running = fitts;
+			running->Start();
+
 			break;
 
 		case 't':
 		case 'T':
 
 			steering->SetConditions(steering_conditions);
-			manager.RunSimulation(steering);
+
+			if(running != NULL)
+			{
+				running->Stop();
+			}
+			running = steering;
+			running->Start();
+
 			break;
 
 		case 's':
 		case 'S':
+			if(running != NULL)
+			{
+				running->Stop();
+				running = NULL;
+			}
 
-			manager.StopSimulation();
 			break;
 
 		case 'e':
 		case 'E':
-
-			manager.StopSimulation();
+			if(running != NULL)
+			{
+				running->Stop();
+				running = NULL;
+			}
 			run = false;
 			break;
 

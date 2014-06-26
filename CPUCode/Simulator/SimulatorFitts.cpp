@@ -1,8 +1,8 @@
 
 #include <stdio.h>
+#include "SimulatorFitts.h"
 #include <iostream>
 #include "MaxSLiCInterface.h"
-#include "Simulators.h"
 #include "Delay.h"
 #include "Logging.h"
 #include <Fitts/FittsLawTest.h>

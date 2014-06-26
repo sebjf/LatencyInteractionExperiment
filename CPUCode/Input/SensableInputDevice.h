@@ -16,8 +16,8 @@ public:
 	virtual ~SensableInputDevice();
 
 private:
-	static bool device_initialised;
-	static HHD device;
+	bool device_initialised;
+	HHD device;
 };
 
 #endif /* SENSABLEINPUTDEVICE_H_ */

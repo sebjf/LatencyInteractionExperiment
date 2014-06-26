@@ -10,9 +10,6 @@
 
 SensableInputDevice::SensableInputDevice() {
 
-	device = hdInitDevice(HD_DEFAULT_DEVICE);
-
-
 }
 
 SensableInputDevice::~SensableInputDevice() {
