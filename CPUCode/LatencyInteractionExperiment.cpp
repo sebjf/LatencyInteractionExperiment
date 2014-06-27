@@ -15,6 +15,7 @@
 
 #include <Simulator/SimulatorFitts.h>
 #include <Simulator/SimulatorSteering.h>
+#include <Simulator/TestSimulator.h>
 
 #include "Steering/SteeringConditionBuilder.h"
 
