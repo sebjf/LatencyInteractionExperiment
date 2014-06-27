@@ -7,6 +7,7 @@
 
 #include "PhantomInputDevice.h"
 #include <iostream>
+#include <math.h>
 
 
 PhantomInputDevice::PhantomInputDevice(LibPhantom::Phantom* phantom)
@@ -16,6 +17,16 @@ PhantomInputDevice::PhantomInputDevice(LibPhantom::Phantom* phantom)
   offset_y(0),
   invert_y(true)
 {
+
+	m_x_axis.m_encoder_resolution = PH_ENCODER_X_RESOLUTION;
+	m_x_axis.m_encoder_zero = PH_ENCODER_X_ZERO;
+
+	m_y_axis.m_encoder_resolution = PH_ENCODER_Y_RESOLUTION;
+	m_y_axis.m_encoder_zero = PH_ENCODER_Y_ZERO;
+
+	m_z_axis.m_encoder_resolution = PH_ENCODER_Z_RESOLUTION;
+	m_z_axis.m_encoder_zero = PH_ENCODER_Z_ZERO;
+
 	if(!phantom){
 		std::cout << "Could not find Phantom device." << std::endl;
 		return;
@@ -50,9 +61,13 @@ MouseState PhantomInputDevice::read()
 {
 	LibPhantom::PhantomDataRead d = phantom->isoIterate();
 	MouseState s;
-	s.lmb = (d.status.button1 == 0);
-	s.x = d.encoder_x + offset_x;
-	s.y = d.encoder_y + offset_y;
+	s.lmb = (d.status.button1 == 0) || (d.status.button2 == 0);
+	float encoder_x = (signed short)d.encoder_x;
+	float encoder_y = (signed short)d.encoder_y;
+	float encoder_z = (signed short)d.encoder_z;
+
+	s.x = m_x_axis.AbsolutePosition(encoder_x);
+	s.y = m_y_axis.AbsolutePosition(encoder_y);;
 
 	if(invert_y){
 		s.y = -s.y;

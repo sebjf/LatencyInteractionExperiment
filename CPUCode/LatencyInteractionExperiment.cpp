@@ -93,6 +93,7 @@ int main(int argc, char *argv[])
 			{
 				running->Stop();
 			}
+			//running = new TestPhantomSimulator(*resources,logger);
 			running = fitts;
 			running->Start();
 
