@@ -1,6 +1,6 @@
 *.o
 *.d
-*.max
+
 *.checksum
 *.maxchecksum
 *.class

@@ -22,7 +22,7 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 		addStreamToCPU("plane_0_to_cpu") <== addStreamFromOnCardMemory("plane_0_read", MemoryAccessPattern.LINEAR_1D);
 
 		/* Main Image Generator Kernel */
-		DisplayStandard displayparams = DisplayStandard.make_1280x1024x75();
+		DisplayStandard displayparams = DisplayStandard.make_1024x768x60();
 
 		LatencyInteractionExperimentKernel framegenkernel_inner =
 			new LatencyInteractionExperimentKernel(makeKernelParameters(m_kernelName), displayparams);
