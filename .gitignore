@@ -1,8 +1,5 @@
 *.o
 *.d
-
-*.checksum
-*.maxchecksum
 *.class
 binaries/
 objects/
