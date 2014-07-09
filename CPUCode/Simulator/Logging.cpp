@@ -36,9 +36,8 @@ Log::Log()
 	//this exists soley for msgpack
 }
 
-Log::Log(std::string name, int id, std::string filename, TestType type, int condition_id)
-:participant_name(name),
- participant_id(id),
+Log::Log(int participant_id, std::string filename, TestType type, int condition_id)
+:participant_id(participant_id),
  conditions_filename(filename),
  type(type),
  condition_id(condition_id)
@@ -46,8 +45,9 @@ Log::Log(std::string name, int id, std::string filename, TestType type, int cond
 	datetime_human_readable = currentDateTime();
 }
 
-Logger::Logger(std::string directory, std::string format, std::string extension)
- :directory(directory),
+Logger::Logger(int participant_id, std::string directory, std::string format, std::string extension)
+ :participant_id(participant_id),
+  directory(directory),
   filename_format(format),
   filename_extension(extension)
 {}
@@ -197,7 +197,6 @@ void Logger::SaveFormatMatlab()
 std::ostream& operator<< (std::ostream& stream, const Log& log)
 {
 	stream << log.conditions_filename << ",";
-	stream << log.participant_name << ",";
 	stream << log.participant_id   << ",";
 	stream << log.datetime_human_readable << ",";
 

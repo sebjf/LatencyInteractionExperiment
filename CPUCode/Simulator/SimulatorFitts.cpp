@@ -73,7 +73,7 @@ bool SimulatorFitts::Iterate()
 			return false;
 		}
 
-		m_logger.AddNewLog(Log("unknown",0,(*m_conditions_interator)->m_filename,Fitts,(*m_conditions_interator)->m_condition_id));
+		m_logger.AddNewLog(Log(m_logger.GetParticipantId(), (*m_conditions_interator)->m_filename,Fitts,(*m_conditions_interator)->m_condition_id));
 		m_runner->Begin(*m_conditions_interator);
 
 		m_conditions_interator++;

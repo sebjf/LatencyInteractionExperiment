@@ -40,17 +40,24 @@ void sigaction_handler(int signum, siginfo_t* info, void* context)
 
 int main(int argc, char *argv[])
 {
+	// no problem with card for a while, so turn this off
 	struct sigaction action;
 	action.sa_handler = NULL;
 	action.sa_sigaction = &sigaction_handler;
 	action.sa_flags = SA_SIGINFO;
-	sigemptyset(&action.sa_mask);
+//	sigemptyset(&action.sa_mask);
+//	sigaction(SIGTERM, &action, NULL );
 
-	sigaction(SIGTERM, &action, NULL );
+	int participant_id = 0;
+	if(argc > 1)
+	{
+		participant_id = atoi(argv[1]);
+	}
+	std::cout << "Beginning for participant number: " << participant_id << std::endl;
 
 	std::string experiments_root = "/home/sfriston/Experiments/";
 
-	Logger logger(experiments_root + "Logs/","test_results_collection",".logs");
+	Logger logger(participant_id, experiments_root + "Logs/", "test_results_collection", ".logs");
 
 	SteeringConditionBuilder steering_conditions(experiments_root);
 
