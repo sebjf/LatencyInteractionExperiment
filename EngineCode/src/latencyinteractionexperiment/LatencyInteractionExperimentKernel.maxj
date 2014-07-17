@@ -2,29 +2,6 @@ package latencyinteractionexperiment;
 
 import java.util.ArrayList;
 
-import maxvideo.MaxVideoKernel;
-import types.FragmentInput;
-import types.fRGBA;
-import types.uRGB;
-import types.uRGBA;
-
-import com.maxeler.maxcompiler.v0.utils.MathUtils;
-import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.Counter;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Count.WrapMode;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.DelimiterMode;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingInput;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingMode;
-import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.memory.Memory;
-import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
-import com.maxeler.maxcompiler.v2.kernelcompiler.types.composite.DFEStruct;
-import com.maxeler.maxcompiler.v2.kernelcompiler.types.composite.DFEStructType;
-
-import displaystandards.DisplayStandard;
-import functions.ColourFunctions;
-
 class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 
 	protected LatencyInteractionExperimentKernel(KernelParameters parameters, DisplayStandard displayparameters) {
@@ -36,6 +13,7 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 		// TODO Auto-generated method stub
 
 		Plane background = new Plane("plane_0", Display, input);
+
 
 		uRGB background_colour = new uRGB(background.getColour());
 

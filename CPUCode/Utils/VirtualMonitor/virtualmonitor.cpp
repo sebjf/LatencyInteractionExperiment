@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <algorithm>
+#include <fstream>
 
 #include <SDL/SDL.h>
 #include <stdint.h>
@@ -140,6 +141,7 @@ VirtualMonitor::VirtualMonitor(max_file_t* maxfile)
 	int width = (int)max_get_constant_uint64t(maxfile, "DisplayTotalWidth");
 	int height = (int)max_get_constant_uint64t(maxfile, "DisplayTotalHeight");
 	InitialiseMonitor(monitor, width, height);
+	file = NULL;
 }
 
 VirtualMonitor::VirtualMonitor(int width, int height)
@@ -190,6 +192,11 @@ void VirtualMonitor::Refresh(int pixels_to_update)
 
 			DualLinkPixel pixel_data = ((DualLinkPixel*)frame_data)[np];
 
+			if(file != NULL)
+			{
+				file->write((char*)&pixel_data, sizeof(DualLinkPixel));
+			}
+
 			if( pixel_data.odd.Control & StartOfFrame){
 				monitor.pixelsReceived = 0;
 			}
@@ -227,6 +234,11 @@ void VirtualMonitor::Refresh(int pixels_to_update)
 
 }
 
+void VirtualMonitor::MirrorToFile(std::string filename)
+{
+	file = new std::ofstream(filename.c_str(), std::ofstream::out);
+}
+
 VirtualMonitor::~VirtualMonitor()
 {
 	if(monitor.connected){
@@ -236,6 +248,11 @@ VirtualMonitor::~VirtualMonitor()
 		SDL_FreeSurface(monitor.source);
 
 		SDL_Quit();
+	}
+
+	if(file != NULL){
+		file->close();
+		delete file;
 	}
 
 	free(monitor.displayData_ptr);

@@ -8,6 +8,9 @@
 #ifndef VIRTUALMONITOR_H_
 #define VIRTUALMONITOR_H_
 
+#include <string>
+#include <ostream>
+#include <fstream>
 #include "MaxSLiCInterface.h"
 #include <SDL/SDL.h>
 
@@ -53,11 +56,14 @@ public:
 	VirtualMonitor(max_file_t* maxfile);
 	~VirtualMonitor();
 
+	void MirrorToFile(std::string filename);
+
 	void Connect(max_engine_t* engine);
 	void Refresh(int pixels_to_draw);
 
 private:
 	VirtualMonitorInfo monitor;
+	std::ofstream* file;
 };
 
 #endif /* VIRTUALMONITOR_H_ */

@@ -6,7 +6,9 @@
  */
 
 #include "Resources.h"
-#include "Maxfiles.h"
+#include <Maxfiles.h>
+#include <LatencyInteractionExperiment.h>
+
 
 Resources* InitialiseResources()
 {
@@ -35,6 +37,7 @@ Resources* InitialiseResources()
 	VirtualMonitor* monitor = new VirtualMonitor(maxfile);
 
 	if(isSimulation){
+		monitor->MirrorToFile("/home/sfriston/Experiments/moncapture.raw");
 		monitor->Connect(engine);
 	}
 
@@ -49,6 +52,9 @@ Resources* InitialiseResources()
 	plane_0->UpdatePlaneContent(); //this will cause a reset
 
 	max_set_uint64t(actions, "LatencyInteractionExperimentKernel", "Enable", 1);
+
+	max_set_uint64t(actions, "LatencyInteractionExperimentKernel", "HSyncPolarity", 0);
+	max_set_uint64t(actions, "LatencyInteractionExperimentKernel", "VSyncPolarity", 0);
 
 	max_disable_validation(actions); //we wont have set the sprite content yet.
 	max_run(engine, actions);
