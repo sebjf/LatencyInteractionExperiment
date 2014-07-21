@@ -18,6 +18,14 @@ PhantomInputDevice::PhantomInputDevice(LibPhantom::Phantom* phantom)
   invert_y(true)
 {
 
+	screen_width = 1280;
+	screen_height = 720;
+
+	screen_pixel_pitch = 0.2768f;
+
+	screen_center_x = screen_width/2;
+	screen_center_y = screen_height/2;
+
 	m_x_axis.m_encoder_resolution = PH_ENCODER_X_RESOLUTION;
 	m_x_axis.m_encoder_zero = PH_ENCODER_X_ZERO;
 
@@ -66,8 +74,14 @@ MouseState PhantomInputDevice::read()
 	float encoder_y = (signed short)d.encoder_y;
 	float encoder_z = (signed short)d.encoder_z;
 
-	s.x = m_x_axis.AbsolutePosition(encoder_x);
-	s.y = m_y_axis.AbsolutePosition(encoder_y);;
+	float x = m_x_axis.AbsolutePosition(encoder_x);
+	float y = m_y_axis.AbsolutePosition(encoder_y);
+
+	x = (x * screen_pixel_pitch) + screen_center_x;
+	y = (y * screen_pixel_pitch) + screen_center_y;
+
+	s.x = x;
+	s.y = y;
 
 	if(invert_y){
 		s.y = -s.y;

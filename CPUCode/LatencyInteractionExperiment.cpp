@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 		case 'r':
 		case 'R':
 
-			fitts->SetConditions(fitts_conditions);
+			fitts->SetConditions(&fitts_conditions);
 
 			if(running != NULL)
 			{

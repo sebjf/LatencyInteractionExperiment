@@ -22,9 +22,9 @@ public:
 	 :BasicSimulator(resources, logger)
 	{}
 
-	void SetConditions(std::vector<FittsLawTestCondition*>& conditions)
+	void SetConditions(std::vector<FittsLawTestCondition*>* conditions)
 	{
-		m_conditions = &conditions;
+		m_conditions = conditions;
 	}
 
 	virtual void Initialise();

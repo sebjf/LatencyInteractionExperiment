@@ -65,6 +65,13 @@ private:
 	PhantomAxisCalibration m_y_axis;
 	PhantomAxisCalibration m_z_axis;
 
+	int screen_width;
+	int screen_height;
+
+	int screen_center_x;
+	int screen_center_y;
+
+	float screen_pixel_pitch;
 };
 
 

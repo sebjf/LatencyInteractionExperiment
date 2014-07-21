@@ -6,13 +6,13 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#define LatencyInteractionExperiment_DisplayTotalWidth (1344)
-#define LatencyInteractionExperiment_PixelClock (65)
-#define LatencyInteractionExperiment_DisplayHeight (768)
-#define LatencyInteractionExperiment_DisplayTotalHeight (806)
-#define LatencyInteractionExperiment_DisplayWidth (1024)
-#define LatencyInteractionExperiment_DisplayStartY (35)
-#define LatencyInteractionExperiment_DisplayStartX (296)
+#define LatencyInteractionExperiment_DisplayTotalWidth (1360)
+#define LatencyInteractionExperiment_PixelClock (143)
+#define LatencyInteractionExperiment_DisplayHeight (720)
+#define LatencyInteractionExperiment_DisplayTotalHeight (733)
+#define LatencyInteractionExperiment_DisplayWidth (1280)
+#define LatencyInteractionExperiment_DisplayStartY (10)
+#define LatencyInteractionExperiment_DisplayStartX (56)
 
 
 /*----------------------------------------------------------------------------*/
