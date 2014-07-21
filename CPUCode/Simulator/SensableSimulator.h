@@ -28,7 +28,8 @@ public:
 	SensableDummy m_dummy;
 
 private:
-	HHD m_device;
+	static bool m_initialised;
+	static HHD m_device;
 	HDSchedulerHandle m_callbackhandle;
 	static HDCallbackCode DeviceStateCallback(void* pUserData);
 

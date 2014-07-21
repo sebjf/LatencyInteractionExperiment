@@ -7,10 +7,16 @@
 
 #include "SensableSimulator.h"
 
+bool SensableSimulator::m_initialised = false;
+HHD SensableSimulator::m_device = 0;
+
 SensableSimulator::SensableSimulator(Resources& resources, Logger& logger)
 :Simulator(resources, logger)
 {
-	m_device = hdInitDevice(HD_DEFAULT_DEVICE);
+	if(m_initialised == false){
+		m_device = hdInitDevice(HD_DEFAULT_DEVICE);
+		m_initialised = true;
+	}
 }
 
 void SensableSimulator::Start()

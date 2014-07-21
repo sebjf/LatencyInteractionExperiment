@@ -9,6 +9,7 @@
 #define SIMULATORSTEERING_H_
 
 #include "BasicSimulator.h"
+#include "SensableSimulator.h"
 
 class SteeringConditionBuilder;
 class SteeringLawTestCondition;
@@ -16,11 +17,11 @@ class SteeringLawTestRunner;
 class PhantomInputDevice;
 class Cursor;
 
-class SimulatorSteering : public BasicSimulator
+class SimulatorSteering : public SensableSimulator
 {
 public:
 	SimulatorSteering(Resources& resources, Logger& logger)
-	 :BasicSimulator(resources, logger)
+	 :SensableSimulator(resources, logger)
 	{}
 
 	virtual void Initialise();
