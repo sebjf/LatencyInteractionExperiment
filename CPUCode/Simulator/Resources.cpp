@@ -64,6 +64,10 @@ Resources* InitialiseResources()
 	max_disable_validation(actions); //we wont have set the sprite content yet.
 	max_run(engine, actions);
 
+	char* nulldata = new char[16];
+	memset(nulldata,0x0,16);
+	metadata->Write(nulldata);
+
 	Resources* resources = new Resources(
 			mouse,
 			phantom,
