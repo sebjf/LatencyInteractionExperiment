@@ -17,9 +17,9 @@
 #define PH_X_ENCODER_MIN -2025
 #define PH_X_ENCODER_MAX 2773
 #define PH_X_ENCODER_ZERO 439
-#define PH_X_SPAN_MM 200
+#define PH_X_SPAN_MM 350
 
-#define PH_ENCODER_X_RESOLUTION 	11.665f
+#define PH_ENCODER_X_RESOLUTION 	13.7f
 #define PH_ENCODER_X_ZERO			440
 
 #define PH_ENCODER_Y_RESOLUTION		11.665f
@@ -27,6 +27,10 @@
 
 #define PH_ENCODER_Z_RESOLUTION		11.665f
 #define PH_ENCODER_Z_ZERO			1487
+
+#define RANGE_X  350 //in mm
+#define RANGE_Y  245 //doesn't matter which way round these go
+#define RANGE_Z  245
 
 struct PhantomAxisCalibration
 {
@@ -64,9 +68,6 @@ private:
 	PhantomAxisCalibration m_x_axis;
 	PhantomAxisCalibration m_y_axis;
 	PhantomAxisCalibration m_z_axis;
-
-	int screen_width;
-	int screen_height;
 
 	int screen_center_x;
 	int screen_center_y;

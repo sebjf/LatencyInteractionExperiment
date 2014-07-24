@@ -54,6 +54,8 @@ private:
 
 	bool m_is_simulation;
 
+	int current_ref;
+
 	void makeDefaultPlanes();
 
 };

@@ -34,6 +34,7 @@ public:
 			Sprite* sprite_2,
 			Plane* plane_0,
 			VirtualMonitor* monitor,
+			Stream* metadata,
 			bool isSimulation)
 	:mouse(*mouse),
 	 phantom(*phantom),
@@ -46,10 +47,13 @@ public:
 	 sprite_2(*sprite_2),
 	 plane_0(*plane_0),
 	 monitor(*monitor),
+	 metadata(*metadata),
 	 isSimulation(isSimulation)
 	{}
 
 	~Resources();
+
+	void KickDFE();
 
 	Mouse& mouse;
 	LibPhantom::Phantom &phantom;
@@ -65,6 +69,8 @@ public:
 	Plane& plane_0;
 
 	VirtualMonitor& monitor;
+
+	Stream& metadata;
 
 	bool isSimulation;
 };

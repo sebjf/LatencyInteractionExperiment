@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 	SteeringConditionBuilder steering_conditions(experiments_root);
 
 	FittsLawTestConditionLoader loader;
-	std::vector<FittsLawTestCondition*> fitts_conditions = loader.LoadCSV("/home/sfriston/Experiments/fittsLawConditions_1.csv");
+	std::vector<FittsLawTestCondition*>* fitts_conditions = loader.LoadCSV("/home/sfriston/Experiments/fittsLawConditions_1.csv");
 
 	Resources* resources = NULL;
 	SimulatorFitts* 	fitts;
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 		case 'r':
 		case 'R':
 
-			fitts->SetConditions(&fitts_conditions);
+			fitts->SetConditions(fitts_conditions);
 
 			if(running != NULL)
 			{
@@ -153,6 +153,13 @@ int main(int argc, char *argv[])
 		case 'n':
 		case 'N':
 			resources->input_controller.Reset();
+
+		case 'M':
+		case 'm':
+			if(running != NULL)
+			{
+				running->flag = 1;
+			}
 
 		case '\n':
 		case '\r':

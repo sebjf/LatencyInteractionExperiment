@@ -82,7 +82,7 @@ class FittsLawTestConditionLoader
 {
 public:
 	std::vector<FittsLawTestCondition*> LoadHardcoded();
-	std::vector<FittsLawTestCondition*> LoadCSV(std::string filename);
+	std::vector<FittsLawTestCondition*>* LoadCSV(std::string filename);
 
 };
 

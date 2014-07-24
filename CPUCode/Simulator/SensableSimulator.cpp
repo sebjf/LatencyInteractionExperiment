@@ -49,7 +49,7 @@ HDCallbackCode SensableSimulator::DeviceStateCallback(void* pUserData)
 	hdGetIntegerv(HD_CURRENT_BUTTONS, &buttonState);
 
 	simulator->m_dummy.m_phantom_x = position[0];
-	simulator->m_dummy.m_phantom_y = position[2];
+	simulator->m_dummy.m_phantom_y = position[1];
 
 	bool b1 = buttonState & HD_DEVICE_BUTTON_1;
 	bool b2 = buttonState & HD_DEVICE_BUTTON_2;

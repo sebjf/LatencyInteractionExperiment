@@ -21,14 +21,16 @@ struct InputUpdate
 
 void SimulatorFitts::Initialise()
 {
+	makeRealtime();
+
 	std::cout << "Beginning main loop Fitts Law Test Simulator" << std::endl;
 
 	/* BASIC INPUT */
-//	m_phantom_input_device = new PhantomInputDevice(&m_resources.phantom);
-//	m_resources.input_controller.input_device = m_phantom_input_device;
+	m_phantom_input_device = new PhantomInputDevice(&m_resources.phantom);
+	m_resources.input_controller.input_device = m_phantom_input_device;
 
 	/* SENSABLE INPUT */
-	m_resources.input_controller.input_device = &m_dummy;
+//	m_resources.input_controller.input_device = &m_dummy;
 
 	/*Set the background for Fitts Test*/
 
@@ -43,9 +45,8 @@ void SimulatorFitts::Initialise()
 	m_cursor = new Cursor(m_resources.sprite_2);
 	m_resources.input_controller.ResetHistory();
 
-	/* This object will load the conditions that drive the state of the tests */
+	current_test = 0;
 
-	m_conditions_interator = m_conditions->begin();
 }
 
 bool SimulatorFitts::Iterate()
@@ -64,23 +65,44 @@ bool SimulatorFitts::Iterate()
 		return true;
 	}
 
+	if(flag == 1)
+	{
+		flag = 0;
+
+		char* d = new char[16];
+		for(int i = 0; i < 16; i++)
+		{
+			if(i < 0)
+			d[i] = 255;
+			else
+			d[i] = 255;
+		}
+		if(m_resources.metadata.Write(d)){
+		std::cout << "Trigger";
+		}
+	}
+
 	m_last_input = input;
 
 	m_cursor->Update(input.x, input.y);
+
+	//std::cout << input.x << " " << input.y << std::endl;
 
 	/* Update returns true when the test is complete, so load the next one until all are exhausted */
 
 	if(m_runner->Update(input.x,input.y, input.lmb)){
 
-		if(m_conditions_interator == m_conditions->end()){
+		if(current_test >= m_conditions->size()){
 			std::cout << "All Conditions Complete." << std::endl;
 			return false;
 		}
 
-		m_logger.AddNewLog(Log(m_logger.GetParticipantId(), (*m_conditions_interator)->m_filename,Fitts,(*m_conditions_interator)->m_condition_id));
-		m_runner->Begin(*m_conditions_interator);
+		FittsLawTestCondition* condition = (*m_conditions)[current_test];
 
-		m_conditions_interator++;
+		m_logger.AddNewLog(Log(m_logger.GetParticipantId(), condition->m_filename,Fitts,condition->m_condition_id));
+		m_runner->Begin(condition);
+
+		current_test++;
 	}
 
 	m_logger.CurrentLog().Add(Datapoint(real,input));

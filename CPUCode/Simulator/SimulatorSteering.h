@@ -17,11 +17,11 @@ class SteeringLawTestRunner;
 class PhantomInputDevice;
 class Cursor;
 
-class SimulatorSteering : public SensableSimulator
+class SimulatorSteering : public BasicSimulator
 {
 public:
 	SimulatorSteering(Resources& resources, Logger& logger)
-	 :SensableSimulator(resources, logger)
+	 :BasicSimulator(resources, logger)
 	{}
 
 	virtual void Initialise();

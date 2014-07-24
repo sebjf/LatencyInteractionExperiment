@@ -15,11 +15,11 @@ class Cursor;
 class FittsLawTestRunner;
 class PhantomInputDevice;
 
-class SimulatorFitts : public SensableSimulator
+class SimulatorFitts : public BasicSimulator
 {
 public:
 	SimulatorFitts(Resources& resources, Logger& logger)
-	 :SensableSimulator(resources, logger)
+	 :BasicSimulator(resources, logger)
 	{}
 
 	void SetConditions(std::vector<FittsLawTestCondition*>* conditions)
@@ -33,7 +33,6 @@ public:
 
 private:
 	std::vector<FittsLawTestCondition*>* m_conditions;
-	std::vector<FittsLawTestCondition*>::iterator m_conditions_interator;
 	MouseState m_last_input;
 	Cursor* m_cursor;
 	FittsLawTestRunner* m_runner;

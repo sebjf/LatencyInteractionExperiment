@@ -87,6 +87,8 @@ void Plane::ShowPlane(int ref)
 	max_enable_partial_memory(mem_actions);
 	max_disable_validation(mem_actions);
 
+	current_ref = ref;
+
 	int offset = m_surfacemap[ref];
 	max_set_uint64t(mem_actions, "mcp_kernel", "frame_offset", offset);
 
