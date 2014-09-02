@@ -32,6 +32,19 @@ class LatencyInteractionExperimentKernel extends MaxVideoKernel {
 	}
 
 	@Override
+	public DFEVar ComputePixelMetadata(FragmentInput input)
+	{
+		NonBlockingInput<DFEVar> metadata_stream =
+			io.nonBlockingInput("metadata", dfeUInt(8), constant.var(true),
+					1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
+		DFEVar metadata = Reductions.streamHold(metadata_stream.data, metadata_stream.valid);
+
+		System.out.println("Using metadata.");
+
+		return metadata.cast(dfeRawBits(8));
+	}
+
+	@Override
 	public uRGB ComputePixelColour(FragmentInput input) {
 		// TODO Auto-generated method stub
 

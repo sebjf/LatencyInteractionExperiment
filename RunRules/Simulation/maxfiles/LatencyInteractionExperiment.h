@@ -6,12 +6,13 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#define LatencyInteractionExperiment_DisplayTotalHeight (1066)
-#define LatencyInteractionExperiment_DisplayTotalWidth (1688)
-#define LatencyInteractionExperiment_DisplayHeight (1024)
+#define LatencyInteractionExperiment_PixelClock (149)
+#define LatencyInteractionExperiment_DisplayTotalHeight (733)
+#define LatencyInteractionExperiment_DisplayTotalWidth (1360)
+#define LatencyInteractionExperiment_DisplayHeight (720)
 #define LatencyInteractionExperiment_DisplayWidth (1280)
-#define LatencyInteractionExperiment_DisplayStartY (41)
-#define LatencyInteractionExperiment_DisplayStartX (392)
+#define LatencyInteractionExperiment_DisplayStartY (10)
+#define LatencyInteractionExperiment_DisplayStartX (56)
 
 
 /*----------------------------------------------------------------------------*/
@@ -24,6 +25,8 @@ extern "C" {
  * \brief Basic static function for the interface 'default'.
  * 
  * \param [in] inscalar_LatencyInteractionExperimentKernel_Enable Input scalar parameter "LatencyInteractionExperimentKernel.Enable".
+ * \param [in] inscalar_LatencyInteractionExperimentKernel_HSyncPolarity Input scalar parameter "LatencyInteractionExperimentKernel.HSyncPolarity".
+ * \param [in] inscalar_LatencyInteractionExperimentKernel_VSyncPolarity Input scalar parameter "LatencyInteractionExperimentKernel.VSyncPolarity".
  * \param [in] inscalar_mcp_kernel_frame_offset Input scalar parameter "mcp_kernel.frame_offset".
  * \param [in] instream_cpu_to_plane_0 Stream "cpu_to_plane_0".
  * \param [in] instream_size_cpu_to_plane_0 The size of the stream instream_cpu_to_plane_0 in bytes.
@@ -49,6 +52,8 @@ extern "C" {
  */
 void LatencyInteractionExperiment(
 	uint64_t inscalar_LatencyInteractionExperimentKernel_Enable,
+	uint64_t inscalar_LatencyInteractionExperimentKernel_HSyncPolarity,
+	uint64_t inscalar_LatencyInteractionExperimentKernel_VSyncPolarity,
 	uint64_t inscalar_mcp_kernel_frame_offset,
 	const void *instream_cpu_to_plane_0,
 	size_t instream_size_cpu_to_plane_0,
@@ -81,6 +86,8 @@ void LatencyInteractionExperiment(
  * 
  * 
  * \param [in] inscalar_LatencyInteractionExperimentKernel_Enable Input scalar parameter "LatencyInteractionExperimentKernel.Enable".
+ * \param [in] inscalar_LatencyInteractionExperimentKernel_HSyncPolarity Input scalar parameter "LatencyInteractionExperimentKernel.HSyncPolarity".
+ * \param [in] inscalar_LatencyInteractionExperimentKernel_VSyncPolarity Input scalar parameter "LatencyInteractionExperimentKernel.VSyncPolarity".
  * \param [in] inscalar_mcp_kernel_frame_offset Input scalar parameter "mcp_kernel.frame_offset".
  * \param [in] instream_cpu_to_plane_0 Stream "cpu_to_plane_0".
  * \param [in] instream_size_cpu_to_plane_0 The size of the stream instream_cpu_to_plane_0 in bytes.
@@ -107,6 +114,8 @@ void LatencyInteractionExperiment(
  */
 max_run_t *LatencyInteractionExperiment_nonblock(
 	uint64_t inscalar_LatencyInteractionExperimentKernel_Enable,
+	uint64_t inscalar_LatencyInteractionExperimentKernel_HSyncPolarity,
+	uint64_t inscalar_LatencyInteractionExperimentKernel_VSyncPolarity,
 	uint64_t inscalar_mcp_kernel_frame_offset,
 	const void *instream_cpu_to_plane_0,
 	size_t instream_size_cpu_to_plane_0,
@@ -136,6 +145,8 @@ max_run_t *LatencyInteractionExperiment_nonblock(
  */
 typedef struct { 
 	uint64_t inscalar_LatencyInteractionExperimentKernel_Enable; /**<  [in] Input scalar parameter "LatencyInteractionExperimentKernel.Enable". */
+	uint64_t inscalar_LatencyInteractionExperimentKernel_HSyncPolarity; /**<  [in] Input scalar parameter "LatencyInteractionExperimentKernel.HSyncPolarity". */
+	uint64_t inscalar_LatencyInteractionExperimentKernel_VSyncPolarity; /**<  [in] Input scalar parameter "LatencyInteractionExperimentKernel.VSyncPolarity". */
 	uint64_t inscalar_mcp_kernel_frame_offset; /**<  [in] Input scalar parameter "mcp_kernel.frame_offset". */
 	const void *instream_cpu_to_plane_0; /**<  [in] Stream "cpu_to_plane_0". */
 	size_t instream_size_cpu_to_plane_0; /**<  [in] The size of the stream instream_cpu_to_plane_0 in bytes. */

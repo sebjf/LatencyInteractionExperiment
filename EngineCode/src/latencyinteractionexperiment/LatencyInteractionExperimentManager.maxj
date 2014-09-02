@@ -3,6 +3,7 @@ package latencyinteractionexperiment;
 import maxvideo.MaxVideoManager;
 import types.uRGBA;
 
+import com.maxeler.maxcompiler.v2.managers.BuildConfig.Switch;
 import com.maxeler.maxcompiler.v2.managers.custom._CustomManagers;
 import com.maxeler.maxcompiler.v2.managers.custom.blocks.KernelBlock;
 import com.maxeler.maxcompiler.v2.managers.custom.stdlib.MemoryControlGroup.MemoryAccessPattern;
@@ -22,7 +23,7 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 		addStreamToCPU("plane_0_to_cpu") <== addStreamFromOnCardMemory("plane_0_read", MemoryAccessPattern.LINEAR_1D);
 
 		/* Main Image Generator Kernel */
-		DisplayStandard displayparams = DisplayStandard.make_1024x768x60();
+		DisplayStandard displayparams = DisplayStandard.make_1280x720x150();
 
 		LatencyInteractionExperimentKernel framegenkernel_inner =
 			new LatencyInteractionExperimentKernel(makeKernelParameters(m_kernelName), displayparams);
@@ -52,6 +53,8 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 		framegenkernel.getInput("sprite_1_content") <== addStreamFromCPU("sprite_1_content");
 		framegenkernel.getInput("sprite_2_content") <== addStreamFromCPU("sprite_2_content");
 
+		/* Metadata */
+		framegenkernel.getInput("metadata") <== addStreamFromCPU("metadata");
 
 		createSLiCinterface(interfaceDefault());
 
@@ -62,6 +65,15 @@ public class LatencyInteractionExperimentManager extends MaxVideoManager {
 	public static void main(String[] args) {
 		LatencyInteractionExperimentEngineParameters params = new LatencyInteractionExperimentEngineParameters(args);
 		LatencyInteractionExperimentManager manager = new LatencyInteractionExperimentManager(params);
+
+		manager.getBuildConfig().setMPPRCostTableSearchRange(params.getMPPRStartCT(), params.getMPPREndCT());
+		manager.getBuildConfig().setMPPRParallelism(params.getMPPRThreads());
+		manager.getBuildConfig().setMPPRContinueAfterMeetingTiming(false);
+		manager.getBuildConfig().setEnablePhysicalSynthesisAsyncPipelining(Switch.ON);
+		manager.getBuildConfig().setEnablePhysicalSynthesisRetiming(Switch.ON);
+		manager.getBuildConfig().setEnablePhysicalSynthesisRegDuplication(Switch.ON);
+		manager.getBuildConfig().setMPPRRetryNearMissesThreshold(1500);
+
 		manager.build();
 	}
 
