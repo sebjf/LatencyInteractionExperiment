@@ -30,7 +30,7 @@ public:
 
 	virtual bool Iterate()
 	{
-		MouseState s = m_dummy.read();
+		MouseState s = m_dummy.readDevice();
 		std::cout << s.x << " " << s.y << " " << s.lmb << std::endl;
 		return true;
 	}
@@ -56,7 +56,7 @@ public:
 
 	virtual bool Iterate()
 	{
-		MouseState s = m_device->read();
+		MouseState s = m_device->readDevice();
 		std::cout << s.x << " " << s.y << " " << s.lmb << std::endl;
 		return true;
 	}

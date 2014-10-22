@@ -31,6 +31,13 @@ std::istream& operator >>(std::istream& is, Path& path)
 
 	int num_segments;
 	is >> num_segments;
+
+	if(num_segments > 600)
+	{
+		std::cout << "Error in file num path segments" << std::endl;
+		return is;
+	}
+
 	for(int i = 0; i < num_segments; i++)
 	{
 		PathSegment s;

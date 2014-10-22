@@ -47,27 +47,36 @@ int main(int argc, char *argv[])
 //	sigemptyset(&action.sa_mask);
 //	sigaction(SIGTERM, &action, NULL );
 
+	int starting_test = 0;
 	int participant_id = 0;
 	if(argc > 1)
 	{
 		participant_id = atoi(argv[1]);
 	}
+	if(argc > 2)
+	{
+		starting_test = atoi(argv[2]);
+	}
 	std::cout << "Beginning for participant number: " << participant_id << std::endl;
 
-	std::string experiments_root = "/home/sfriston/Experiments/";
+	//std::string experiments_root = "/home/sfriston/Experiments/";
+	std::string experiments_root = "/home/sfriston/smbhelp/Experiments/";
+
 
 	Logger logger(participant_id, experiments_root + "Logs/", "test_results_collection", ".logs");
 
 	SteeringConditionBuilder steering_conditions(experiments_root);
 
 	FittsLawTestConditionLoader loader;
-	std::vector<FittsLawTestCondition*>* fitts_conditions = loader.LoadCSV("/home/sfriston/Experiments/fittsLawConditions_1.csv");
+	std::vector<FittsLawTestCondition*>* fitts_conditions = loader.LoadCSV(experiments_root + "/fittsLawConditions_1.csv");
 
 	Resources* resources = NULL;
 	SimulatorFitts* 	fitts;
 	SimulatorSteering* 	steering;
 
 	Simulator* running = NULL;
+
+	bool shoulddolatencymeasurement = false;
 
 	bool run = true;
 	while(run){
@@ -101,6 +110,8 @@ int main(int argc, char *argv[])
 			}
 			//running = new TestPhantomSimulator(*resources,logger);
 			running = fitts;
+			running->current_test = starting_test;
+			running->dolatency = shoulddolatencymeasurement;
 			running->Start();
 
 			break;
@@ -115,6 +126,8 @@ int main(int argc, char *argv[])
 				running->Stop();
 			}
 			running = steering;
+			running->current_test = starting_test;
+			running->dolatency = shoulddolatencymeasurement;
 			running->Start();
 
 			break;
@@ -152,13 +165,19 @@ int main(int argc, char *argv[])
 		case 'n':
 		case 'N':
 			resources->input_controller.Reset();
+			break;
 
 		case 'M':
 		case 'm':
-			if(running != NULL)
-			{
-				running->flag = 1;
+			shoulddolatencymeasurement = !shoulddolatencymeasurement;
+			break;
+
+		case 'P':
+		case 'p':
+			if(running != NULL){
+				std::cout << "Current test: " << running->current_test << std::endl;
 			}
+			break;
 
 		case '\n':
 		case '\r':

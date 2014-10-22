@@ -20,9 +20,12 @@
  {
 	std::cout << "Beginning main loop Steering Law Test Simulator" << std::endl;
 
+	/* BASIC MOUSE INPUT */
+	m_resources.input_controller.input_device = &(m_resources.mouse);
+
 	/* BASIC INPUT */
-	m_phantom_input_device = new PhantomInputDevice(&m_resources.phantom);
-	m_resources.input_controller.input_device = m_phantom_input_device;
+//	m_phantom_input_device = new PhantomInputDevice(&m_resources.phantom);
+//	m_resources.input_controller.input_device = m_phantom_input_device;
 
 	/* SENSABLE INPUT */
 //	m_resources.input_controller.input_device = &m_dummy;
@@ -33,13 +36,9 @@
 
 	/* This will control the cursor sprite */
 
-	m_cursor = new Cursor(m_resources.sprite_2);
+	m_cursor = new Cursor(m_resources.sprite_2, dolatency, 5);
 	m_resources.input_controller.ResetHistory();
-
-	/* This object will load the conditions that drive the state of the tests */
-
-	m_conditions_interator = m_conditions->m_conditions.begin();
-
+	m_resources.input_controller.input_device->reset();
  }
 
 
@@ -67,15 +66,17 @@
 
 	if(m_runner->Update(input.x,input.y)){
 
-		if(m_conditions_interator == m_conditions->m_conditions.end()){
+		if(current_test >= m_conditions->m_conditions.size()){
 			std::cout << "All Conditions Complete." << std::endl;
 			return false;
 		}
 
-		m_logger.AddNewLog(Log(m_logger.GetParticipantId(), (*m_conditions_interator)->m_filename,Steering,(*m_conditions_interator)->m_condition_id));
-		m_runner->Begin(*m_conditions_interator);
+		SteeringLawTestCondition* condition = (m_conditions->m_conditions)[current_test];
 
-		m_conditions_interator++;
+		m_logger.AddNewLog(Log(m_logger.GetParticipantId(), condition->m_filename,Steering,condition->m_condition_id));
+		m_runner->Begin(condition);
+
+		current_test++;
 	}
 
 	m_logger.CurrentLog().Add(Datapoint(real,input));
@@ -86,6 +87,8 @@
 
  void SimulatorSteering::Finish()
  {
+	std::cout << "Finished on test: " << current_test << std::endl;
+
 	m_logger.Save(); //saves to the default directory with an unused filename
 	m_logger.Clear();
 
@@ -95,7 +98,7 @@
 
 	delete m_cursor;
 	delete m_runner;
-	delete m_phantom_input_device;
+//	delete m_phantom_input_device;
  }
 
 

@@ -20,7 +20,8 @@ public:
 		:m_do_simulation(false),
 		m_resources(resources),
 		m_logger(logger),
-		flag(0)
+		flag(0),
+		dolatency(false)
 	{}
 
 	bool do_simulation() { return m_do_simulation; }
@@ -31,6 +32,7 @@ public:
 
 	int current_test;
 	int flag;
+	bool dolatency;
 
 	virtual void Start() = 0;
 	virtual void Stop() = 0;

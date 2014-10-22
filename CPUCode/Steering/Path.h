@@ -21,8 +21,8 @@ struct Polar
 
 struct PathSegment
 {
-	int x;
-	int y;
+	float x;
+	float y;
 	float forward; //angle in radians from 0 to 2*pi
 
 	Vector2 ToVector()
@@ -40,7 +40,7 @@ class Path
 {
 public:
 	std::vector<PathSegment> m_points;
-	int m_width;
+	float m_width;
 };
 
 std::istream& operator >>(std::istream& is, Path& path);

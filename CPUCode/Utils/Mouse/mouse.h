@@ -9,6 +9,7 @@
 #define MOUSE_H_
 
 #include <stdio.h>
+#include <Simulator/Delay.h>
 
 struct MouseEvent
 {
@@ -23,20 +24,30 @@ struct MouseDelta{
 	float x;
 	float y;
 	bool lmb;
+	bool valid;
 };
 
-class Mouse
+class Mouse : public InputDevice
 {
 public:
 	Mouse(bool invert_y);
-	~Mouse();
+	virtual ~Mouse();
 	struct MouseDelta readMouse(bool block);
 	float Scale;
 	bool InvertY;
 
+	virtual MouseState readDevice();
+	virtual void reset();
+
 private:
 	FILE* mouse;
 	bool mouseInputAvailable();
+
+	float xpos;
+	float ypos;
+
+	int m_mouse_cooldown;
+	bool m_mouse_down;
 };
 
 
