@@ -14,9 +14,9 @@
 #include <Utils/Split.h>
 #include <boost/filesystem/path.hpp>
 
-std::vector<FittsLawTestCondition*> FittsLawTestConditionLoader::LoadCSV(std::string filename)
+std::vector<FittsLawTestCondition*>* FittsLawTestConditionLoader::LoadCSV(std::string filename)
 {
-	std::vector<FittsLawTestCondition*> conditions;
+	std::vector<FittsLawTestCondition*>* conditions = new std::vector<FittsLawTestCondition*>();
 
 	std::ifstream file(filename.c_str(), std::ifstream::in); // declare file stream: http://www.cplusplus.com/reference/iostream/ifstream/
 	if(file.fail())
@@ -56,10 +56,12 @@ std::vector<FittsLawTestCondition*> FittsLawTestConditionLoader::LoadCSV(std::st
 			 continue;
 		 }
 
-		 conditions.push_back(condition);
+		 conditions->push_back(condition);
 	}
 
-	if(conditions.size() <= 0){
+	std::cout << "Loaded " << conditions->size() << " Test Conditions" << std::endl;
+
+	if(conditions->size() <= 0){
 		std::cout << "No conditions were loaded from the CSV, there may be a problem with it." << std::endl;
 	}
 

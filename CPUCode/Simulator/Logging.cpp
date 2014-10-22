@@ -47,10 +47,14 @@ Log::Log(int participant_id, std::string filename, TestType type, int condition_
 
 Logger::Logger(int participant_id, std::string directory, std::string format, std::string extension)
  :participant_id(participant_id),
-  directory(directory),
   filename_format(format),
   filename_extension(extension)
-{}
+{
+	std::ostringstream stream;
+	stream << directory << "participant_" <<  participant_id << "/";
+	this->directory =  stream.str();
+	boost::filesystem::create_directories(this->directory);
+}
 
 void Logger::AddNewLog(const Log& log)
 {

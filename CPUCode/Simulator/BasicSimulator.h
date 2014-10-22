@@ -10,6 +10,8 @@
 
 #include "Simulator.h"
 
+void makeRealtime();
+
 class BasicSimulator : public Simulator
 {
 public:

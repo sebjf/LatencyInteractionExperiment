@@ -19,7 +19,8 @@ public:
 	Simulator(Resources& resources, Logger& logger)
 		:m_do_simulation(false),
 		m_resources(resources),
-		m_logger(logger)
+		m_logger(logger),
+		flag(0)
 	{}
 
 	bool do_simulation() { return m_do_simulation; }
@@ -27,6 +28,9 @@ public:
 
 	Resources& m_resources;
 	Logger& m_logger;
+
+	int current_test;
+	int flag;
 
 	virtual void Start() = 0;
 	virtual void Stop() = 0;

@@ -9,6 +9,7 @@
 #define SIMULATORSTEERING_H_
 
 #include "BasicSimulator.h"
+#include "SensableSimulator.h"
 
 class SteeringConditionBuilder;
 class SteeringLawTestCondition;

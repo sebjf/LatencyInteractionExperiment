@@ -20,8 +20,12 @@
  {
 	std::cout << "Beginning main loop Steering Law Test Simulator" << std::endl;
 
+	/* BASIC INPUT */
 	m_phantom_input_device = new PhantomInputDevice(&m_resources.phantom);
 	m_resources.input_controller.input_device = m_phantom_input_device;
+
+	/* SENSABLE INPUT */
+//	m_resources.input_controller.input_device = &m_dummy;
 
 	/* This object will control the logic of the Fitts Law Tests */
 

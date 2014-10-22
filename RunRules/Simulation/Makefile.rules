@@ -56,16 +56,8 @@ maxfiles: $(MAXFILES_MAX)
 BUILDNAME_MAXFILE_1:=LatencyInteractionExperiment
 MAXFILE_1:=LatencyInteractionExperiment.max
 
-include/LatencyInteractionExperiment.h: maxfiles/LatencyInteractionExperiment.h
-	cp $< $@
-
-maxfiles/LatencyInteractionExperiment.max maxfiles/LatencyInteractionExperiment.h:
-# Ensure that maxfiles do not get build by this Makefile when running in MaxIDE
-ifndef MAXIDE_RUN
-	env  MAX_BUILDPARAMS=" DFEModel=CORIA  target=DFE_SIM  maxFileName=LatencyInteractionExperiment "  ant -v -f LatencyInteractionExperiment.xml
-else
-	test -f $@ || ( echo 'Maxfile unavailable: $@' >/dev/stderr ; exit 1 )
-endif
+maxfiles/LatencyInteractionExperiment.max:
+	ln -sf '/network-raid/sfriston/maxworkspace/LatencyInteractionExperiment/RunRules/Simulation/maxfiles/LatencyInteractionExperiment.max' $@
 
 
 
