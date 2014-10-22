@@ -45,13 +45,7 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.811804367" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1270727551" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
-								<option id="gnu.c.link.option.paths.1169695117" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/compiler/lib/intel64"/>
-									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/ipp/../compiler/lib/intel64"/>
-									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/ipp/lib/intel64"/>
-									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/mkl/lib/intel64"/>
-									<listOptionValue builtIn="false" value="/network-raid/opt/intel/composer_xe_2011_sp1.7.256/composer_xe_2011_sp1.7.256/tbb/lib/intel64//cc4.1.0_libc2.4_kernel2.6.16.21"/>
-								</option>
+								<option id="gnu.c.link.option.paths.1169695117" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.1644971630" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -78,7 +72,6 @@
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Fitts"/>
 						<entry excluding="Steering|Input|Fitts|Graphics|Utils|Simulator|VirtualMonitor|Keyboard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Input"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Steering"/>
 					</sourceEntries>
 				</configuration>
@@ -454,7 +447,6 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Graphics"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Input"/>
 						<entry excluding="VirtualMonitor" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Utils"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Steering"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Simulator"/>

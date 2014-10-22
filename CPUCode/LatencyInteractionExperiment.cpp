@@ -10,7 +10,6 @@
 #include "MaxSLiCInterface.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-#include <Phantom/Phantom.h>
 #include "Simulator/Resources.h"
 
 #include <Simulator/SimulatorFitts.h>
