@@ -6,3 +6,5 @@ objects/
 *.log
 *.xml
 *.pxg
+*.dat
+*.be
