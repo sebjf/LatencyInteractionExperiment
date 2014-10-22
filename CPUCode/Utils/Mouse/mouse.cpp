@@ -7,13 +7,18 @@
 
 #include "mouse.h"
 
+#include <iostream>
 #include <poll.h>
 
+
 Mouse::Mouse(bool invert_y)
-:Scale(1.0f),
- InvertY(invert_y)
+:Scale(0.0833),
+ InvertY(invert_y),
+ xpos(0),
+ ypos(0),
+ m_mouse_cooldown(0)
 {
-	mouse = fopen("/dev/input/mice","rb");
+	mouse = fopen("/dev/input/mouse1","rb");
 	if(mouse == NULL){
 		printf("Could not open mouse. Are you running with elevated permissions?");
 	}
@@ -24,12 +29,58 @@ Mouse::~Mouse()
 	fclose(mouse);
 }
 
+void Mouse::reset()
+{
+	xpos = 640 * (1/Scale);
+	ypos = 360 * (1/Scale);
+}
+
+struct MouseState Mouse::readDevice()
+{
+	MouseDelta d = readMouse(false);
+
+	xpos += d.x;
+
+	if(InvertY){
+		d.y = -d.y;
+	}
+	ypos += d.y;
+
+	MouseState s;
+	s.lmb = false;
+
+	if(d.valid){
+		bool mouse_down = d.lmb;
+		if(mouse_down){
+			if(!m_mouse_down){
+				m_mouse_cooldown = 1000;
+			}
+		}
+		m_mouse_down = mouse_down;
+	}
+
+	/* Since we filter the rising edge of the lmb state we need to give some play so when the
+	 * delayed state is sampled, those just behind it will be picked up as well */
+	if(m_mouse_cooldown > 0)
+	{
+		s.lmb = true;
+		m_mouse_cooldown--;
+	}
+
+	s.x = (int)(xpos * Scale);
+	s.y = (int)(ypos * Scale);
+
+
+	return s;
+}
+
 struct MouseDelta Mouse::readMouse(bool block)
 {
 	struct MouseDelta value;
 	value.x = 0;
 	value.y = 0;
 	value.lmb = false;
+	value.valid = false;
 
 	if(mouseInputAvailable() || block){
 
@@ -47,13 +98,12 @@ struct MouseDelta Mouse::readMouse(bool block)
 			x = ((event.flags & 0x10) << 4) | (int)event.x;
 			y = ((event.flags & 0x20) << 3) | (int)event.y;
 			value.lmb = (event.flags & 0x1);
+
+			value.x = x;
+			value.y = y;
+
+			value.valid = true;
 		}
-
-		float xscale = Scale;
-		float yscale = InvertY ? -Scale : Scale;
-
-		value.x = ((float)x) * xscale;
-		value.y = ((float)y) * yscale;
 	}
 
 	return value;

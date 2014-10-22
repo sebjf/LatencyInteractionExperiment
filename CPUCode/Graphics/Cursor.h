@@ -16,7 +16,7 @@ private:
 	Sprite& m_sprite;
 
 public:
-	Cursor(Sprite& sprite);
+	Cursor(Sprite& sprite, bool dolatency, int size);
 	void Update(int x, int y);
 };
 

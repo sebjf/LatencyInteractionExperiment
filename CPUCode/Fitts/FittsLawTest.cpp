@@ -45,6 +45,8 @@ bool FittsLawTestRunner::Update(int x, int y, bool lmb)
 	case BeginMoveToStagingState:
 		if(BeginMoveToStage()){
 			stage = MoveToStagingState;
+
+			current_latency_in_ms = 0;
 		}
 		break;
 
@@ -52,7 +54,10 @@ bool FittsLawTestRunner::Update(int x, int y, bool lmb)
 		/* In this stage the user is prompted to click on the starting point to begin the timed test. The staging
 		 * area is green and the next target is visible. */
 		if(WaitForStage(x,y,lmb)){
-			stage = BeginMoveToTargetState;
+			//stage = BeginMoveToTargetState;
+			if(BeginMoveToTarget()){
+				stage = MoveToTargetState;
+			}
 
 			/*When the user is moving back to the stage to begin the next experiment, we do not want them to adapt
 			 *to the new latency, so current_latency_in_ms contains the previous conditions latency, until this point*/
@@ -60,38 +65,25 @@ bool FittsLawTestRunner::Update(int x, int y, bool lmb)
 		}
 		break;
 
-	case BeginMoveToTargetState:
-		if(BeginMoveToTarget()){
-			stage = MoveToTargetState;
-		}
-		break;
+//	case BeginMoveToTargetState:
+//		if(BeginMoveToTarget()){
+//			stage = MoveToTargetState;
+//		}
+//		break;
 
 	case MoveToTargetState:
 		/* In this stage the user is to move to the target. The staging area disappears and the target becomes
 		 * green drawing the user to it */
 		if(MoveToTarget(x,y,lmb)){
 			stage = CompleteStage;
-		}
-		break;
-
-	/*Skip these*/
-
-	case BeginMoveToStagingEndState:
-		if(BeginMoveToStage()){
-			stage = MoveToStagingEndState;
-		}
-		break;
-
-	case MoveToStagingEndState:
-		if(WaitForStage(x,y,lmb)){
-			stage = CompleteStage;
+			Complete();
 		}
 		break;
 
 	case CompleteStage:
 		/* The user has clicked on the target and the test is now complete */
 
-		Complete();
+		//Complete();
 
 		return true;
 	}

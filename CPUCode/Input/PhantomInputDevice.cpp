@@ -61,11 +61,23 @@ PhantomInputDevice::~PhantomInputDevice()
 	}
 }
 
-MouseState PhantomInputDevice::read()
+MouseState PhantomInputDevice::readDevice()
 {
 	LibPhantom::PhantomDataRead d = phantom->isoIterate();
 	MouseState s;
-	s.lmb = (d.status.button1 == 0) || (d.status.button2 == 0);
+
+	//s.lmb = (d.status.button1 == 0) || (d.status.button2 == 0);
+
+	//debounce the mouse
+	s.lmb = false;
+	bool mouse_down = (d.status.button1 == 0) || (d.status.button2 == 0);
+	if(mouse_down){
+		if(!m_mouse_down){
+			s.lmb = true;
+		}
+	}
+	m_mouse_down = mouse_down;
+
 	float encoder_x = (signed short)d.encoder_x;
 	float encoder_y = (signed short)d.encoder_y;
 	float encoder_z = (signed short)d.encoder_z;
@@ -88,7 +100,7 @@ MouseState PhantomInputDevice::read()
 
 void PhantomInputDevice::reset()
 {
-	MouseState s = read();
+	MouseState s = readDevice();
 
 	offset_x = -s.x;
 	offset_y = -s.y;

@@ -25,9 +25,12 @@ void SimulatorFitts::Initialise()
 
 	std::cout << "Beginning main loop Fitts Law Test Simulator" << std::endl;
 
+	/* BASIC MOUSE INPUT */
+	m_resources.input_controller.input_device = &(m_resources.mouse);
+
 	/* BASIC INPUT */
-	m_phantom_input_device = new PhantomInputDevice(&m_resources.phantom);
-	m_resources.input_controller.input_device = m_phantom_input_device;
+//	m_phantom_input_device = new PhantomInputDevice(&m_resources.phantom);
+//	m_resources.input_controller.input_device = m_phantom_input_device;
 
 	/* SENSABLE INPUT */
 //	m_resources.input_controller.input_device = &m_dummy;
@@ -42,10 +45,9 @@ void SimulatorFitts::Initialise()
 
 	/* This will control the cursor sprite */
 
-	m_cursor = new Cursor(m_resources.sprite_2);
+	m_cursor = new Cursor(m_resources.sprite_2, dolatency, 2);
 	m_resources.input_controller.ResetHistory();
-
-	current_test = 0;
+	m_resources.input_controller.input_device->reset();
 
 }
 
@@ -57,29 +59,16 @@ bool SimulatorFitts::Iterate()
 	MouseState real  = m_resources.input_controller.GetCurrentState();
 	MouseState input = m_resources.input_controller.GetState(m_runner->GetDelay());
 
+	/* The input controller samples so fast (0.006ms) that quantisation noise in the the timing during the search for the
+	 * delayed value can result in the lmb being missed. */
+	//input.lmb = real.lmb;
+
 	/* This loop runs at ~ 1/60us /s (very fast), and will quickly saturate the pci-ex link, computer memory and make
 	 * handling the large amount of data in the logs difficult. So we only do all of the above when the user input
 	 * state has changed, and rely on the timestamp for correct analysis of the data later on */
 
 	if(input.Equals(m_last_input)){
 		return true;
-	}
-
-	if(flag == 1)
-	{
-		flag = 0;
-
-		char* d = new char[16];
-		for(int i = 0; i < 16; i++)
-		{
-			if(i < 0)
-			d[i] = 255;
-			else
-			d[i] = 255;
-		}
-		if(m_resources.metadata.Write(d)){
-		std::cout << "Trigger";
-		}
 	}
 
 	m_last_input = input;
@@ -112,6 +101,8 @@ bool SimulatorFitts::Iterate()
 
 void SimulatorFitts::Finish()
 {
+	std::cout << "Finished on test: " << current_test << std::endl;
+
 	m_logger.Save(); //saves to the default directory with an unused filename
 	m_logger.Clear();
 
@@ -120,5 +111,5 @@ void SimulatorFitts::Finish()
 
 	delete m_cursor;
 	delete m_runner;
-	delete m_phantom_input_device;
+	//delete m_phantom_input_device;
 }

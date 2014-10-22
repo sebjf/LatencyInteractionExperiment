@@ -14,8 +14,11 @@ Resources* InitialiseResources()
 {
 	std::cout << "Initialising resources." << std::endl;
 
+//	Wacom* wacom = new Wacom();
+	Wacom* wacom = NULL;
+
 	Mouse* mouse = new Mouse(true);
-	mouse->Scale = 0.4f;
+//	Mouse* mouse = NULL;
 
 	LibPhantom::Phantom* phantom = LibPhantom::Phantom::findPhantom(0);
 
@@ -26,7 +29,7 @@ Resources* InitialiseResources()
 	/* This will control the input device, reading it and storing a history of its state so that delayed input
 	 * may be provided to the tests */
 
-	DelayedInputController* input_controller = new DelayedInputController(0.060f,1000);
+	DelayedInputController* input_controller = new DelayedInputController(0.0060f,2000);
 
 	max_file_t* maxfile = LatencyInteractionExperiment_init();
 
@@ -70,6 +73,7 @@ Resources* InitialiseResources()
 
 	Resources* resources = new Resources(
 			mouse,
+			wacom,
 			phantom,
 			input_controller,
 			maxfile,
@@ -85,20 +89,6 @@ Resources* InitialiseResources()
 
 	return resources;
 
-}
-
-void Resources::KickDFE()
-{
-	max_actions_t* mem_actions = max_actions_init(&maxfile, "default");
-	max_disable_reset(mem_actions);
-	max_enable_partial_memory(mem_actions);
-	max_disable_validation(mem_actions);
-
-//	max_set_uint64t(mem_actions, "mcp_kernel", "frame_offset", offset);
-
-	max_run(&engine, mem_actions);
-
-	max_actions_free(mem_actions);
 }
 
 Resources::~Resources()

@@ -8,7 +8,6 @@
 #ifndef DELAY_H_
 #define DELAY_H_
 
-#include <Utils/Mouse/mouse.h>
 #include <time.h>
 #include <msgpack.hpp>
 
@@ -40,7 +39,7 @@ class InputDevice
 {
 public:
 	virtual ~InputDevice() {};
-	virtual MouseState read() = 0;
+	virtual MouseState readDevice() = 0;
 	virtual void reset() = 0;
 };
 

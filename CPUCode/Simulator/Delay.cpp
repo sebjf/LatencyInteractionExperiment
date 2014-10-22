@@ -15,7 +15,7 @@
 DelayedInputController::DelayedInputController(float average_period_ms, float max_delay_ms)
 :input_device(NULL)
 {
-	buffer_length = (int)((max_delay_ms / average_period_ms) * 2.0f);
+	buffer_length = (int)((max_delay_ms / average_period_ms) * 1.2f);
 	values = new MouseState[buffer_length]();
 
 	ResetHistory();
@@ -53,6 +53,10 @@ double DelayedInputController::getCurrentTimeInMs()
 
 MouseState DelayedInputController::GetState(float delay_ms)
 {
+	if(delay_ms == 0){
+	//	return GetCurrentState();
+	}
+
 	double target_time = getCurrentTimeInMs() - delay_ms;
 
 	int search_position = buffer_position;
@@ -60,6 +64,12 @@ MouseState DelayedInputController::GetState(float delay_ms)
 	{
 		if(values[search_position].timestamp_ms <= target_time){
 			//timestamps increase from epoch, so we have found the first timestamp older than the target age
+
+			float dt = target_time - values[search_position].timestamp_ms;
+			if(abs(dt) > 0.060){
+				std::cout << "dt of " << dt << " is greater than average period." << std::endl;
+			}
+
 			return values[search_position];
 		}
 		search_position--;
@@ -94,7 +104,7 @@ void DelayedInputController::Update()
 		std::cout << "Input Device must be provided before calling update." << std::endl;
 	}
 
-	MouseState m = input_device->read();
+	MouseState m = input_device->readDevice();
 
 	buffer_position++;
 
@@ -107,6 +117,10 @@ void DelayedInputController::Update()
 	values[buffer_position].y = m.y;
 	values[buffer_position].lmb = m.lmb;
 	values[buffer_position].timestamp_ms = getCurrentTimeInMs();
+
+/*	if(buffer_position > 0){
+		std::cout << values[buffer_position].timestamp_ms - values[buffer_position-1].timestamp_ms << std::endl;
+	}*/
 }
 
 std::ostream& operator<< (std::ostream& stream, const MouseState& mousestate)

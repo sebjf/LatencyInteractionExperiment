@@ -16,6 +16,7 @@
 #include <Graphics/Plane.h>
 #include <Phantom/Phantom.h>
 #include <Input/PhantomInputDevice.h>
+#include <Input/Wacom.h>
 #include "MaxSLiCInterface.h"
 
 class Resources
@@ -24,6 +25,7 @@ public:
 
 	Resources(
 			Mouse* mouse,
+			Wacom* wacom,
 			LibPhantom::Phantom* phantom,
 			DelayedInputController* input_controller,
 			max_file_t* maxfile,
@@ -37,6 +39,7 @@ public:
 			Stream* metadata,
 			bool isSimulation)
 	:mouse(*mouse),
+	 wacom(*wacom),
 	 phantom(*phantom),
 	 input_controller(*input_controller),
 	 maxfile(*maxfile),
@@ -53,9 +56,8 @@ public:
 
 	~Resources();
 
-	void KickDFE();
-
 	Mouse& mouse;
+	Wacom& wacom;
 	LibPhantom::Phantom &phantom;
 	DelayedInputController& input_controller;
 

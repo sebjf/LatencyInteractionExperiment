@@ -50,7 +50,7 @@ public:
 	PhantomInputDevice(LibPhantom::Phantom* phantom);
 	virtual ~PhantomInputDevice();
 
-	MouseState read();
+	MouseState readDevice();
 	void reset();
 
 private:
@@ -73,6 +73,8 @@ private:
 	int screen_center_y;
 
 	float screen_pixel_pitch;
+
+	bool m_mouse_down;
 };
 
 

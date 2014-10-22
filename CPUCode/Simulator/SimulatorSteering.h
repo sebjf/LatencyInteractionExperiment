@@ -35,7 +35,6 @@ public:
 
 private:
 	SteeringConditionBuilder* m_conditions;
-	std::vector<SteeringLawTestCondition*>::iterator m_conditions_interator;
 	SteeringLawTestRunner* m_runner;
 	MouseState m_last_input;
 	Cursor* m_cursor;

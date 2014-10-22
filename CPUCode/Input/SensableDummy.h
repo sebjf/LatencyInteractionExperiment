@@ -28,7 +28,7 @@ public:
 
 	bool m_phantom_lmb;
 
-	MouseState read()
+	MouseState readDevice()
 	{
 		MouseState state;
 

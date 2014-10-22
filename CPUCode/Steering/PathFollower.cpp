@@ -12,7 +12,7 @@ using namespace boost::numeric::ublas;
 PathFollower::PathFollower(Path& path)
 :m_path(path),
  m_s(0),
- m_tolerance(2)
+ m_tolerance(0)
 {
 
 }
@@ -69,7 +69,12 @@ Vector2 PathFollower::GetBallForwardVector()
 	Vector2 v1 = m_path.m_points[i1].ToVector();
 	Vector2 v2 = m_path.m_points[i2].ToVector();
 
-	return normalized(v2 - v1);
+	Vector2 dv = v2 - v1;
+	Vector2 nv = normalized(dv);
+
+//	std::cout << dv[0] << "," << dv[1] << " " << nv[0] << "," << nv[1] << std::endl;
+
+	return nv;
 }
 
 Vector2 PathFollower::GetBallLocation()
