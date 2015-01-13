@@ -6,9 +6,10 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#define LatencyInteractionExperiment_PixelClock (149)
+#define LatencyInteractionExperiment_PixelClock (143)
 #define LatencyInteractionExperiment_DisplayTotalHeight (733)
 #define LatencyInteractionExperiment_DisplayTotalWidth (1360)
+#define LatencyInteractionExperiment_PCIE_ALIGNMENT (16)
 #define LatencyInteractionExperiment_DisplayHeight (720)
 #define LatencyInteractionExperiment_DisplayWidth (1280)
 #define LatencyInteractionExperiment_DisplayStartY (10)
@@ -21,6 +22,7 @@ extern "C" {
 
 
 
+
 /**
  * \brief Basic static function for the interface 'default'.
  * 
@@ -30,6 +32,8 @@ extern "C" {
  * \param [in] inscalar_mcp_kernel_frame_offset Input scalar parameter "mcp_kernel.frame_offset".
  * \param [in] instream_cpu_to_plane_0 Stream "cpu_to_plane_0".
  * \param [in] instream_size_cpu_to_plane_0 The size of the stream instream_cpu_to_plane_0 in bytes.
+ * \param [in] instream_metadata Stream "metadata".
+ * \param [in] instream_size_metadata The size of the stream instream_metadata in bytes.
  * \param [in] instream_sprite_0_content Stream "sprite_0_content".
  * \param [in] instream_size_sprite_0_content The size of the stream instream_sprite_0_content in bytes.
  * \param [in] instream_sprite_0_positions Stream "sprite_0_positions".
@@ -57,6 +61,8 @@ void LatencyInteractionExperiment(
 	uint64_t inscalar_mcp_kernel_frame_offset,
 	const void *instream_cpu_to_plane_0,
 	size_t instream_size_cpu_to_plane_0,
+	const void *instream_metadata,
+	size_t instream_size_metadata,
 	const void *instream_sprite_0_content,
 	size_t instream_size_sprite_0_content,
 	const void *instream_sprite_0_positions,
@@ -91,6 +97,8 @@ void LatencyInteractionExperiment(
  * \param [in] inscalar_mcp_kernel_frame_offset Input scalar parameter "mcp_kernel.frame_offset".
  * \param [in] instream_cpu_to_plane_0 Stream "cpu_to_plane_0".
  * \param [in] instream_size_cpu_to_plane_0 The size of the stream instream_cpu_to_plane_0 in bytes.
+ * \param [in] instream_metadata Stream "metadata".
+ * \param [in] instream_size_metadata The size of the stream instream_metadata in bytes.
  * \param [in] instream_sprite_0_content Stream "sprite_0_content".
  * \param [in] instream_size_sprite_0_content The size of the stream instream_sprite_0_content in bytes.
  * \param [in] instream_sprite_0_positions Stream "sprite_0_positions".
@@ -119,6 +127,8 @@ max_run_t *LatencyInteractionExperiment_nonblock(
 	uint64_t inscalar_mcp_kernel_frame_offset,
 	const void *instream_cpu_to_plane_0,
 	size_t instream_size_cpu_to_plane_0,
+	const void *instream_metadata,
+	size_t instream_size_metadata,
 	const void *instream_sprite_0_content,
 	size_t instream_size_sprite_0_content,
 	const void *instream_sprite_0_positions,
@@ -150,6 +160,8 @@ typedef struct {
 	uint64_t inscalar_mcp_kernel_frame_offset; /**<  [in] Input scalar parameter "mcp_kernel.frame_offset". */
 	const void *instream_cpu_to_plane_0; /**<  [in] Stream "cpu_to_plane_0". */
 	size_t instream_size_cpu_to_plane_0; /**<  [in] The size of the stream instream_cpu_to_plane_0 in bytes. */
+	const void *instream_metadata; /**<  [in] Stream "metadata". */
+	size_t instream_size_metadata; /**<  [in] The size of the stream instream_metadata in bytes. */
 	const void *instream_sprite_0_content; /**<  [in] Stream "sprite_0_content". */
 	size_t instream_size_sprite_0_content; /**<  [in] The size of the stream instream_sprite_0_content in bytes. */
 	const void *instream_sprite_0_positions; /**<  [in] Stream "sprite_0_positions". */

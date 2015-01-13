@@ -11,6 +11,7 @@
 #include <sstream>
 #include <iostream>
 #include <errno.h>
+#include <string.h>
 #include <Utils/Split.h>
 #include <boost/filesystem/path.hpp>
 

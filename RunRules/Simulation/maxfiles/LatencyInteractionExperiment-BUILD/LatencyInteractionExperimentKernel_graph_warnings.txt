@@ -1,0 +1,76 @@
+*** After kernel graph-pass 'Init Graph' ***
+node "Counter(NUMERIC_INCREMENTING)\nInc: 1\nReset: 0\nInit: 0" (ID 3) has unconnected outputs: [count]
+stack trace of node origin follows:
+	com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain.addCounter(CounterChain.java:504)
+	maxvideo.MaxVideoKernel.GenerateDisplayWordData(MaxVideoKernel.maxj:53)
+	maxvideo.MaxVideoKernel.<init>(MaxVideoKernel.maxj:26)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:33)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:29)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:67)
+	
+node "Hold" (ID 150) has unconnected outputs: [output]
+stack trace of node origin follows:
+	com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions.streamHold(Reductions.java:641)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:149)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.ComputePixelColour(LatencyInteractionExperimentKernel.maxj:60)
+	maxvideo.MaxVideoKernel.GenerateDisplayWordData(MaxVideoKernel.maxj:73)
+	maxvideo.MaxVideoKernel.<init>(MaxVideoKernel.maxj:26)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:33)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:29)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:67)
+	
+node "<{HWOffsetFix:8, 0, UNSIGNED}>" (ID 164) has unconnected outputs: [output]
+stack trace of node origin follows:
+	com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.nonBlockingInput(IO.java:409)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:153)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.ComputePixelColour(LatencyInteractionExperimentKernel.maxj:60)
+	maxvideo.MaxVideoKernel.GenerateDisplayWordData(MaxVideoKernel.maxj:73)
+	maxvideo.MaxVideoKernel.<init>(MaxVideoKernel.maxj:26)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:33)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:29)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:67)
+	
+node "Hold" (ID 202) has unconnected outputs: [output]
+stack trace of node origin follows:
+	com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions.streamHold(Reductions.java:641)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:149)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.ComputePixelColour(LatencyInteractionExperimentKernel.maxj:61)
+	maxvideo.MaxVideoKernel.GenerateDisplayWordData(MaxVideoKernel.maxj:73)
+	maxvideo.MaxVideoKernel.<init>(MaxVideoKernel.maxj:26)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:33)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:29)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:67)
+	
+node "<{HWOffsetFix:8, 0, UNSIGNED}>" (ID 216) has unconnected outputs: [output]
+stack trace of node origin follows:
+	com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.nonBlockingInput(IO.java:409)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:153)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.ComputePixelColour(LatencyInteractionExperimentKernel.maxj:61)
+	maxvideo.MaxVideoKernel.GenerateDisplayWordData(MaxVideoKernel.maxj:73)
+	maxvideo.MaxVideoKernel.<init>(MaxVideoKernel.maxj:26)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:33)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:29)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:67)
+	
+node "Hold" (ID 254) has unconnected outputs: [output]
+stack trace of node origin follows:
+	com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions.streamHold(Reductions.java:641)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:149)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.ComputePixelColour(LatencyInteractionExperimentKernel.maxj:62)
+	maxvideo.MaxVideoKernel.GenerateDisplayWordData(MaxVideoKernel.maxj:73)
+	maxvideo.MaxVideoKernel.<init>(MaxVideoKernel.maxj:26)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:33)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:29)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:67)
+	
+node "<{HWOffsetFix:8, 0, UNSIGNED}>" (ID 268) has unconnected outputs: [output]
+stack trace of node origin follows:
+	com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.nonBlockingInput(IO.java:409)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:153)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.ComputePixelColour(LatencyInteractionExperimentKernel.maxj:62)
+	maxvideo.MaxVideoKernel.GenerateDisplayWordData(MaxVideoKernel.maxj:73)
+	maxvideo.MaxVideoKernel.<init>(MaxVideoKernel.maxj:26)
+	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:33)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:29)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:67)
+	

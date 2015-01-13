@@ -6,8 +6,13 @@
 <enableMPCX enabled="false"/>
 </common>
 <maxFiles>
-<maxFile buildName="LatencyInteractionExperiment" buildOrUseExisting="existing">
-<externalPath>/network-raid/sfriston/maxworkspace/LatencyInteractionExperiment/RunRules/Simulation/maxfiles/LatencyInteractionExperiment.max</externalPath>
+<maxFile buildName="LatencyInteractionExperiment" buildOrUseExisting="build">
+<runConfiguration askBeforeAutoBuild="true">
+<mainClass>latencyinteractionexperiment.LatencyInteractionExperimentManager</mainClass>
+<maxHeapSize>2</maxHeapSize>
+</runConfiguration>
+<selectEngineTarget enabled="false">VECTIS</selectEngineTarget>
+<overrideEnableMPCX enabled="false" value="false"/>
 </maxFile>
 </maxFiles>
 <cpuCode targetType="executable">

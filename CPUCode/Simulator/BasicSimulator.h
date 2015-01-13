@@ -15,8 +15,8 @@ void makeRealtime();
 class BasicSimulator : public Simulator
 {
 public:
-	BasicSimulator(Resources& resources, Logger& logger)
-	:Simulator(resources, logger),
+	BasicSimulator(Resources& resources)
+	:Simulator(resources),
 	 thread_running(false)
 	{}
 

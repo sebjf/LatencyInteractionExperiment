@@ -8,23 +8,14 @@
 #include "Resources.h"
 #include <Maxfiles.h>
 #include <LatencyInteractionExperiment.h>
+#include <iostream>
 
 
 Resources* InitialiseResources()
 {
 	std::cout << "Initialising resources." << std::endl;
 
-//	Wacom* wacom = new Wacom();
-	Wacom* wacom = NULL;
-
 	Mouse* mouse = new Mouse(true);
-//	Mouse* mouse = NULL;
-
-	LibPhantom::Phantom* phantom = LibPhantom::Phantom::findPhantom(0);
-
-	if(phantom == 0){
-		std::cout << "No Phantoms Connected." << std::endl;
-	}
 
 	/* This will control the input device, reading it and storing a history of its state so that delayed input
 	 * may be provided to the tests */
@@ -73,8 +64,6 @@ Resources* InitialiseResources()
 
 	Resources* resources = new Resources(
 			mouse,
-			wacom,
-			phantom,
 			input_controller,
 			maxfile,
 			engine,

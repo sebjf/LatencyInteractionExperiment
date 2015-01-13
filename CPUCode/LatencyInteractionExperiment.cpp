@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
+#include <vector>
 
 #include "MaxSLiCInterface.h"
 #include <SDL/SDL.h>
@@ -14,9 +15,8 @@
 
 #include <Simulator/SimulatorFitts.h>
 #include <Simulator/SimulatorSteering.h>
-#include <Simulator/TestSimulator.h>
-
 #include "Steering/SteeringConditionBuilder.h"
+#include "Fitts/FittsLawTestConditions.h"
 
 #include <signal.h>
 
@@ -31,22 +31,8 @@ void PrintMainMenu()
 	"	C: Convert all available logs to Matlab\n";
 }
 
-void sigaction_handler(int signum, siginfo_t* info, void* context)
-{
-	int pid = info->si_pid;
-	std::cout << "Received term from " << pid << std::endl;
-}
-
 int main(int argc, char *argv[])
 {
-	// no problem with card for a while, so turn this off
-	struct sigaction action;
-	action.sa_handler = NULL;
-	action.sa_sigaction = &sigaction_handler;
-	action.sa_flags = SA_SIGINFO;
-//	sigemptyset(&action.sa_mask);
-//	sigaction(SIGTERM, &action, NULL );
-
 	int starting_test = 0;
 	int participant_id = 0;
 	if(argc > 1)
@@ -57,16 +43,12 @@ int main(int argc, char *argv[])
 	{
 		starting_test = atoi(argv[2]);
 	}
+
 	std::cout << "Beginning for participant number: " << participant_id << std::endl;
 
-	//std::string experiments_root = "/home/sfriston/Experiments/";
-	std::string experiments_root = "/home/sfriston/smbhelp/Experiments/";
-
-
-	Logger logger(participant_id, experiments_root + "Logs/", "test_results_collection", ".logs");
+	std::string experiments_root = "/home/sfriston/Experiments/";
 
 	SteeringConditionBuilder steering_conditions(experiments_root);
-
 	FittsLawTestConditionLoader loader;
 	std::vector<FittsLawTestCondition*>* fitts_conditions = loader.LoadCSV(experiments_root + "/fittsLawConditions_1.csv");
 
@@ -95,8 +77,8 @@ int main(int argc, char *argv[])
 			resources->plane_0.UpdatePlaneContent();
 			resources->plane_0.ShowPlane(MAP_DEFAULT);
 
-			fitts = new SimulatorFitts(*resources, logger);
-			steering = new SimulatorSteering(*resources, logger);
+			fitts = new SimulatorFitts(*resources);
+			steering = new SimulatorSteering(*resources);
 			break;
 
 		case 'r':
@@ -108,7 +90,7 @@ int main(int argc, char *argv[])
 			{
 				running->Stop();
 			}
-			//running = new TestPhantomSimulator(*resources,logger);
+
 			running = fitts;
 			running->current_test = starting_test;
 			running->dolatency = shoulddolatencymeasurement;
@@ -155,11 +137,6 @@ int main(int argc, char *argv[])
 		case 'q':	//this will kill any stuck simulator threads by exiting the program.
 		case 'Q':
 			run = false;
-			break;
-
-		case 'c':	//convert all available logs to matlab
-		case 'C':
-			logger.SaveFormatMatlab();
 			break;
 
 		case 'n':

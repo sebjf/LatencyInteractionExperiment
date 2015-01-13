@@ -8,15 +8,11 @@
 #ifndef RESOURCES_H_
 #define RESOURCES_H_
 
-#include "Logging.h"
 #include "Delay.h"
 #include <Utils/Mouse/mouse.h>
 #include <Utils/VirtualMonitor/virtualmonitor.h>
 #include <Graphics/Sprite.h>
 #include <Graphics/Plane.h>
-#include <Phantom/Phantom.h>
-#include <Input/PhantomInputDevice.h>
-#include <Input/Wacom.h>
 #include "MaxSLiCInterface.h"
 
 class Resources
@@ -25,8 +21,6 @@ public:
 
 	Resources(
 			Mouse* mouse,
-			Wacom* wacom,
-			LibPhantom::Phantom* phantom,
 			DelayedInputController* input_controller,
 			max_file_t* maxfile,
 			max_engine_t* engine,
@@ -39,8 +33,6 @@ public:
 			Stream* metadata,
 			bool isSimulation)
 	:mouse(*mouse),
-	 wacom(*wacom),
-	 phantom(*phantom),
 	 input_controller(*input_controller),
 	 maxfile(*maxfile),
 	 engine(*engine),
@@ -57,8 +49,6 @@ public:
 	~Resources();
 
 	Mouse& mouse;
-	Wacom& wacom;
-	LibPhantom::Phantom &phantom;
 	DelayedInputController& input_controller;
 
 	max_file_t& maxfile;

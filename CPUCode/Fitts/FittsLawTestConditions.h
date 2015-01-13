@@ -10,7 +10,7 @@
 
 #include <vector>
 #include <string>
-#include <msgpack.hpp>
+#include <stdlib.h>
 
 class Rectangle
 {
@@ -29,7 +29,6 @@ public:
 
 	friend std::ostream& operator<< (std::ostream& stream, const Rectangle& rect);
 
-	MSGPACK_DEFINE(center_x, center_y, width, height);
 };
 
 
@@ -71,7 +70,6 @@ public:
 
 	friend std::ostream& operator<< (std::ostream& stream, const FittsLawTestCondition& condition);
 
-	MSGPACK_DEFINE(m_condition_id,staging_area,target,latency_in_ms);
 };
 
 class FittsLawTestConditions : std::vector<FittsLawTestCondition*>

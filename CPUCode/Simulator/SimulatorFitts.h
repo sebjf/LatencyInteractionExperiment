@@ -9,17 +9,17 @@
 #define SIMULATORFITTS_H_
 
 #include "BasicSimulator.h"
-#include "SensableSimulator.h"
+#include <vector>
 
 class Cursor;
 class FittsLawTestRunner;
-class PhantomInputDevice;
+class FittsLawTestCondition;
 
 class SimulatorFitts : public BasicSimulator
 {
 public:
-	SimulatorFitts(Resources& resources, Logger& logger)
-	 :BasicSimulator(resources, logger)
+	SimulatorFitts(Resources& resources)
+	 :BasicSimulator(resources)
 	{}
 
 	void SetConditions(std::vector<FittsLawTestCondition*>* conditions)
@@ -36,7 +36,6 @@ private:
 	MouseState m_last_input;
 	Cursor* m_cursor;
 	FittsLawTestRunner* m_runner;
-	PhantomInputDevice* m_phantom_input_device;
 };
 
 #endif /* SIMULATORFITTS_H_ */

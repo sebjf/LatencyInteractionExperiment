@@ -4,12 +4,10 @@
 #include <iostream>
 #include "MaxSLiCInterface.h"
 #include "Delay.h"
-#include "Logging.h"
 #include <Fitts/FittsLawTest.h>
 #include <Graphics/Sprite.h>
 #include <Graphics/Plane.h>
 #include <Graphics/Cursor.h>
-#include <Input/SensableDummy.h>
 
 struct InputUpdate
 {
@@ -27,13 +25,6 @@ void SimulatorFitts::Initialise()
 
 	/* BASIC MOUSE INPUT */
 	m_resources.input_controller.input_device = &(m_resources.mouse);
-
-	/* BASIC INPUT */
-//	m_phantom_input_device = new PhantomInputDevice(&m_resources.phantom);
-//	m_resources.input_controller.input_device = m_phantom_input_device;
-
-	/* SENSABLE INPUT */
-//	m_resources.input_controller.input_device = &m_dummy;
 
 	/*Set the background for Fitts Test*/
 
@@ -88,13 +79,10 @@ bool SimulatorFitts::Iterate()
 
 		FittsLawTestCondition* condition = (*m_conditions)[current_test];
 
-		m_logger.AddNewLog(Log(m_logger.GetParticipantId(), condition->m_filename,Fitts,condition->m_condition_id));
 		m_runner->Begin(condition);
 
 		current_test++;
 	}
-
-	m_logger.CurrentLog().Add(Datapoint(real,input));
 
 	return true;
 }
@@ -103,13 +91,9 @@ void SimulatorFitts::Finish()
 {
 	std::cout << "Finished on test: " << current_test << std::endl;
 
-	m_logger.Save(); //saves to the default directory with an unused filename
-	m_logger.Clear();
-
 	m_resources.sprite_0.Hide();
 	m_resources.sprite_1.Hide();
 
 	delete m_cursor;
 	delete m_runner;
-	//delete m_phantom_input_device;
 }

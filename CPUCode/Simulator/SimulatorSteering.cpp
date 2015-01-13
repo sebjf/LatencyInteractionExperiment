@@ -9,7 +9,6 @@
 #include <iostream>
 #include "SimulatorSteering.h"
 #include "Delay.h"
-#include "Logging.h"
 #include <Steering/SteeringLawTest.h>
 #include <Steering/SteeringConditionBuilder.h>
 #include <Graphics/Sprite.h>
@@ -22,13 +21,6 @@
 
 	/* BASIC MOUSE INPUT */
 	m_resources.input_controller.input_device = &(m_resources.mouse);
-
-	/* BASIC INPUT */
-//	m_phantom_input_device = new PhantomInputDevice(&m_resources.phantom);
-//	m_resources.input_controller.input_device = m_phantom_input_device;
-
-	/* SENSABLE INPUT */
-//	m_resources.input_controller.input_device = &m_dummy;
 
 	/* This object will control the logic of the Fitts Law Tests */
 
@@ -72,14 +64,10 @@
 		}
 
 		SteeringLawTestCondition* condition = (m_conditions->m_conditions)[current_test];
-
-		m_logger.AddNewLog(Log(m_logger.GetParticipantId(), condition->m_filename,Steering,condition->m_condition_id));
 		m_runner->Begin(condition);
 
 		current_test++;
 	}
-
-	m_logger.CurrentLog().Add(Datapoint(real,input));
 
 	return true;
  }
@@ -89,16 +77,13 @@
  {
 	std::cout << "Finished on test: " << current_test << std::endl;
 
-	m_logger.Save(); //saves to the default directory with an unused filename
-	m_logger.Clear();
-
 	m_resources.sprite_0.Hide();
 	m_resources.sprite_1.Hide();
 	m_resources.plane_0.ShowPlane(MAP_DEFAULT);
 
 	delete m_cursor;
 	delete m_runner;
-//	delete m_phantom_input_device;
+
  }
 
 

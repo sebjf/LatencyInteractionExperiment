@@ -9,7 +9,7 @@
 #define DELAY_H_
 
 #include <time.h>
-#include <msgpack.hpp>
+#include <ostream>
 
 struct MouseState
 {
@@ -32,7 +32,6 @@ struct MouseState
 
 	friend std::ostream& operator<< (std::ostream& stream, const MouseState& mousestate);
 
-	MSGPACK_DEFINE(x,y,lmb,timestamp_ms);
 };
 
 class InputDevice

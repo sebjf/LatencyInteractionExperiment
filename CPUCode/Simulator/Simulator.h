@@ -16,10 +16,9 @@ private:
 	bool m_do_simulation;
 
 public:
-	Simulator(Resources& resources, Logger& logger)
+	Simulator(Resources& resources)
 		:m_do_simulation(false),
 		m_resources(resources),
-		m_logger(logger),
 		flag(0),
 		dolatency(false)
 	{}
@@ -28,7 +27,6 @@ public:
 	void do_simuation(bool val) { m_do_simulation = val; }
 
 	Resources& m_resources;
-	Logger& m_logger;
 
 	int current_test;
 	int flag;

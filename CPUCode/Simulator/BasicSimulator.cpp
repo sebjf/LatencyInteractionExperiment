@@ -7,6 +7,7 @@
 
 #include "BasicSimulator.h"
 #include <sched.h>
+#include <iostream>
 
 void makeRealtime(){
 
