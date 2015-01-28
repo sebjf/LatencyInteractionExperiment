@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
 	Simulator* running = NULL;
 
-	bool shoulddolatencymeasurement = false;
+	bool shoulddolatencymeasurement = true;
 
 	bool run = true;
 	while(run){
@@ -70,12 +70,9 @@ int main(int argc, char *argv[])
 		case 'i':
 		case 'I':
 
-			resources = InitialiseResources();
-
 			steering_conditions.Load("steering_conditions_1.mbin");
-			resources->plane_0.SetPlaneContent(steering_conditions.GetMaps(), steering_conditions.GetRefs());
-			resources->plane_0.UpdatePlaneContent();
-			resources->plane_0.ShowPlane(MAP_DEFAULT);
+
+			resources = InitialiseResources(steering_conditions);
 
 			fitts = new SimulatorFitts(*resources);
 			steering = new SimulatorSteering(*resources);

@@ -44,7 +44,7 @@ void SimulatorFitts::Initialise()
 
 bool SimulatorFitts::Iterate()
 {
-	m_resources.monitor.Refresh(1066);
+	m_resources.monitor.Refresh(1280);
 
 	m_resources.input_controller.Update();
 	MouseState real  = m_resources.input_controller.GetCurrentState();

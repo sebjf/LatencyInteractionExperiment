@@ -14,6 +14,7 @@
 #include <Graphics/Sprite.h>
 #include <Graphics/Plane.h>
 #include "MaxSLiCInterface.h"
+#include <Steering/SteeringConditionBuilder.h>
 
 class Resources
 {
@@ -30,7 +31,6 @@ public:
 			Sprite* sprite_2,
 			Plane* plane_0,
 			VirtualMonitor* monitor,
-			Stream* metadata,
 			bool isSimulation)
 	:mouse(*mouse),
 	 input_controller(*input_controller),
@@ -42,7 +42,6 @@ public:
 	 sprite_2(*sprite_2),
 	 plane_0(*plane_0),
 	 monitor(*monitor),
-	 metadata(*metadata),
 	 isSimulation(isSimulation)
 	{}
 
@@ -62,11 +61,9 @@ public:
 
 	VirtualMonitor& monitor;
 
-	Stream& metadata;
-
 	bool isSimulation;
 };
 
-Resources* InitialiseResources();
+Resources* InitialiseResources(SteeringConditionBuilder& steeringConditions);
 
 #endif /* RESOURCES_H_ */

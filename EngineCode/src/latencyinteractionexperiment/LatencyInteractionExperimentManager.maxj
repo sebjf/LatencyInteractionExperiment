@@ -1,9 +1,12 @@
 package latencyinteractionexperiment;
 
-import maxvideo.MaxVideoManager;
+import maxvideo.MaxVideoCounterKernel;
+import maxvideo.MaxVideoSignalKernel;
 import types.uRGBA;
 
 import com.maxeler.maxcompiler.v2.managers.BuildConfig.Switch;
+import com.maxeler.maxcompiler.v2.managers.custom.CustomManager;
+import com.maxeler.maxcompiler.v2.managers.custom.ManagerClock;
 import com.maxeler.maxcompiler.v2.managers.custom._CustomManagers;
 import com.maxeler.maxcompiler.v2.managers.custom.blocks.KernelBlock;
 import com.maxeler.maxcompiler.v2.managers.custom.stdlib.MemoryControlGroup.MemoryAccessPattern;
@@ -11,54 +14,75 @@ import com.maxeler.maxcompiler.v2.managers.engine_interfaces.EngineInterface;
 
 import displaystandards.DisplayStandard;
 
-public class LatencyInteractionExperimentManager extends MaxVideoManager {
-
-	private static final String m_kernelName = "LatencyInteractionExperimentKernel";
+public class LatencyInteractionExperimentManager extends CustomManager {
 
 	public LatencyInteractionExperimentManager(LatencyInteractionExperimentEngineParameters engineParameters) {
 		super(engineParameters);
 
+		/* Create display standard */
+		DisplayStandard displayStandard = DisplayStandard.make_1280x1024x60();
+
+		displayStandard.sanitiseCounters = false;
+
+		/* Configure clocks and resources outside the kernels */
+		config.setDefaultStreamClockFrequency(210);
+		config.setOnCardMemoryFrequency(475);
+
 		/* Memory Initialisation Separate to Kernel */
 		addStreamToOnCardMemory("plane_0_write", MemoryAccessPattern.LINEAR_1D) <== addStreamFromCPU("cpu_to_plane_0",StreamMode.LOW_LATENCY_ENABLED);
-		addStreamToCPU("plane_0_to_cpu",StreamMode.LOW_LATENCY_ENABLED) <== addStreamFromOnCardMemory("plane_0_read", MemoryAccessPattern.LINEAR_1D);
 
-		/* Main Image Generator Kernel */
-		DisplayStandard displayparams = DisplayStandard.make_1280x720x150();
+		/* Create kernels and connect the video signals */
+		KernelBlock videoCounterKernel = addKernel(new MaxVideoCounterKernel(makeKernelParameters("MaxVideoCounterKernel"), displayStandard));
+		KernelBlock videoDataKernel = addKernel(new LatencyInteractionExperimentKernel(makeKernelParameters("LatencyInteractionExperimentKernel"),displayStandard));
+		KernelBlock videoSignalKernel = addKernel(new MaxVideoSignalKernel(makeKernelParameters("MaxVideoSignalKernel"), displayStandard));
 
-		LatencyInteractionExperimentKernel framegenkernel_inner =
-			new LatencyInteractionExperimentKernel(makeKernelParameters(m_kernelName), displayparams);
+		videoDataKernel.getInput("x").connect(videoCounterKernel.getOutput("x"));
+		videoDataKernel.getInput("y").connect(videoCounterKernel.getOutput("y"));
 
-		KernelBlock framegenkernel = addVideoKernel(framegenkernel_inner);
+		videoSignalKernel.getInput("x").connect(videoCounterKernel.getOutput("signalKernel_x"));
+		videoSignalKernel.getInput("y").connect(videoCounterKernel.getOutput("signalKernel_y"));
+
+		videoSignalKernel.getInput("rgb").connect(videoDataKernel.getOutput("rgb"));
+
+		ManagerClock displayClock = generateStreamClock("displayDataClock", displayStandard.getDisplayClock());
+		videoSignalKernel.setClock(displayClock);
+
+	//	getVideoStream("videoData", displayClock).connect(videoSignalKernel.getOutput("displayDataOut"));
+		addStreamToCPU("displayDataOut",StreamMode.LOW_LATENCY_ENABLED).connect(videoSignalKernel.getOutput("displayDataOut"));
+
 
 		/* Background Map Memory Control */
+		KernelBlock mcp_kernel = addKernel(new MemoryCommandGeneratorKernel(makeKernelParameters("mcp_kernel"), displayStandard));
 
-		MemoryCommandGeneratorKernel mcp_kernel_inner =
-			new MemoryCommandGeneratorKernel(makeKernelParameters("mcp_kernel"), displayparams);
-		KernelBlock mcp_kernel = addKernel(mcp_kernel_inner);
+		mcp_kernel.getInput("line_number_in") <== videoDataKernel.getOutput("line_number_out");
+		videoDataKernel.getInput("line_data_in") <== addStreamFromOnCardMemory("line_data_out", mcp_kernel.getOutput("memory_commands"));
 
-		mcp_kernel.getInput("line_number_in") <== framegenkernel.getOutput("line_number_out");
-		framegenkernel.getInput("line_data_in") <== addStreamFromOnCardMemory("line_data_out", mcp_kernel.getOutput("memory_commands"));
 
-		final int buffer_space_in_bits = uRGBA.getDFEStructType().getTotalBits() * displayparams.TotalWidth;
-		_CustomManagers.setStreamBufferSpaceRequirement(framegenkernel.getInput("line_data_in"), buffer_space_in_bits);
+		/* Configure buffer sizes to prevent stalling */
 
-		mcp_kernel.setClock(generateStreamClock("memory_controller_clock", 210));
+		final int linedata_buffer_size_bits = uRGBA.getDFEStructType().getTotalBits() * displayStandard.TotalWidth;
+		_CustomManagers.setStreamBufferSpaceRequirement(videoDataKernel.getInput("line_data_in"), linedata_buffer_size_bits);
+
+		//final int signalcounter_buffer_size_bits = 16 * 250;
+		//_CustomManagers.setStreamBufferSpaceRequirement(stream, buffer_space)
+
 
 		/* CPU IO Connections */
-		framegenkernel.getInput("sprite_0_positions") <== addStreamFromCPU("sprite_0_positions",StreamMode.LOW_LATENCY_ENABLED);
-		framegenkernel.getInput("sprite_1_positions") <== addStreamFromCPU("sprite_1_positions",StreamMode.LOW_LATENCY_ENABLED);
-		framegenkernel.getInput("sprite_2_positions") <== addStreamFromCPU("sprite_2_positions",StreamMode.LOW_LATENCY_ENABLED);
+		videoDataKernel.getInput("sprite_0_positions") <== addStreamFromCPU("sprite_0_positions",StreamMode.LOW_LATENCY_ENABLED);
+		videoDataKernel.getInput("sprite_1_positions") <== addStreamFromCPU("sprite_1_positions",StreamMode.LOW_LATENCY_ENABLED);
+		videoDataKernel.getInput("sprite_2_positions") <== addStreamFromCPU("sprite_2_positions",StreamMode.LOW_LATENCY_ENABLED);
 
-		framegenkernel.getInput("sprite_0_content") <== addStreamFromCPU("sprite_0_content",StreamMode.LOW_LATENCY_ENABLED);
-		framegenkernel.getInput("sprite_1_content") <== addStreamFromCPU("sprite_1_content",StreamMode.LOW_LATENCY_ENABLED);
-		framegenkernel.getInput("sprite_2_content") <== addStreamFromCPU("sprite_2_content",StreamMode.LOW_LATENCY_ENABLED);
-
-		/* Metadata */
-		framegenkernel.getInput("metadata") <== addStreamFromCPU("metadata",StreamMode.LOW_LATENCY_ENABLED);
+		videoDataKernel.getInput("sprite_0_content") <== addStreamFromCPU("sprite_0_content",StreamMode.LOW_LATENCY_ENABLED);
+		videoDataKernel.getInput("sprite_1_content") <== addStreamFromCPU("sprite_1_content",StreamMode.LOW_LATENCY_ENABLED);
+		videoDataKernel.getInput("sprite_2_content") <== addStreamFromCPU("sprite_2_content",StreamMode.LOW_LATENCY_ENABLED);
 
 		createSLiCinterface(interfaceDefault());
 
-		getManagerConfiguration().dram.setOnCardMemoryFrequency(475);
+		/* Parameters for the cpu code */
+		addMaxFileConstant("DisplayTotalWidth", displayStandard.TotalWidth);
+		addMaxFileConstant("DisplayTotalHeight", displayStandard.TotalHeight);
+		addMaxFileConstant("DisplayWidth", displayStandard.H_Active);
+		addMaxFileConstant("DisplayHeight", displayStandard.V_Active);
 
 	}
 

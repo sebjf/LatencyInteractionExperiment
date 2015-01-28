@@ -10,8 +10,7 @@
 #include <LatencyInteractionExperiment.h>
 #include <iostream>
 
-
-Resources* InitialiseResources()
+Resources* InitialiseResources(SteeringConditionBuilder& steeringConditions)
 {
 	std::cout << "Initialising resources." << std::endl;
 
@@ -34,7 +33,6 @@ Resources* InitialiseResources()
 	VirtualMonitor* monitor = new VirtualMonitor(maxfile);
 
 	if(isSimulation){
-		monitor->MirrorToFile("/home/sfriston/Experiments/moncapture.raw");
 		monitor->Connect(engine);
 	}
 
@@ -42,25 +40,28 @@ Resources* InitialiseResources()
 	Sprite* sprite_1 = new Sprite("sprite_1",engine,maxfile,256,256);
 	Sprite* sprite_2 = new Sprite("sprite_2",engine,maxfile,256,256);
 
-	Stream* metadata = new Stream(engine,"metadata",16);
-
 	Plane* plane_0 = new Plane("plane_0", engine, maxfile);
 	std::string s("/home/sfriston/Experiments/1280x1024.jpg");
 	plane_0->SetPlaneContent(s);
+	plane_0->SetPlaneContent(steeringConditions.GetMaps(), steeringConditions.GetRefs());
+
+	printf("Writing plane content...\n");
 
 	plane_0->UpdatePlaneContent(); //this will cause a reset
 
-	max_set_uint64t(actions, "LatencyInteractionExperimentKernel", "Enable", 1);
+	printf("Showing plane 0.\n");
 
-	max_set_uint64t(actions, "LatencyInteractionExperimentKernel", "HSyncPolarity", 0);
-	max_set_uint64t(actions, "LatencyInteractionExperimentKernel", "VSyncPolarity", 0);
+	plane_0->ShowPlane(MAP_DEFAULT);
 
-	max_disable_validation(actions); //we wont have set the sprite content yet.
+	max_set_uint64t(actions, "MaxVideoSignalKernel", "HSyncPolarity", 1);
+	max_set_uint64t(actions, "MaxVideoSignalKernel", "VSyncPolarity", 1);
+
+	max_ignore_scalar(actions, "mcp_kernel", "frame_offset");
+	max_ignore_lmem(actions,"plane_0_write");
+
+	printf("Starting engine...\n");
+
 	max_run(engine, actions);
-
-	char* nulldata = new char[16];
-	memset(nulldata,0x0,16);
-	metadata->Write(nulldata);
 
 	Resources* resources = new Resources(
 			mouse,
@@ -73,7 +74,6 @@ Resources* InitialiseResources()
 			sprite_2,
 			plane_0,
 			monitor,
-			metadata,
 			isSimulation);
 
 	return resources;

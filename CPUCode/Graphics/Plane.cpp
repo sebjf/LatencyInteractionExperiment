@@ -82,7 +82,9 @@ void Plane::SetPlaneContent(std::string& filename)
 
 void Plane::ShowPlane(int ref)
 {
-	max_actions_t* mem_actions = max_actions_init(m_maxfile, "default");
+	std::cout << "Showing Plane." << std::endl;
+
+	max_actions_t* mem_actions = max_actions_init(m_maxfile, NULL);
 	max_disable_reset(mem_actions);
 	max_enable_partial_memory(mem_actions);
 	max_disable_validation(mem_actions);
@@ -91,6 +93,7 @@ void Plane::ShowPlane(int ref)
 
 	int offset = m_surfacemap[ref];
 	max_set_uint64t(mem_actions, "mcp_kernel", "frame_offset", offset);
+
 
 	if(m_is_simulation)
 	{
@@ -101,12 +104,13 @@ void Plane::ShowPlane(int ref)
 		max_run(m_engine, mem_actions);
 	}
 	max_actions_free(mem_actions);
+
+	std::cout << "Showing Plane Done." << std::endl;
 }
 
 void Plane::UpdatePlaneContent()
 {
-	max_actions_t* mem_actions = max_actions_init(m_maxfile, "default");
-//	max_disable_reset(mem_actions);
+	max_actions_t* mem_actions = max_actions_init(m_maxfile, NULL);
 	max_enable_partial_memory(mem_actions);
 	max_disable_validation(mem_actions);
 
@@ -119,14 +123,9 @@ void Plane::UpdatePlaneContent()
 		max_queue_input(mem_actions,"cpu_to_plane_0", m_surfaces[i]->pixels, m_map_size);
 	}
 
-	if(m_is_simulation)
-	{
-		max_run_nonblock(m_engine, mem_actions);
-	}
-	else
-	{
-		max_run(m_engine, mem_actions);
-	}
+	max_ignore_stream(mem_actions,"displayDataOut");
+	max_run(m_engine, mem_actions);
+
 	max_actions_free(mem_actions);
 
 	std::cout << "Wrote LMem." << std::endl;
