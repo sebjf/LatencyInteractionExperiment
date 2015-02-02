@@ -20,7 +20,7 @@ Mouse::Mouse(bool invert_y)
 {
 	mouse = fopen("/dev/input/mouse1","rb");
 	if(mouse == NULL){
-		printf("Could not open mouse. Are you running with elevated permissions?");
+		printf("-----------\nCould not open mouse. Are you running with elevated permissions?\n-----------\n");
 	}
 };
 

@@ -83,15 +83,13 @@ void SteeringConditionBuilder::Load(std::string filename)
 	if(file.fail())
 	{
 		std::cout << "Could not open file: " << filename << " " << strerror(errno) << std::endl;
+		return;
 	}
 
-	int count = 1;
+	int count = 0;
+	file >> count;
 
-	if(filename.find(".mbin") != std::string::npos){
-		file >> count;
-	}
-
-	for(int i = 0; i < count; i++){
+	for(int i = 0; i < 5; i++){
 		SteeringLawTestCondition* condition = LoadSingle(file);
 		condition->m_filename = boost::filesystem::path(filename).leaf();
 		m_conditions.push_back(condition);

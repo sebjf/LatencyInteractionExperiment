@@ -73,6 +73,15 @@ void Plane::SetPlaneContent(SDL_Surface* src)
 	SetPlaneContent(src, MAP_DEFAULT);
 }
 
+void Plane::SetPlaneContent(void* image, unsigned int image_size)
+{
+	SDL_RWops* image_ops = SDL_RWFromMem(image, image_size);
+	SDL_Surface* img_surface = IMG_LoadJPG_RW(image_ops);
+	SetPlaneContent(img_surface);
+	SDL_FreeSurface(img_surface);
+	SDL_FreeRW(image_ops);
+}
+
 void Plane::SetPlaneContent(std::string& filename)
 {
 	SDL_Surface* img = IMG_Load(filename.c_str());
@@ -93,7 +102,6 @@ void Plane::ShowPlane(int ref)
 
 	int offset = m_surfacemap[ref];
 	max_set_uint64t(mem_actions, "mcp_kernel", "frame_offset", offset);
-
 
 	if(m_is_simulation)
 	{

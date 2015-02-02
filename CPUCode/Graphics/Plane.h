@@ -28,6 +28,7 @@ public:
 	void SetPlaneContent(SDL_Surface* image, int ref);
 	void SetPlaneContent(std::string& image);
 	void SetPlaneContent(SDL_Surface* image);
+	void SetPlaneContent(void* image, unsigned int image_size);
 	void UpdatePlaneContent();
 
 	void ShowPlane(int ref);

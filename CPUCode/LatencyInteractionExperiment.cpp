@@ -20,45 +20,37 @@
 
 #include <signal.h>
 
+
 void PrintMainMenu()
 {
 	std::cout <<
-	"Latency Interaction Experiment.\n"\
+	"Latency Interaction Experiment Demonstration.\n"\
 	"	I: Initialise resources for experiments.\n"\
-	"	R: Run Simulation\n"\
+	"	R: Run Fitts's Tests\n"\
+	"	T: Run Steering Law Tests\n"\
 	"	E: Exit.\n"\
-	"	S: Stop Simulation\n"\
-	"	C: Convert all available logs to Matlab\n";
+	"	S: Stop Simulation\n";
 }
+
+/* Embedded resources */
+
+std::vector<FittsLawTestCondition*>* generateFittsLawTestConditions();
+SteeringConditionBuilder* generateSteeringLawTestConditions();
+
 
 int main(int argc, char *argv[])
 {
 	int starting_test = 0;
-	int participant_id = 0;
-	if(argc > 1)
-	{
-		participant_id = atoi(argv[1]);
-	}
-	if(argc > 2)
-	{
-		starting_test = atoi(argv[2]);
-	}
 
-	std::cout << "Beginning for participant number: " << participant_id << std::endl;
+	SteeringConditionBuilder* 			 steering_conditions = generateSteeringLawTestConditions();
+	std::vector<FittsLawTestCondition*>* fitts_conditions = generateFittsLawTestConditions();
 
-	std::string experiments_root = "/home/sfriston/Experiments/";
+	Resources* 			resources = NULL;
+	SimulatorFitts* 	fitts = NULL;
+	SimulatorSteering* 	steering = NULL;
+	Simulator* 			running = NULL;
 
-	SteeringConditionBuilder steering_conditions(experiments_root);
-	FittsLawTestConditionLoader loader;
-	std::vector<FittsLawTestCondition*>* fitts_conditions = loader.LoadCSV(experiments_root + "/fittsLawConditions_1.csv");
-
-	Resources* resources = NULL;
-	SimulatorFitts* 	fitts;
-	SimulatorSteering* 	steering;
-
-	Simulator* running = NULL;
-
-	bool shoulddolatencymeasurement = true;
+	bool shoulddolatencymeasurement = false;
 
 	bool run = true;
 	while(run){
@@ -69,12 +61,9 @@ int main(int argc, char *argv[])
 
 		case 'i':
 		case 'I':
+			resources = InitialiseResources(*steering_conditions);
 
-			steering_conditions.Load("steering_conditions_1.mbin");
-
-			resources = InitialiseResources(steering_conditions);
-
-			fitts = new SimulatorFitts(*resources);
+			fitts 	 = new SimulatorFitts(*resources);
 			steering = new SimulatorSteering(*resources);
 			break;
 
@@ -98,7 +87,7 @@ int main(int argc, char *argv[])
 		case 't':
 		case 'T':
 
-			steering->SetConditions(steering_conditions);
+			steering->SetConditions(*steering_conditions);
 
 			if(running != NULL)
 			{

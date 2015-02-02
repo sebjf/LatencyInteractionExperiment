@@ -1,0 +1,562 @@
+NodeID     : 0
+Node       : {HWOffsetFix:1, 0, UNSIGNED}\n0x0; 0.0
+Node type  : NodeConstantRawBits
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.Flush.disabled(Flush.java:155)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:15)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 1
+Node       : {HWOffsetFix:1, 0, UNSIGNED}\n0x1; 1.0
+Node type  : NodeConstantRawBits
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Constant.var(Constant.java:80)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:17)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 2
+Node       : 1066.0
+Node type  : NodeConstantDouble
+Removed by : [RemoveUntypedConstants]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain.addCounter(CounterChain.java:504)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:18)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+Led to:
+  NodeID     : 48
+  Node       : {HWOffsetFix:12, 0, UNSIGNED}\n0x42a; 1066.0
+  Node type  : NodeConstantRawBits
+  Creator    : RemoveUntypedConstants
+
+------------
+NodeID     : 3
+Node       : Counter(NUMERIC_INCREMENTING)\nInc: 1\nReset: 0\nInit: 0
+Node type  : NodeCounterV1
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain.addCounter(CounterChain.java:504)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:18)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 4
+Node       : 1688.0
+Node type  : NodeConstantDouble
+Removed by : [RemoveUntypedConstants]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain.addCounter(CounterChain.java:504)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:19)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+Led to:
+  NodeID     : 50
+  Node       : {HWOffsetFix:12, 0, UNSIGNED}\n0x698; 1688.0
+  Node type  : NodeConstantRawBits
+  Creator    : RemoveUntypedConstants
+
+------------
+NodeID     : 5
+Node       : Counter(NUMERIC_INCREMENTING)\nInc: 1\nReset: 0\nInit: 0
+Node type  : NodeCounterV1
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain.addCounter(CounterChain.java:504)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:19)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 6
+Node       : {HWOffsetFix:16, 0, TWOSCOMPLEMENT}
+Node type  : NodeCast
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:21)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 7
+Node       : 360.0
+Node type  : NodeConstantDouble
+Removed by : [RemoveUntypedConstants]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.sub(DFEVar.java:929)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:21)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+Led to:
+  NodeID     : 49
+  Node       : {HWOffsetFix:16, 0, TWOSCOMPLEMENT}\n0x0168; 360.0
+  Node type  : NodeConstantRawBits
+  Creator    : RemoveUntypedConstants
+
+------------
+NodeID     : 8
+Node       : -
+Node type  : NodeSub
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.sub(DFEVar.java:929)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:21)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 9
+Node       : {HWOffsetFix:16, 0, TWOSCOMPLEMENT}
+Node type  : NodeCast
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:22)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 10
+Node       : 41.0
+Node type  : NodeConstantDouble
+Removed by : [RemoveUntypedConstants]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.sub(DFEVar.java:929)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:22)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+Led to:
+  NodeID     : 47
+  Node       : {HWOffsetFix:16, 0, TWOSCOMPLEMENT}\n0x0029; 41.0
+  Node type  : NodeConstantRawBits
+  Creator    : RemoveUntypedConstants
+
+------------
+NodeID     : 11
+Node       : -
+Node type  : NodeSub
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.sub(DFEVar.java:929)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:22)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 12
+Node       : {HWOffsetFix:1, 0, UNSIGNED}\n0x1; 1.0
+Node type  : NodeConstantRawBits
+Removed by : [OptimiseNodesPass]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 13
+Node       : Scalar input (io_x_force_disabled)
+Node type  : NodeInputMappedReg
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 14
+Node       : ~
+Node type  : NodeNot
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 15
+Node       : &
+Node type  : NodeAnd
+Removed by : [OptimiseNodesPass]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 16
+Node       : Output(x)
+Node type  : NodeOutput
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 17
+Node       : {HWOffsetFix:16, 0, TWOSCOMPLEMENT}
+Node type  : NodeCast
+Removed by : [OptimiseNodesPass]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 18
+Node       : {HWOffsetFix:1, 0, UNSIGNED}\n0x1; 1.0
+Node type  : NodeConstantRawBits
+Removed by : [OptimiseNodesPass]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 19
+Node       : Scalar input (io_y_force_disabled)
+Node type  : NodeInputMappedReg
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 20
+Node       : ~
+Node type  : NodeNot
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 21
+Node       : &
+Node type  : NodeAnd
+Removed by : [OptimiseNodesPass]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 22
+Node       : Output(y)
+Node type  : NodeOutput
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 23
+Node       : {HWOffsetFix:16, 0, TWOSCOMPLEMENT}
+Node type  : NodeCast
+Removed by : [OptimiseNodesPass]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 24
+Node       : {HWOffsetFix:1, 0, UNSIGNED}\n0x1; 1.0
+Node type  : NodeConstantRawBits
+Removed by : [OptimiseNodesPass]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 25
+Node       : Scalar input (io_signalKernel_x_force_disabled)
+Node type  : NodeInputMappedReg
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 26
+Node       : ~
+Node type  : NodeNot
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 27
+Node       : &
+Node type  : NodeAnd
+Removed by : [OptimiseNodesPass]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 28
+Node       : Output(signalKernel_x)
+Node type  : NodeOutput
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 29
+Node       : {HWOffsetFix:16, 0, UNSIGNED}
+Node type  : NodeCast
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 30
+Node       : {HWOffsetFix:1, 0, UNSIGNED}\n0x1; 1.0
+Node type  : NodeConstantRawBits
+Removed by : [OptimiseNodesPass]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 31
+Node       : Scalar input (io_signalKernel_y_force_disabled)
+Node type  : NodeInputMappedReg
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 32
+Node       : ~
+Node type  : NodeNot
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 33
+Node       : &
+Node type  : NodeAnd
+Removed by : [OptimiseNodesPass]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 34
+Node       : Output(signalKernel_y)
+Node type  : NodeOutput
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 35
+Node       : {HWOffsetFix:16, 0, UNSIGNED}
+Node type  : NodeCast
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
+maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 36
+Node       : 1.0
+Node type  : NodeConstantDouble
+Removed by : [RemoveUntypedConstants]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+Led to:
+  NodeID     : 46
+  Node       : {HWOffsetFix:1, 0, UNSIGNED}\n0x1; 1.0
+  Node type  : NodeConstantRawBits
+  Creator    : RemoveUntypedConstants
+
+------------
+NodeID     : 37
+Node       : {HWOffsetFix:49, 0, UNSIGNED}\n0x1000000000000; 2.81474976710656E14
+Node type  : NodeConstantRawBits
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 38
+Node       : Counter(NUMERIC_INCREMENTING)\nInc: 1\nReset: 0\nInit: 0
+Node type  : NodeCounterV1
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 39
+Node       : stream offset: 1
+Node type  : NodeStreamOffset
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 40
+Node       : {HWOffsetFix:1, 0, UNSIGNED}\n0x1; 1.0
+Node type  : NodeConstantRawBits
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 41
+Node       : Scalar output (current_run_cycle_count)
+Node type  : NodeOutputMappedReg
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 42
+Node       : 1.0
+Node type  : NodeConstantDouble
+Removed by : [Init Graph]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 43
+Node       : {HWOffsetFix:49, 0, UNSIGNED}\n0x1000000000000; 2.81474976710656E14
+Node type  : NodeConstantRawBits
+Removed by : [Init Graph]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NODE WAS REMOVED!
+NodeID     : 44
+Node       : Counter(NUMERIC_INCREMENTING)\nInc: 1\nReset: 0\nInit: 0
+Node type  : NodeCounterV1
+Removed by : [Init Graph]
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------
+NodeID     : 45
+Node       : flush on trigger
+Node type  : NodeFlush
+Creator    : User
+Stack Trace:
+com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+
+------------

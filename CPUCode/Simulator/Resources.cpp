@@ -10,6 +10,10 @@
 #include <LatencyInteractionExperiment.h>
 #include <iostream>
 
+/* Embedded resources */
+extern unsigned int __background_map_size;
+extern unsigned char __background_map_data[];
+
 Resources* InitialiseResources(SteeringConditionBuilder& steeringConditions)
 {
 	std::cout << "Initialising resources." << std::endl;
@@ -21,10 +25,9 @@ Resources* InitialiseResources(SteeringConditionBuilder& steeringConditions)
 
 	DelayedInputController* input_controller = new DelayedInputController(0.0060f,2000);
 
+	input_controller->suppressPeriodWarnings = true;
+
 	max_file_t* maxfile = LatencyInteractionExperiment_init();
-
-	max_set_max_runnable_timing_score(maxfile,2000);
-
 	max_engine_t* engine = max_load(maxfile, "local:*");
 	max_actions_t* actions = max_actions_init(maxfile, "default");
 
@@ -41,15 +44,14 @@ Resources* InitialiseResources(SteeringConditionBuilder& steeringConditions)
 	Sprite* sprite_2 = new Sprite("sprite_2",engine,maxfile,256,256);
 
 	Plane* plane_0 = new Plane("plane_0", engine, maxfile);
-	std::string s("/home/sfriston/Experiments/1280x1024.jpg");
-	plane_0->SetPlaneContent(s);
+	plane_0->SetPlaneContent(__background_map_data, __background_map_size);
 	plane_0->SetPlaneContent(steeringConditions.GetMaps(), steeringConditions.GetRefs());
 
-	printf("Writing plane content...\n");
+	printf("Loading resources...\n");
 
 	plane_0->UpdatePlaneContent(); //this will cause a reset
 
-	printf("Showing plane 0.\n");
+	printf("Initialising...\n");
 
 	plane_0->ShowPlane(MAP_DEFAULT);
 
@@ -59,7 +61,7 @@ Resources* InitialiseResources(SteeringConditionBuilder& steeringConditions)
 	max_ignore_scalar(actions, "mcp_kernel", "frame_offset");
 	max_ignore_lmem(actions,"plane_0_write");
 
-	printf("Starting engine...\n");
+	printf("Starting display engine...\n");
 
 	max_run(engine, actions);
 

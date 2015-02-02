@@ -19,6 +19,8 @@ DelayedInputController::DelayedInputController(float average_period_ms, float ma
 	buffer_length = (int)((max_delay_ms / average_period_ms) * 1.2f);
 	values = new MouseState[buffer_length]();
 
+	suppressPeriodWarnings = false;
+
 	ResetHistory();
 }
 
@@ -67,8 +69,10 @@ MouseState DelayedInputController::GetState(float delay_ms)
 			//timestamps increase from epoch, so we have found the first timestamp older than the target age
 
 			float dt = target_time - values[search_position].timestamp_ms;
-			if(abs(dt) > 0.060){
-				std::cout << "dt of " << dt << " is greater than average period." << std::endl;
+			if(!suppressPeriodWarnings){
+				if(abs(dt) > 0.060){
+					std::cout << "dt of " << dt << " is greater than average period." << std::endl;
+				}
 			}
 
 			return values[search_position];

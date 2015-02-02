@@ -58,13 +58,15 @@
 
 	if(m_runner->Update(input.x,input.y)){
 
-		if(current_test >= m_conditions->m_conditions.size()){
+		if(current_test >= (int)m_conditions->m_conditions.size()){
 			std::cout << "All Conditions Complete." << std::endl;
 			return false;
 		}
 
 		SteeringLawTestCondition* condition = (m_conditions->m_conditions)[current_test];
 		m_runner->Begin(condition);
+
+		std::cout << "The latency is now " << condition->m_latency_in_ms << " ms." << std::endl;
 
 		current_test++;
 	}

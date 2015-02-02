@@ -72,7 +72,7 @@ bool SimulatorFitts::Iterate()
 
 	if(m_runner->Update(input.x,input.y, input.lmb)){
 
-		if(current_test >= m_conditions->size()){
+		if(current_test >= (int)m_conditions->size()){
 			std::cout << "All Conditions Complete." << std::endl;
 			return false;
 		}
@@ -80,6 +80,8 @@ bool SimulatorFitts::Iterate()
 		FittsLawTestCondition* condition = (*m_conditions)[current_test];
 
 		m_runner->Begin(condition);
+
+		std::cout << "The latency is now " << condition->latency_in_ms << " ms." << std::endl;
 
 		current_test++;
 	}

@@ -54,6 +54,8 @@ public:
 
 	InputDevice* input_device;
 
+	bool suppressPeriodWarnings;
+
 private:
 
 	int buffer_length;
