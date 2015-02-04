@@ -6,7 +6,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.Flush.disabled(Flush.java:155)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:15)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 1
@@ -17,7 +17,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.Constant.var(Constant.java:80)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:17)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -30,7 +30,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain.addCounter(CounterChain.java:504)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:18)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 Led to:
   NodeID     : 48
@@ -47,7 +47,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain.addCounter(CounterChain.java:504)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:18)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -60,7 +60,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain.addCounter(CounterChain.java:504)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:19)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 Led to:
   NodeID     : 50
@@ -77,7 +77,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.CounterChain.addCounter(CounterChain.java:504)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:19)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 6
@@ -88,7 +88,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:21)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -101,7 +101,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.sub(DFEVar.java:929)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:21)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 Led to:
   NodeID     : 49
@@ -118,7 +118,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.sub(DFEVar.java:929)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:21)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 9
@@ -129,7 +129,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:22)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -142,7 +142,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.sub(DFEVar.java:929)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:22)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 Led to:
   NodeID     : 47
@@ -159,7 +159,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.sub(DFEVar.java:929)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:22)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -172,7 +172,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 13
@@ -183,7 +183,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 14
@@ -194,7 +194,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -207,7 +207,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 16
@@ -218,7 +218,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -231,7 +231,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:31)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -244,7 +244,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 19
@@ -255,7 +255,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 20
@@ -266,7 +266,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -279,7 +279,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 22
@@ -290,7 +290,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -303,7 +303,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:32)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -316,7 +316,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 25
@@ -327,7 +327,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 26
@@ -338,7 +338,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -351,7 +351,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 28
@@ -362,7 +362,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 29
@@ -373,7 +373,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:36)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -386,7 +386,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 31
@@ -397,7 +397,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 32
@@ -408,7 +408,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -421,7 +421,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 34
@@ -432,7 +432,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.output(IO.java:790)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 35
@@ -443,7 +443,7 @@ Stack Trace:
 com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar.cast(DFEVar.java:165)
 maxvideo.MaxVideoCounterKernel.<init>(MaxVideoCounterKernel.maxj:37)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -455,7 +455,7 @@ Creator    : User
 Stack Trace:
 com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 Led to:
   NodeID     : 46
@@ -471,7 +471,7 @@ Creator    : User
 Stack Trace:
 com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 38
@@ -481,7 +481,7 @@ Creator    : User
 Stack Trace:
 com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 39
@@ -491,7 +491,7 @@ Creator    : User
 Stack Trace:
 com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 40
@@ -501,7 +501,7 @@ Creator    : User
 Stack Trace:
 com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 41
@@ -511,7 +511,7 @@ Creator    : User
 Stack Trace:
 com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -523,7 +523,7 @@ Creator    : User
 Stack Trace:
 com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -535,7 +535,7 @@ Creator    : User
 Stack Trace:
 com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NODE WAS REMOVED!
@@ -547,7 +547,7 @@ Creator    : User
 Stack Trace:
 com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------
 NodeID     : 45
@@ -557,6 +557,6 @@ Creator    : User
 Stack Trace:
 com.maxeler.maxcompiler.v2.managers.custom.CustomManager.addKernel(CustomManager.java:1015)
 latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:35)
-latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 
 ------------

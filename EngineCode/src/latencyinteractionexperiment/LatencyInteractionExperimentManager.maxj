@@ -66,6 +66,7 @@ public class LatencyInteractionExperimentManager extends CustomManager {
 		_CustomManagers.setStreamBufferSpaceRequirement(videoDataKernel.getInput("line_data_in"), linedata_buffer_size_bits);
 
 		/* CPU IO Connections */
+
 		videoDataKernel.getInput("sprite_0_positions") <== addStreamFromCPU("sprite_0_positions",StreamMode.LOW_LATENCY_ENABLED);
 		videoDataKernel.getInput("sprite_1_positions") <== addStreamFromCPU("sprite_1_positions",StreamMode.LOW_LATENCY_ENABLED);
 		videoDataKernel.getInput("sprite_2_positions") <== addStreamFromCPU("sprite_2_positions",StreamMode.LOW_LATENCY_ENABLED);
@@ -73,6 +74,8 @@ public class LatencyInteractionExperimentManager extends CustomManager {
 		videoDataKernel.getInput("sprite_0_content") <== addStreamFromCPU("sprite_0_content",StreamMode.LOW_LATENCY_ENABLED);
 		videoDataKernel.getInput("sprite_1_content") <== addStreamFromCPU("sprite_1_content",StreamMode.LOW_LATENCY_ENABLED);
 		videoDataKernel.getInput("sprite_2_content") <== addStreamFromCPU("sprite_2_content",StreamMode.LOW_LATENCY_ENABLED);
+
+		mcp_kernel.getInput("frame_offset_stream") <== addStreamFromCPU("frame_offset_stream",StreamMode.LOW_LATENCY_ENABLED);
 
 		createSLiCinterface(interfaceDefault());
 

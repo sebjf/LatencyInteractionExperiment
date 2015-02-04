@@ -5,7 +5,7 @@ stack trace of node origin follows:
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:140)
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:45)
 	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:36)
-	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 	
 node "<{HWOffsetFix:8, 0, UNSIGNED}>" (ID 126) has unconnected outputs: [output]
 stack trace of node origin follows:
@@ -13,7 +13,7 @@ stack trace of node origin follows:
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:144)
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:45)
 	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:36)
-	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 	
 node "Hold" (ID 164) has unconnected outputs: [output]
 stack trace of node origin follows:
@@ -21,7 +21,7 @@ stack trace of node origin follows:
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:140)
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:46)
 	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:36)
-	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 	
 node "<{HWOffsetFix:8, 0, UNSIGNED}>" (ID 178) has unconnected outputs: [output]
 stack trace of node origin follows:
@@ -29,7 +29,7 @@ stack trace of node origin follows:
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:144)
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:46)
 	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:36)
-	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 	
 node "Hold" (ID 216) has unconnected outputs: [output]
 stack trace of node origin follows:
@@ -37,7 +37,7 @@ stack trace of node origin follows:
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:140)
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:47)
 	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:36)
-	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 	
 node "<{HWOffsetFix:8, 0, UNSIGNED}>" (ID 230) has unconnected outputs: [output]
 stack trace of node origin follows:
@@ -45,5 +45,5 @@ stack trace of node origin follows:
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel$Sprite.<init>(LatencyInteractionExperimentKernel.maxj:144)
 	latencyinteractionexperiment.LatencyInteractionExperimentKernel.<init>(LatencyInteractionExperimentKernel.maxj:47)
 	latencyinteractionexperiment.LatencyInteractionExperimentManager.<init>(LatencyInteractionExperimentManager.maxj:36)
-	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:89)
+	latencyinteractionexperiment.LatencyInteractionExperimentManager.main(LatencyInteractionExperimentManager.maxj:92)
 	

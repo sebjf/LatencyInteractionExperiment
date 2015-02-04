@@ -3,6 +3,7 @@ package latencyinteractionexperiment;
 import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
 import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.LMemCommandStream;
+import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.Reductions;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.DelimiterMode;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingInput;
 import com.maxeler.maxcompiler.v2.kernelcompiler.stdlib.core.IO.NonBlockingMode;
@@ -21,7 +22,12 @@ public class MemoryCommandGeneratorKernel extends Kernel {
 		NonBlockingInput<DFEVar> line_number =
 			io.nonBlockingInput("line_number_in", dfeUInt(16), constant.var(true), 1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
 
-		DFEVar frame_offset = io.scalarInput("frame_offset", dfeUInt(32));
+		NonBlockingInput<DFEVar> frame_offset_stream =
+			io.nonBlockingInput("frame_offset_stream", dfeUInt(128), constant.var(true),
+					1, DelimiterMode.FRAME_LENGTH, 0, NonBlockingMode.NO_TRICKLING);
+		DFEVar frame_offset = Reductions.streamHold(frame_offset_stream.data, frame_offset_stream.valid);
+
+//		DFEVar frame_offset = io.scalarInput("frame_offset", dfeUInt(32));
 
 		final double burst_size = 384;
 		final double pixels_per_burst = burst_size / 4;

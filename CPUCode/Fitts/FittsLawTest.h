@@ -43,6 +43,8 @@ public:
 	FittsStage stage;
 	FittsLawTestCondition* condition;
 
+	bool IsInitialising();
+
 	double GetDelay();
 
 private:

@@ -25,6 +25,11 @@ void FittsLawTestRunner::Begin(FittsLawTestCondition* condition)
 	stage = InitialiseState;
 }
 
+bool FittsLawTestRunner::IsInitialising()
+{
+	return (stage == InitialiseState);
+}
+
 /* At the end of each motion there are two stages that ensure the user moves back to the original staging area.
  * This is because the next condition could introduce artificial latency. It only takes 500ms for a user to adapt
  * to latency, so we do not want them experiencing it while moving to begin the next trial.*/

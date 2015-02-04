@@ -32,6 +32,8 @@ public:
 	float GetDelay();
 	void Begin(SteeringLawTestCondition* condition);
 
+	bool IsInitialising();
+
 	Cursor* m_ball_cursor;
 
 private:

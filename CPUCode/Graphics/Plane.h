@@ -13,6 +13,7 @@
 #include <SDL/SDL.h>
 #include <vector>
 #include <map>
+#include <Utils/Stream/streaming.h>
 
 /* A plane is a special type of sprite that does not move, and instead takes up the whole screen, stored in LMEM */
 
@@ -39,6 +40,9 @@ private:
 	max_engine_t* m_engine;
 	max_file_t* m_maxfile;
 	SDL_Surface* m_surface;
+
+	Stream* m_offset_stream;
+
 
 	int m_width;
 	int m_height;

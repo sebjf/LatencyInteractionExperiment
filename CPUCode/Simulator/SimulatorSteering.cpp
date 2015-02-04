@@ -17,7 +17,7 @@
 
  void SimulatorSteering::Initialise()
  {
-	std::cout << "Beginning main loop Steering Law Test Simulator" << std::endl;
+	std::cout << "Beginning main loop Steering Law Test" << std::endl;
 
 	/* BASIC MOUSE INPUT */
 	m_resources.input_controller.input_device = &(m_resources.mouse);
@@ -46,7 +46,7 @@
 	 * handling the large amount of data in the logs difficult. So we only do all of the above when the user input
 	 * state has changed, and rely on the timestamp for correct analysis of the data later on */
 
-	if(input.Equals(m_last_input)){
+	if(input.Equals(m_last_input) && !m_runner->IsInitialising()){
 		return true;
 	}
 

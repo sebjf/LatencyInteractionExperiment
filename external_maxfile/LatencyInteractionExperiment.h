@@ -24,9 +24,10 @@ extern "C" {
  * 
  * \param [in] inscalar_MaxVideoSignalKernel_HSyncPolarity Input scalar parameter "MaxVideoSignalKernel.HSyncPolarity".
  * \param [in] inscalar_MaxVideoSignalKernel_VSyncPolarity Input scalar parameter "MaxVideoSignalKernel.VSyncPolarity".
- * \param [in] inscalar_mcp_kernel_frame_offset Input scalar parameter "mcp_kernel.frame_offset".
  * \param [in] instream_cpu_to_plane_0 Stream "cpu_to_plane_0".
  * \param [in] instream_size_cpu_to_plane_0 The size of the stream instream_cpu_to_plane_0 in bytes.
+ * \param [in] instream_frame_offset_stream Stream "frame_offset_stream".
+ * \param [in] instream_size_frame_offset_stream The size of the stream instream_frame_offset_stream in bytes.
  * \param [in] instream_sprite_0_content Stream "sprite_0_content".
  * \param [in] instream_size_sprite_0_content The size of the stream instream_sprite_0_content in bytes.
  * \param [in] instream_sprite_0_positions Stream "sprite_0_positions".
@@ -45,9 +46,10 @@ extern "C" {
 void LatencyInteractionExperiment(
 	uint64_t inscalar_MaxVideoSignalKernel_HSyncPolarity,
 	uint64_t inscalar_MaxVideoSignalKernel_VSyncPolarity,
-	uint64_t inscalar_mcp_kernel_frame_offset,
 	const void *instream_cpu_to_plane_0,
 	size_t instream_size_cpu_to_plane_0,
+	const void *instream_frame_offset_stream,
+	size_t instream_size_frame_offset_stream,
 	const void *instream_sprite_0_content,
 	size_t instream_size_sprite_0_content,
 	const void *instream_sprite_0_positions,
@@ -73,9 +75,10 @@ void LatencyInteractionExperiment(
  * 
  * \param [in] inscalar_MaxVideoSignalKernel_HSyncPolarity Input scalar parameter "MaxVideoSignalKernel.HSyncPolarity".
  * \param [in] inscalar_MaxVideoSignalKernel_VSyncPolarity Input scalar parameter "MaxVideoSignalKernel.VSyncPolarity".
- * \param [in] inscalar_mcp_kernel_frame_offset Input scalar parameter "mcp_kernel.frame_offset".
  * \param [in] instream_cpu_to_plane_0 Stream "cpu_to_plane_0".
  * \param [in] instream_size_cpu_to_plane_0 The size of the stream instream_cpu_to_plane_0 in bytes.
+ * \param [in] instream_frame_offset_stream Stream "frame_offset_stream".
+ * \param [in] instream_size_frame_offset_stream The size of the stream instream_frame_offset_stream in bytes.
  * \param [in] instream_sprite_0_content Stream "sprite_0_content".
  * \param [in] instream_size_sprite_0_content The size of the stream instream_sprite_0_content in bytes.
  * \param [in] instream_sprite_0_positions Stream "sprite_0_positions".
@@ -95,9 +98,10 @@ void LatencyInteractionExperiment(
 max_run_t *LatencyInteractionExperiment_nonblock(
 	uint64_t inscalar_MaxVideoSignalKernel_HSyncPolarity,
 	uint64_t inscalar_MaxVideoSignalKernel_VSyncPolarity,
-	uint64_t inscalar_mcp_kernel_frame_offset,
 	const void *instream_cpu_to_plane_0,
 	size_t instream_size_cpu_to_plane_0,
+	const void *instream_frame_offset_stream,
+	size_t instream_size_frame_offset_stream,
 	const void *instream_sprite_0_content,
 	size_t instream_size_sprite_0_content,
 	const void *instream_sprite_0_positions,
@@ -120,9 +124,10 @@ max_run_t *LatencyInteractionExperiment_nonblock(
 typedef struct { 
 	uint64_t inscalar_MaxVideoSignalKernel_HSyncPolarity; /**<  [in] Input scalar parameter "MaxVideoSignalKernel.HSyncPolarity". */
 	uint64_t inscalar_MaxVideoSignalKernel_VSyncPolarity; /**<  [in] Input scalar parameter "MaxVideoSignalKernel.VSyncPolarity". */
-	uint64_t inscalar_mcp_kernel_frame_offset; /**<  [in] Input scalar parameter "mcp_kernel.frame_offset". */
 	const void *instream_cpu_to_plane_0; /**<  [in] Stream "cpu_to_plane_0". */
 	size_t instream_size_cpu_to_plane_0; /**<  [in] The size of the stream instream_cpu_to_plane_0 in bytes. */
+	const void *instream_frame_offset_stream; /**<  [in] Stream "frame_offset_stream". */
+	size_t instream_size_frame_offset_stream; /**<  [in] The size of the stream instream_frame_offset_stream in bytes. */
 	const void *instream_sprite_0_content; /**<  [in] Stream "sprite_0_content". */
 	size_t instream_size_sprite_0_content; /**<  [in] The size of the stream instream_sprite_0_content in bytes. */
 	const void *instream_sprite_0_positions; /**<  [in] Stream "sprite_0_positions". */

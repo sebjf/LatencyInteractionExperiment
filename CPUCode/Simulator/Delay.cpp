@@ -69,8 +69,9 @@ MouseState DelayedInputController::GetState(float delay_ms)
 			//timestamps increase from epoch, so we have found the first timestamp older than the target age
 
 			float dt = target_time - values[search_position].timestamp_ms;
-			if(!suppressPeriodWarnings){
-				if(abs(dt) > 0.060){
+
+			if(abs(dt) > 0.060){
+				if(!suppressPeriodWarnings){
 					std::cout << "dt of " << dt << " is greater than average period." << std::endl;
 				}
 			}
@@ -85,7 +86,9 @@ MouseState DelayedInputController::GetState(float delay_ms)
 
 		if(search_position == buffer_position)
 		{
-			std::cout << "Error: Could not find an Input State old enough. Returning the current one." << std::endl;
+			if(!suppressPeriodWarnings){
+				std::cout << "Error: Could not find an Input State old enough. Returning the current one." << std::endl;
+			}
 			return values[search_position];
 		}
 

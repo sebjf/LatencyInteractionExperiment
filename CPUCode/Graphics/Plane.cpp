@@ -29,6 +29,8 @@ Plane::Plane(std::string name, max_engine_t* engine, max_file_t* maxfile)
 
 	m_is_simulation = max_get_constant_uint64t(m_maxfile,"IS_SIMULATION") > 0;
 
+	m_offset_stream = new Stream(engine, "frame_offset_stream", 16);
+
 	makeDefaultPlanes();
 }
 
@@ -91,29 +93,17 @@ void Plane::SetPlaneContent(std::string& filename)
 
 void Plane::ShowPlane(int ref)
 {
-	std::cout << "Showing Plane." << std::endl;
-
-	max_actions_t* mem_actions = max_actions_init(m_maxfile, NULL);
-	max_disable_reset(mem_actions);
-	max_enable_partial_memory(mem_actions);
-	max_disable_validation(mem_actions);
-
 	current_ref = ref;
-
 	int offset = m_surfacemap[ref];
-	max_set_uint64t(mem_actions, "mcp_kernel", "frame_offset", offset);
 
-	if(m_is_simulation)
+	//PCIe words are 128 bits minimum, so pad the update out
+	uint32_t offset_data[4];
+	for(int i = 0; i < 4; i++)
 	{
-		max_run_nonblock(m_engine, mem_actions);
+		offset_data[i] = (uint32_t)offset;
 	}
-	else
-	{
-		max_run(m_engine, mem_actions);
-	}
-	max_actions_free(mem_actions);
 
-	std::cout << "Showing Plane Done." << std::endl;
+	m_offset_stream->Write((void*)offset_data);
 }
 
 void Plane::UpdatePlaneContent()
@@ -121,8 +111,6 @@ void Plane::UpdatePlaneContent()
 	max_actions_t* mem_actions = max_actions_init(m_maxfile, NULL);
 	max_enable_partial_memory(mem_actions);
 	max_disable_validation(mem_actions);
-
-	max_set_uint64t(mem_actions, "mcp_kernel", "frame_offset", 0);
 
 	max_lmem_linear(mem_actions, "plane_0_write", 0, m_map_size * m_surfaces.size());
 

@@ -24,6 +24,11 @@ void SteeringLawTestRunner::Begin(SteeringLawTestCondition* condition)
 	m_stage = InitialiseStage;
 }
 
+bool SteeringLawTestRunner::IsInitialising()
+{
+	return (m_stage == InitialiseStage);
+}
+
 bool SteeringLawTestRunner::Update(int x, int y)
 {
 	switch(m_stage)

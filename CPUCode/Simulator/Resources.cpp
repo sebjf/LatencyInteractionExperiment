@@ -53,17 +53,16 @@ Resources* InitialiseResources(SteeringConditionBuilder& steeringConditions)
 
 	printf("Initialising...\n");
 
-	plane_0->ShowPlane(MAP_DEFAULT);
-
 	max_set_uint64t(actions, "MaxVideoSignalKernel", "HSyncPolarity", 1);
 	max_set_uint64t(actions, "MaxVideoSignalKernel", "VSyncPolarity", 1);
 
-	max_ignore_scalar(actions, "mcp_kernel", "frame_offset");
 	max_ignore_lmem(actions,"plane_0_write");
 
 	printf("Starting display engine...\n");
 
 	max_run(engine, actions);
+
+	plane_0->ShowPlane(MAP_DEFAULT);
 
 	Resources* resources = new Resources(
 			mouse,
